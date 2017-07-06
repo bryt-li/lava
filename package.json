@@ -1,7 +1,6 @@
 {
   "private": true,
   "scripts": {
-
     "start": "HOST=0.0.0.0 PORT=8080 roadhog server",
     "build": "roadhog build",
     "lint": "eslint --ext .js src test",
