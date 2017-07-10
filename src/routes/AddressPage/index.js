@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import styles from './AddressPage.less';
+import styles from './index.less';
 
 function AddressPage() {
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './SignupForm.less';
+import styles from './index.less';
 
 
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';

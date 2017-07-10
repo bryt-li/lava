@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './TopMostBar.less';
+import styles from './index.less';
 import { Row, Col, Icon, Avatar, Input } from 'antd';
 import { Link } from 'dva/router';
 

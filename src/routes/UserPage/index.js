@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import styles from './UserPage.less';
+import FooterInfo from '../components/FooterInfo'
 
 import { Layout, Row, Col, Icon, Avatar, Menu } from 'antd';
 const { Header, Footer, Content } = Layout;
@@ -42,7 +43,7 @@ function UserPage() {
 	    	<hr />
 		</Content>
 		<Footer className={styles.footer}>
-			活力火山©2017 Ver 1.0
+			<FooterInfo/>
 		</Footer>
 	</Layout>
   );

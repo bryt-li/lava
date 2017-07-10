@@ -1,24 +1,51 @@
 import React from 'react';
 import { Router, Route } from 'dva/router';
+import PropTypes from 'prop-types'
 
-import IndexPage from './routes/IndexPage';
-import SigninPage from './routes/SigninPage';
-import SignupPage from './routes/SignupPage';
-import UserPage from './routes/UserPage';
-import AddressPage from './routes/AddressPage';
+const LayoutShop = require('./routes/layoutShop/');
 
 
-function RouterConfig({ history }) {
-  	return (
-    <Router history={history}>
-    	<Route path="/" component={IndexPage} />
-    	<Route path="/signin" component={SigninPage} />
-    	<Route path="/signup" component={SignupPage} />
-
-	    <Route path="/user" component={UserPage} />
-	    <Route path="/user/address" component={AddressPage} />
-    </Router>
- 	);
+const registerModel = (app, model) => {
+  if (!(app._models.filter(m => m.namespace === model.namespace).length === 1)) {
+    app.model(model)
+  }
 }
 
-export default RouterConfig;
+const Routers = function ({ history, app }) {
+  const routes = [
+    {
+      path: '/',
+      component: LayoutShop,
+      getIndexRoute (nextState, cb) {
+         require.ensure(
+         	[], 
+         	require => {
+           		registerModel(app, require('./models/home'))
+           		cb(null, { component: require('./routes/layoutShop/HomePage') })
+         	},
+        	'HomePage'
+        )
+      },
+      childRoutes: [
+        {
+          path: '/item/:id',
+          getComponent (nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/item'))
+              cb(null, require('./routes/layoutShop/ItemPage/'))
+            }, 'ItemPage')
+          },
+        },
+      ],
+    },
+  ]
+
+  return <Router history={history} routes={routes} />
+}
+
+Routers.propTypes = {
+  history: PropTypes.object,
+  app: PropTypes.object,
+}
+
+export default Routers

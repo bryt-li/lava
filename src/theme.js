@@ -1,5 +1,6 @@
 module.exports = () => {
-  return {
-//    '@layout-header-background': '#FFF'
-  };
+	//use there to overwrite styles globally
+	return {
+	//    '@layout-header-background': '#FFF'
+	};
 };

@@ -1,30 +1,29 @@
 import React from 'react';
 import { connect } from 'dva';
-import styles from './SignupPage.less';
-import SignupForm from '../components/SignupForm';
+import styles from './index.less';
+import SigninForm from '../../components/SigninForm'
 import { Layout, Row, Col, Icon, Avatar } from 'antd';
 import { Link } from 'dva/router';
 
 const { Header, Footer, Content } = Layout;
 
-function SignupPage() {
-	return (
+function SigninPage() {
+
+  	return (
 	<Layout>
 		<Header className={styles.header}>
 	        <Link to="/"><Icon type='left' className={styles.backIcon}/></Link>
-		    <h2>填写注册信息</h2>
+			<img src={require('../assets/logo.png')} />
+		    <h2>会员登录</h2>
 		</Header>
 		<Content className={styles.content}>
-	    	<SignupForm />
+	    	<SigninForm />
 		</Content>
-		<Footer className={styles.footer}>
-			活力火山©2017
-		</Footer>
 	</Layout>
   );
 }
 
-SignupPage.propTypes = {
+SigninPage.propTypes = {
 };
 
-export default connect()(SignupPage);
+export default connect()(SigninPage);

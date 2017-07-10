@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './SigninForm.less';
+import styles from './index.less';
 import { Link } from 'dva/router';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const FormItem = Form.Item;
