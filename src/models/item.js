@@ -1,12 +1,12 @@
 import { routerRedux } from 'dva/router';
 import { parse } from 'qs';
 
+
 export default {
 
   namespace: 'item',
 
   state: {
-    ...g_MENU
   },
 
   subscriptions: {

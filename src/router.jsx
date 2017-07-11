@@ -18,7 +18,7 @@ const Routers = function ({ history, app }) {
       component: LayoutShop,
       getIndexRoute (nextState, cb) {
          require.ensure(
-         	[], 
+         	[],
          	require => {
            		registerModel(app, require('./models/home'))
            		cb(null, { component: require('./routes/layoutShop/HomePage') })
@@ -28,7 +28,7 @@ const Routers = function ({ history, app }) {
       },
       childRoutes: [
         {
-          path: '/item/:id',
+          path: '/item/:type/:id',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/item'))

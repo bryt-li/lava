@@ -4,11 +4,9 @@ import 'babel-polyfill'
 import dva from 'dva';
 import createLoading from 'dva-loading'
 import { browserHistory } from 'dva/router'
-import { message } from 'antd'
+import { Toast } from 'antd-mobile';
 
 import './index.css';
-
-const g_MENU = require('./menu');
 
 // 1. Initialize
 const app = dva({
@@ -17,7 +15,7 @@ const app = dva({
   }),
   history: browserHistory,
   onError (error) {
-    message.error(error.message)
+    Toast.fail(error.message, 1);
   },
 })
 
