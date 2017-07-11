@@ -11,7 +11,6 @@ function HomePage() {
   		<ul>
 	  		<li><Link to="/item/staples/swybsm">三文鱼菠色面</Link></li>
 	  		<li><Link to="/item/staples/sbhmkj">桑巴红米烤鸡</Link></li>
-	  		<li><Link to="/item/3">Tree</Link></li>
   		</ul>
 	</div>
   );
