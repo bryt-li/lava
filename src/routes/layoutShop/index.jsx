@@ -12,8 +12,8 @@ const LayoutShop = ({ children, location, dispatch, app, loading }) => {
 
   return (
     <div className={styles.normal}>
-      <Header location={location} dispatch={dispatch} />
-      <Footer location={location} childrens={children} />
+      <Header title={app.title} location={location} dispatch={dispatch} />
+      <Footer childrens={children} location={location} dispatch={dispatch} />
     </div>
   )
 }

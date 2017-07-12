@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
-import { Link } from 'dva/router';
+import { Link,routerRedux } from 'dva/router';
 import { Flex, Carousel, WhiteSpace, WingBlank,
-Button, Grid, Icon } from 'antd-mobile';
+Button, Grid, Icon, NavBar } from 'antd-mobile';
 import ReactLoading from 'react-loading';
 
 import styles from './index.less';
 
-const MENU = require('../../../menu');
+const MENU = require('../../menu');
 const STAPLES = MENU.staples;
 const SEASONINGS = MENU.seasonings;
 const YOGURTS = MENU.yogurts;
@@ -16,7 +16,6 @@ const JUICES = MENU.juices;
 
 const MAJOR_INGREDIENTS = MENU.ingredients.majors;
 const MINOR_INGREDIENTS = MENU.ingredients.minors;
-
 
 const MajorIngredients = ({majors}) => {
 	const data = Object.entries(majors).map((entry,key)=>{
@@ -91,22 +90,43 @@ const NutritionTable = ({nutrition}) => {
 }
 
 class ItemPage extends React.Component{
-	state = {
-    	loading: true
-  	}
+
+	constructor (props) {
+    	super(props)
+    	let type = props.params.type;
+		let id = props.params.id;
+		let item = MENU[type][id];
+	    this.state = {
+		    loading: true,
+		    type: type,
+		    id: id,
+		    item: item,
+			seasoning: SEASONINGS[item.season]
+	    }
+	}
+	
+	componentWillMount() {
+	}
 
   	handleImageLoaded = () => {
-    	this.setState({ loading: false });
+  		this.setState({...this.state, loading:false});
   	}
 
-	render(){
-		const { loading } = this.state;
-		let type = this.props.params.type;
-		let id = this.props.params.id;
-		let item = MENU[type][id];
-		let seasoning = SEASONINGS[item.season];
-	  	return (
-		<div onLoad={this.handleImageLoaded} className={styles.container}>
+  	render(){
+  		const {loading, item, seasoning,type,id} = this.state;
+  		return(
+		<div className={styles.container}>
+		    <NavBar
+		        leftContent="返回"
+		        mode="light"
+		        onLeftClick={() => this.props.dispatch(routerRedux.push('/'))}
+		        rightContent={[
+		          <Icon key="0" type="search" style={{marginRight: '0.32rem'}} />,
+		          <Icon key="1" type="ellipsis" />
+		        ]}>
+		      {item.name}
+		    </NavBar>
+
 			{loading && <ReactLoading className={styles.loading} type='spinningBubbles' color='$444'/> }
 			<Carousel
 		      className={styles.carousel}
@@ -116,7 +136,7 @@ class ItemPage extends React.Component{
 		      swipeSpeed={35}>
 				<img alt="icon" src={`/menu/${type}/${id}/1.jpg`} />
 				<img alt="icon" src={`/menu/${type}/${id}/2.jpg`} />
-				<img alt="icon" src={`/menu/${type}/${id}/3.jpg`} />
+				<img onLoad={this.handleImageLoaded} alt="icon" src={`/menu/${type}/${id}/3.jpg`} />
 		    </Carousel>
     		<WingBlank size="sm">
 			    <Flex className={styles.title}>
@@ -175,11 +195,13 @@ class ItemPage extends React.Component{
 
 		    <div style={{display:'block',height:'200px'}}/>
 		</div>
-	  	);
+  		);
   	}
 }
 
 ItemPage.propTypes = {
+	loading: PropTypes.bool,
+	dispatch: PropTypes.func,
 	params: PropTypes.object
 };
 

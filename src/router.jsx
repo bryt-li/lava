@@ -28,15 +28,24 @@ const Routers = function ({ history, app }) {
       },
       childRoutes: [
         {
-          path: '/item/:type/:id',
+          path: '/circle',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               registerModel(app, require('./models/item'))
-              cb(null, require('./routes/layoutShop/ItemPage/'))
-            }, 'ItemPage')
+              cb(null, require('./routes/layoutShop/CirclePage/'))
+            }, 'CirclePage')
           },
         },
       ],
+    },
+    {
+      path: '/i/:type/:id',
+      getComponent (nextState, cb) {
+        require.ensure([], require => {
+          registerModel(app, require('./models/item'))
+          cb(null, require('./routes/ItemPage/'))
+        }, 'ItemPage')
+      },
     },
   ]
 

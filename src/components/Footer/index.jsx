@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  TabBar
+  TabBar,Icon
 } from 'antd-mobile';
 import {
   connect
@@ -24,43 +24,43 @@ function Footer({
         hidden={false}
       >
         <TabBar.Item
-          title="生活"
-          key="生活"
-          icon={{uri: 'https://zos.alipayobjects.com/rmsportal/cKhfyLTszUeFARPgfokz.png'}}
-          selectedIcon={{uri: 'https://zos.alipayobjects.com/rmsportal/bqUXyjiOyKrXRfiIZVsZ.png'}}
-          selected={location.pathname === '/' || location.pathname.startsWith('/item/')}
+          title="首页"
+          key="首页"
+          icon={(<Icon type="#icon-jingpaicaigoushang"/>)}
+          selectedIcon={(<Icon type="#icon-jingpaicaigoushang" />)}
+          selected={location.pathname === '/'}
           badge={1}
           onPress={() => dispatch(routerRedux.push('/'))}
         >
           {childrens}
         </TabBar.Item>
         <TabBar.Item
-          title="口碑"
-          key="口碑"
-          icon={{uri: 'https://zos.alipayobjects.com/rmsportal/UNQhIatjpNZHjVf.png'}}
-          selectedIcon={{uri: 'https://zos.alipayobjects.com/rmsportal/HLkBvJOKnmOfBPO.png'}}
-          selected={location.pathname === '/page01'}
+          title="活力圈子"
+          key="活力圈子"
+          icon={(<Icon type="#icon-iconfontyundonghuwai" />)}
+          selectedIcon={(<Icon type="#icon-iconfontyundonghuwai" />)}
+          selected={location.pathname === '/circle'}
           onPress={() => dispatch(routerRedux.push('/page01'))}
         >
           {childrens}
         </TabBar.Item>
         <TabBar.Item
-          title="朋友"
-          key="朋友"
-          icon={{uri: 'https://zos.alipayobjects.com/rmsportal/WdEuTLJOVzeABZlKYLmJ.png'}}
-          selectedIcon={{uri: 'https://zos.alipayobjects.com/rmsportal/sRkvMgIGXERtyRVyAsXP.png'}}
-          selected={location.pathname === '/page02'}
-          onPress={() => dispatch(routerRedux.push('/page02'))}
+          title="火山爆发"
+          key="火山爆发"
+          icon={(<Icon type="#icon-vip" />)}
+          selectedIcon={(<Icon type="#icon-vip" />)}
+          selected={location.pathname === '/burst'}
+          onPress={() => dispatch(routerRedux.push('/burst'))}
         >
           {childrens}
         </TabBar.Item>
         <TabBar.Item
-          title="我的"
-          key="我的"
-          icon={{uri: 'https://zos.alipayobjects.com/rmsportal/cKhfyLTszUeFARPgfokz.png'}}
-          selectedIcon={{uri: 'https://zos.alipayobjects.com/rmsportal/bqUXyjiOyKrXRfiIZVsZ.png'}}
-          selected={location.pathname === '/page03'}
-          onPress={() => dispatch(routerRedux.push('/page03'))}
+          title="品牌"
+          key="品牌"
+          icon={(<Icon type="#icon-wxbpinpaibao" />)}
+          selectedIcon={(<Icon type="#icon-wxbpinpaibao" />)}
+          selected={location.pathname === '/brand'}
+          onPress={() => dispatch(routerRedux.push('/brand'))}
         >
           {childrens}
         </TabBar.Item>

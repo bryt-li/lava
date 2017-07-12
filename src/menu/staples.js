@@ -6,6 +6,7 @@ module.exports = {
 		"bread": false,
 		"season": "和风汁",
 		"delivery_time": "07-05 周一12:30之前",
+		"slogon": "正宗日本风味",
 		"intro": ()=>{
 			return (
 				<p>想给你和风感觉的<strong>清爽鲜美</strong><br/>在你品味的时候，多一些小清新异国味道</p>
@@ -38,6 +39,7 @@ module.exports = {
 		"bread": false,
 		"season": "桑巴粉",
 		"delivery_time": "07-05 周一12:30之前",
+		"slogon": "狂野巴西风",
 		"intro": ()=>{
 			return (
 				<p>啊！不要酱嘛！活力大厨如是说……<br/>喜欢<strong>东南亚风格</strong>吗？真的很鲜香哦！</p>
