@@ -27,7 +27,7 @@ const MajorIngredients = ({majors}) => {
 			name:name,
 			percent:percent,
 			intro:major.intro,
-			image:`/menu/ingredients/majors/${major.english.replace(/ /g,'_')}.png`
+			image:`/menu/ingredients/majors/${major.english.replace(/ /g,'_')}.jpg`
 		};
 	});
 
@@ -141,7 +141,7 @@ class ItemPage extends React.Component{
     		<WingBlank size="sm">
 			    <Flex className={styles.title}>
 			    	<Flex.Item className={styles.name}>{item.name}</Flex.Item>
-			    	<Flex.Item className={styles.price}><span className={styles.original_price}><span className={styles.cny}>￥</span>{item.original_price}</span><span className={styles.cny}>￥</span>{item.price}</Flex.Item>
+			    	<Flex.Item className={styles.price}><span className={styles.original_price}><span className={styles.cny}>&nbsp;&nbsp;￥</span>{item.original_price}&nbsp;&nbsp;</span><span className={styles.cny}>￥</span>{item.price}</Flex.Item>
 			    </Flex>
 			    <hr />
 			    <div className={styles.order}>

@@ -1,5 +1,6 @@
 module.exports={
-	"staples":require('./staples'),
+	"salads":require('./salads'),
+	"rices":require('./rices'),
 	"yogurts":require('./yogurts'),
 	"juices":require('./juices'),
 
