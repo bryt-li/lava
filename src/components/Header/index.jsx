@@ -11,7 +11,8 @@ const config =  require('../../config');
 function Header({ user_icon, dispatch, location }) {
 
   const login = () => {
-    let url = config.api.wechatLogin.replace('CALLER_URL',location.pathname);
+    //重定向后会带上state参数，开发者可以填写a-zA-Z0-9的参数值，最多128字节，我们用777表示路径中的/
+    let url = config.api.wechatLogin.replace('CALLER_URL',location.pathname.replace(/\//g,'777'));
     window.location = url;
   }
 
