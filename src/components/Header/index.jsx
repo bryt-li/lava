@@ -21,7 +21,7 @@ function Header({ user_icon, dispatch, location }) {
       <NavBar
         iconName='null'
         leftContent={
-          user_icon? <img src={user_icon} /> : <Icon type="#icon-account" size='md' />
+          user_icon? <img className={styles.user_icon} src={user_icon} /> : <Icon type="#icon-account" size='md' />
         }
         mode="light"
         onLeftClick={login}>
