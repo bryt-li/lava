@@ -3,6 +3,7 @@ import { routerRedux } from 'dva/router';
 import { parse } from 'qs'
 import { queryUser } from '../services/user';
 
+const config =  require('../config');
 
 export default {
 
@@ -13,7 +14,10 @@ export default {
 
   subscriptions: {
     setup({ dispatch, history }) {  
-      dispatch({ type: 'queryUser' });
+      return history.listen(({ pathname }) => {
+        if(pathname!=config.loginPage)
+          dispatch({ type: 'queryUser' });
+      });
     },
   },
 

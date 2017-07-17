@@ -28,8 +28,8 @@ class HomePage extends React.Component {
 	
 	render(){
 		const {dispatch, location, home, app, user} = this.props;
-
-		if(user.openid==null){
+		
+		if(user.id==null){
 			return (
 				<Helmet>
             		<meta charSet="utf-8" />
