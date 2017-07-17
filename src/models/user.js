@@ -14,10 +14,7 @@ export default {
 
   subscriptions: {
     setup({ dispatch, history }) {  
-      return history.listen(({ pathname }) => {
-        if(pathname!=config.loginPage)
-          dispatch({ type: 'queryUser' });
-      });
+      dispatch({ type: 'queryUser' });
     },
   },
 

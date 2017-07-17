@@ -52,13 +52,28 @@ function UserPage() {
 }
 */
 
-function UserPage() {
-	return (
-		<div>用户页面</div>
-	);
+function UserPage({user}) {
+	if(user.id==null){
+		return (
+			<Helmet>
+				<meta charSet="utf-8" />
+				<title>微信登录</title>
+				<meta http-equiv="refresh" content={`0; url=${config.loginPage}#${location.pathname}`} />
+			</Helmet>
+		);
+	}else{
+		return (
+			<div>用户页面</div>
+		);
+	}
 }
 
 UserPage.propTypes = {
+	user: PropTypes.object,
 };
 
-export default connect()(UserPage);
+const mapStateToProps = (state) => ({
+    user:state.user,
+});
+
+export default connect(mapStateToProps)(UserPage);

@@ -6,7 +6,6 @@ import { Link } from 'dva/router';
 
 import styles from './index.less';
 
-
 function Header({ user_icon, dispatch, location }) {
 
   return (

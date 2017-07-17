@@ -6,7 +6,6 @@ import { Carousel, WingBlank, Flex, Button, Icon } from 'antd-mobile';
 import {Helmet} from "react-helmet";
 import ReactLoading from 'react-loading';
 
-const config =  require('../../config');
 
 const Header = require('../../components/Header/');
 const ShopItem = require('../../components/ShopItem/');
@@ -28,17 +27,6 @@ class HomePage extends React.Component {
 	
 	render(){
 		const {dispatch, location, home, app, user} = this.props;
-		
-		if(user.id==null){
-			return (
-				<Helmet>
-            		<meta charSet="utf-8" />
-            		<title>微信登录</title>
-            		<meta http-equiv="refresh" content={`0; url=${config.loginPage}#${location.pathname}`} />
-        		</Helmet>
-			);
-		}
-
 		const {salads, yogurts, rices, juices} = home;
 		const {menu} = app;
 

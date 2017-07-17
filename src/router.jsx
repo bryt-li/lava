@@ -50,6 +50,15 @@ const Routers = function ({ history, app }) {
       },
     },
     {
+      path: '/wechat/login/succeed',
+      getComponent (nextState, cb) {
+        require.ensure([], require => {
+          registerModel(app, require('./models/user'));
+          cb(null, require('./routes/WechatLoginSucceedPage/'));
+        }, 'WechatLoginSucceedPage')
+      },
+    },
+    {
       path: '/',
       getComponent (nextState, cb) {
         require.ensure([], require => {

@@ -22,6 +22,11 @@ const WechatLoginPage = ({location}) => {
 
 WechatLoginPage.propTypes = {
 	dispatch: PropTypes.func,
+	user: PropTypes.object,
 };
 
-export default connect()(WechatLoginPage);
+const mapStateToProps = (state) => ({
+    user:state.user,
+});
+
+export default connect(mapStateToProps)(WechatLoginPage);
