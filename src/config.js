@@ -1,5 +1,5 @@
-//const BACKEND = 'https://m.huolihuoshan.com/hlhs-backend'
-const BACKEND = 'http://192.168.1.232:9090/hlhs-backend'
+const BACKEND = 'https://m.huolihuoshan.com/hlhs-backend'
+//const BACKEND = 'http://192.168.1.232:9090/hlhs-backend'
 
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
