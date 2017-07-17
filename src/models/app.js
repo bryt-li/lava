@@ -15,7 +15,7 @@ export default {
     /* check user login*/
     accessControl({ dispatch, history }) {
       return history.listen(({ pathname }) => {
-        dispatch({ type: 'checkLogin', payload: {pathname}});
+        //dispatch({ type: 'checkLogin', payload: {pathname}});
       });
     },
 

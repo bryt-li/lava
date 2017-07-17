@@ -1,14 +1,16 @@
 import React from 'react';
 import { connect } from 'dva';
-import styles from './UserPage.less';
+import styles from './index.less';
+import { Link } from 'dva/router';
+
+
+/*
+
 import FooterInfo from '../components/FooterInfo'
 
 import { Layout, Row, Col, Icon, Avatar, Menu } from 'antd';
 const { Header, Footer, Content } = Layout;
 const SubMenu = Menu.SubMenu;
-
-
-import { Link } from 'dva/router';
 
 function UserPage() {
 	return (
@@ -47,6 +49,13 @@ function UserPage() {
 		</Footer>
 	</Layout>
   );
+}
+*/
+
+function UserPage() {
+	return (
+		<div>用户页面</div>
+	);
 }
 
 UserPage.propTypes = {

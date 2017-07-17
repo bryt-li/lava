@@ -42,6 +42,14 @@ const Routers = function ({ history, app }) {
     },
     */
     {
+      path: '/wechat/login',
+      getComponent (nextState, cb) {
+        require.ensure([], require => {
+          cb(null, require('./routes/WechatLoginPage/'));
+        }, 'WechatLoginPage')
+      },
+    },
+    {
       path: '/',
       getComponent (nextState, cb) {
         require.ensure([], require => {
@@ -71,13 +79,14 @@ const Routers = function ({ history, app }) {
       },
     },
     {
-      path: '/wechat/login',
+      path: '/user',
       getComponent (nextState, cb) {
         require.ensure([], require => {
-          cb(null, require('./routes/WechatLoginPage/'))
-        }, 'WechatLoginPage')
+          cb(null, require('./routes/UserPage/'));
+        }, 'UserPage')
       },
     },
+
   ]
 
   return <Router history={history} routes={routes} />

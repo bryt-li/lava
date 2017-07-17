@@ -4,12 +4,18 @@ import { connect } from 'dva';
 import { Link } from 'dva/router';
 import {Helmet} from "react-helmet";
 
-const WechatLoginPage = () => {
+const config =  require('../../config');
+
+const WechatLoginPage = ({location}) => {
+	let redirect = location.hash;
+	redirect = redirect.replace('#','').replace(/\//g,'777');
+    let url = config.api.wechatLogin.replace('CALLER_URL',redirect);
+
 	return (
 		<Helmet>
             <meta charSet="utf-8" />
-            <title>正在进行微信登录</title>
-            <meta http-equiv="refresh" content="0; url=https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe6113ca48260dbd9&redirect_uri=https%3A%2F%2Fm.huolihuoshan.com%2Fhlhs-backend%2Fwechat%2Flogin&response_type=code&scope=snsapi_userinfo&state=null#wechat_redirect" />
+            <title>微信登录</title>
+            <meta http-equiv="refresh" content={`0; url=${url}`} />
         </Helmet>
 	);
 }
