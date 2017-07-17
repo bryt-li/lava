@@ -1,8 +1,12 @@
 import React from 'react';
 import { connect } from 'dva';
+import PropTypes from 'prop-types';
 import styles from './index.less';
 import { Link } from 'dva/router';
+import {Helmet} from "react-helmet";
 
+
+const config = require('../../config')
 
 /*
 
@@ -63,13 +67,12 @@ function UserPage({user}) {
 		);
 	}else{
 		return (
-			<div>用户页面</div>
+			<h1>用户页面</h1>
 		);
 	}
 }
 
 UserPage.propTypes = {
-	user: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({

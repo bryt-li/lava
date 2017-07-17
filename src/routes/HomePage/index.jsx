@@ -6,6 +6,7 @@ import { Carousel, WingBlank, Flex, Button, Icon } from 'antd-mobile';
 import {Helmet} from "react-helmet";
 import ReactLoading from 'react-loading';
 
+const config =  require('../../config');
 
 const Header = require('../../components/Header/');
 const ShopItem = require('../../components/ShopItem/');
