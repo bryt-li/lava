@@ -13,6 +13,7 @@ const registerModel = (app, model) => {
 
 const Routers = function ({ history, app }) {
   const routes = [
+    /*
     {
       path: '/',
       component: LayoutShop,
@@ -21,6 +22,7 @@ const Routers = function ({ history, app }) {
          	[],
          	require => {
            		registerModel(app, require('./models/home'))
+              registerModel(app, require('./models/cart'))
            		cb(null, { component: require('./routes/layoutShop/HomePage') })
          	},
         	'HomePage'
@@ -38,13 +40,42 @@ const Routers = function ({ history, app }) {
         },
       ],
     },
+    */
+    {
+      path: '/',
+      getComponent (nextState, cb) {
+        require.ensure([], require => {
+          registerModel(app, require('./models/home'));
+          registerModel(app, require('./models/user'));
+          registerModel(app, require('./models/cart'));
+          cb(null, require('./routes/HomePage/'));
+        }, 'HomePage')
+      },
+    },
     {
       path: '/i/:type/:id',
       getComponent (nextState, cb) {
         require.ensure([], require => {
-          registerModel(app, require('./models/item'))
+          registerModel(app, require('./models/item'));
+          registerModel(app, require('./models/cart'));
           cb(null, require('./routes/ItemPage/'))
         }, 'ItemPage')
+      },
+    },
+    {
+      path: '/order/confirm',
+      getComponent (nextState, cb) {
+        require.ensure([], require => {
+          cb(null, require('./routes/ConfirmOrderPage/'))
+        }, 'ConfirmOrderPage')
+      },
+    },
+    {
+      path: '/wechat/login',
+      getComponent (nextState, cb) {
+        require.ensure([], require => {
+          cb(null, require('./routes/WechatLoginPage/'))
+        }, 'WechatLoginPage')
       },
     },
   ]

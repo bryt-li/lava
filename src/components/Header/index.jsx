@@ -6,13 +6,24 @@ import { Link } from 'dva/router';
 
 import styles from './index.less';
 
-function Header({ title, dispatch, location }) {
+const config =  require('../../config');
+
+function Header({ user_icon, dispatch, location }) {
+
+  const login = () => {
+    let url = config.api.wechatLogin.replace('CALLER_URL',location.pathname);
+    window.location = url;
+  }
+
   return (
     <div className={styles.container}>
       <NavBar
-        iconName='#icon-account'
+        iconName='null'
+        leftContent={
+          user_icon? <img src={user_icon} /> : <Icon type="#icon-account" size='md' />
+        }
         mode="light"
-        onLeftClick={() => dispatch(routerRedux.push('/user'))}>
+        onLeftClick={login}>
         <Link to="/user/address">
             <Icon type="#icon-map" size='xxs' />
             <span className={styles.address_title}>暂未获取到地址</span>
@@ -24,6 +35,7 @@ function Header({ title, dispatch, location }) {
 
 
 Header.propTypes = {
+  user_icon: PropTypes.string,
   dispatch: PropTypes.func,
   location: PropTypes.object.isRequired
 };

@@ -6,11 +6,10 @@ export default {
 
   namespace: 'item',
 
-  state: {
-  },
+  state: null,
 
   subscriptions: {
-    setup({ dispatch, history }) {  // eslint-disable-line
+    setup({ dispatch, history }) {
     },
   },
 

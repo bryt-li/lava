@@ -1,0 +1,82 @@
+
+.item_blank{
+
+}
+
+.item_selected{
+	border: 2px solid red;
+}
+
+.item{
+	text-align: left;
+	margin: 30px auto;
+	padding: 10px 12px;
+
+	img{
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	h2{
+		line-height: 40px;
+		margin:0;
+		padding: 0;
+		font-size: 30px;
+	}
+	h3{
+		line-height: 40px;
+		color: #666;
+		margin:0;
+		padding: 0;
+		font-size: 25px;
+		font-weight: normal;
+	}
+	.price{
+		float: left;
+		font-weight: normal;
+		margin:0;
+		padding: 0;
+		font-size: 40px;
+		color:red;
+		span{
+			margin-left: 10px;
+			text-decoration: line-through;
+			font-size: 28px;
+			color: #aaa;
+		}
+	}
+	.buy{
+		float: right;
+		position: relative;
+		display: block;
+		width:120px;
+
+		svg{
+			color:white;
+			font-weight: bolder;
+			background-color: #f26c4f;
+			width:40px;
+			height: 40px;
+			border-radius: 20px;
+		}
+	    .minus{
+	    	position: absolute;
+	    	top:0;
+	    	left:0;
+		    width:40px;
+		}
+		.plus{
+			position: absolute;
+			top: 0;
+			right: 0;
+		    width: 40px;
+		}
+		.quantity{
+			margin:0 40px;
+			font-size: 40px;
+			color: #aaa;
+			text-align: center;
+			line-height: 40px;
+		}
+	}
+}

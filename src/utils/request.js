@@ -1,9 +1,5 @@
 import fetch from 'dva/fetch';
 
-function parseJSON(response) {
-  return response.json();
-}
-
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
@@ -14,6 +10,10 @@ function checkStatus(response) {
   throw error;
 }
 
+function parseJSON(response) {
+  return response.json();
+}
+
 /**
  * Requests a URL, returning a promise.
  *
@@ -22,9 +22,10 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(url, options) {
-  return fetch(url, options)
+  /*Must have credentials include to enable cookies*/
+  return fetch(url, {...options, credentials: 'include'})
     .then(checkStatus)
     .then(parseJSON)
-    .then(data => ({ data }))
-    .catch(err => ({ err }));
+    .then((response) => ({ response }))
+    .catch((err) => ({ err }));
 }

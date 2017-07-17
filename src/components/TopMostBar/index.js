@@ -7,7 +7,7 @@ const TopMostBar = () => {
   return (
     <Row className={styles.container}>
       <Col span={4}>
-        <Link to="/user">
+        <Link to="/wechat/login">
           <Avatar size="small" icon="user" className={styles.avatar}/>
         </Link>
       </Col>

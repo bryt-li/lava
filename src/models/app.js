@@ -1,12 +1,14 @@
 
 import { routerRedux } from 'dva/router';
 
+const MENU = require('../config/menu/');
+
 export default {
 
   namespace: 'app',
 
   state: {
-    user: null
+    menu: MENU
   },
 
   subscriptions: {

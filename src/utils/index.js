@@ -10,6 +10,10 @@ String.prototype.hyphenToHump = function () {
   })
 }
 
+String.prototype.toEnglish = function () {
+  return this.replace(/_/g,' ').replace(/\b\w/g, l => l.toUpperCase());
+}
+
 // 驼峰转连字符
 String.prototype.humpToHyphen = function () {
   return this.replace(/([A-Z])/g, '-$1').toLowerCase()
@@ -97,6 +101,24 @@ const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
   return result
 }
 
+const findObj = (obj, key) => {
+  for(var p in obj){
+    if(p == key)
+      return {
+        key:p,
+        obj:obj[p]
+      };
+  }
+  for(var p in obj){
+    if(obj[p]['name'] == key)
+      return {
+        key:p,
+        obj:obj[p]
+      };
+  }
+  return null;
+}
+
 module.exports = {
   request,
   color,
@@ -104,4 +126,5 @@ module.exports = {
   queryURL,
   queryArray,
   arrayToTree,
+  findObj
 }

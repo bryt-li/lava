@@ -1,0 +1,24 @@
+module.exports={
+	japanese_dressing:{
+		name:"和风汁",
+		intro:"鲜美微甜",
+		ingredients: "鳗鱼汁,蜂蜜,绿芥末",
+		nutrition:{
+			C:319,
+			Cx:58,
+			Fat:14,
+			Pro:42
+		}
+	},
+	samba_crush:{
+		name:"桑巴粉",
+		intro:"咸香鲜味",
+		ingredients:"鳗鱼汁,蜂蜜,绿芥末",
+		nutrition:{
+			C:319,
+			Cx:58,
+			Fat:14,
+			Pro:42
+		}
+	}
+}
