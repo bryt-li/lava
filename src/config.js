@@ -17,6 +17,7 @@ module.exports = {
   logoBig: '/logoBig.png',
   iconFontCSS: '/iconfont.css',
   iconFontJS: '/iconfont.js',
+  loginPage: '/wechat/login',
   openPages: ['/','/signin','/signup','/item'],
   api: {
     wechatLogin: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${APP_ID}&redirect_uri=${LOGIN_URL}&response_type=code&scope=${LOGIN_SCOPE}&state=CALLER_URL#wechat_redirect`,
