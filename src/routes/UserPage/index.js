@@ -63,8 +63,8 @@ function UserPage({dispatch, location, user}) {
 	const {query} = location;
 	//check qs
 	if(user.id == null && query.id!=null){
-		user = query;
-		dispatch({ type: 'user/queryUserSuccess', payload: user })
+		dispatch({ type: 'user/signIn', payload: query })
+		return(<div/>)
 	}
 
 	if(user.id!=null){
@@ -72,7 +72,8 @@ function UserPage({dispatch, location, user}) {
 		return (
 			<div>
 				<h1>用户页面</h1>
-				<a href={config.api.logout}>注销</a>
+				<a href={config.api.logout}><h1>注销</h1></a>
+				<Link to="/"><h1>Home</h1></Link>
 			</div>
 		);
 	}else{

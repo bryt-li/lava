@@ -19,6 +19,11 @@ export default {
   },
 
   effects: {
+    *signIn({
+      payload,
+    }, { call, put }) {
+      yield put({ type: 'signedIn'})
+    },
     *signOut({
       payload,
     }, { call, put }) {
@@ -51,6 +56,9 @@ export default {
 
   reducers: {
     queryMeSuccess(state, action) {
+      return action.payload;
+    },
+    signedIn(state, action) {
       return action.payload;
     },
     signedOut(state, action){
