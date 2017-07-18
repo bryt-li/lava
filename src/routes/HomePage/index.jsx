@@ -27,7 +27,11 @@ class HomePage extends React.Component {
   	}
 	
 	render(){
-		const {dispatch, location, home, app, user} = this.props;
+		let {dispatch, location, home, app, user} = this.props;
+		if(user.id!=null && location.query.logout){
+			user = {}
+			dispatch({type:'user/signOut'})
+		}
 		const {salads, yogurts, rices, juices} = home;
 		const {menu} = app;
 

@@ -5,7 +5,6 @@ import styles from './index.less';
 import { Link } from 'dva/router';
 import {Helmet} from "react-helmet";
 
-
 const config = require('../../config')
 
 /*
@@ -56,18 +55,34 @@ function UserPage() {
 }
 */
 
-function UserPage({user}) {
-	if(user.id==null){
+function UserPage({dispatch, location, user}) {
+	//get referer
+	const referer = location.hash.replace('#','');
+	const caller = location.pathname+location.hash;
+	
+	const {query} = location;
+	//check qs
+	if(user.id == null && query.id!=null){
+		user = query;
+		dispatch({ type: 'user/queryUserSuccess', payload: user })
+	}
+
+	if(user.id!=null){
+		//return closed page
+		return (
+			<div>
+				<h1>用户页面</h1>
+				<a href={config.api.logout}>注销</a>
+			</div>
+		);
+	}else{
+		//redirect to login
 		return (
 			<Helmet>
 				<meta charSet="utf-8" />
-				<title>微信登录</title>
-				<meta http-equiv="refresh" content={`0; url=${config.loginPage}#${location.pathname}`} />
+				<title>用户登录</title>
+				<meta http-equiv="refresh" content={`0; url=${config.api.login}?caller=${encodeURIComponent(caller)}&referer=${encodeURIComponent(referer)}`} />
 			</Helmet>
-		);
-	}else{
-		return (
-			<h1>用户页面</h1>
 		);
 	}
 }

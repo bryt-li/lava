@@ -8,6 +8,10 @@ import styles from './index.less';
 
 function Header({ user_icon, dispatch, location }) {
 
+  const handleUserClicked = ()=>{
+    dispatch(routerRedux.push(`/user#${location.pathname}`))
+  }
+  
   return (
     <div className={styles.container}>
       <NavBar
@@ -16,7 +20,7 @@ function Header({ user_icon, dispatch, location }) {
           user_icon? <img className={styles.user_icon} src={user_icon} /> : <Icon type="#icon-account" size='md' />
         }
         mode="light"
-        onLeftClick={()=>{dispatch(routerRedux.push('/user'))}}>
+        onLeftClick={handleUserClicked}>
         <Link to="/user/address">
             <Icon type="#icon-map" size='xxs' />
             <span className={styles.address_title}>暂未获取到地址</span>

@@ -3,9 +3,9 @@ import { request } from '../utils'
 const config = require('../config');
 const { api } = config
 
-export async function queryUser() {
+export async function queryMe() {
 	return request(
-		api.user,
+		api.queryMe,
 		{
 			method: 'get',
 		}

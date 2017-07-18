@@ -4,11 +4,6 @@ const BACKEND = 'https://m.huolihuoshan.com/hlhs-backend'
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
 
-
-const APP_ID = 'wxe6113ca48260dbd9'
-const LOGIN_URL = encodeURI('https://m.huolihuoshan.com/hlhs-backend/wechat/login')
-const LOGIN_SCOPE = 'snsapi_userinfo'
-
 module.exports = {
   name: '活力火山健康商城',
   prefix: '',
@@ -17,11 +12,12 @@ module.exports = {
   logoBig: '/logoBig.png',
   iconFontCSS: '/iconfont.css',
   iconFontJS: '/iconfont.js',
-  loginPage: '/wechat/login',
   openPages: ['/','/signin','/signup','/item'],
+
   api: {
-    wechatLogin: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${APP_ID}&redirect_uri=${LOGIN_URL}&response_type=code&scope=${LOGIN_SCOPE}&state=CALLER_URL#wechat_redirect`,
-    user: `${BACKEND}/wechat/user`,
+    queryMe: `${BACKEND}/user/queryMe`,
+    login: `${BACKEND}/user/login`,
+    logout: `${BACKEND}/user/logout`,
 
     userLogin: `${APIV1}/user/login`,
     userLogout: `${APIV1}/user/logout`,

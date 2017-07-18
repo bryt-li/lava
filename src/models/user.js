@@ -1,7 +1,7 @@
 
 import { routerRedux } from 'dva/router';
 import { parse } from 'qs'
-import { queryUser } from '../services/user';
+import { queryMe } from '../services/user';
 
 const config =  require('../config');
 
@@ -14,27 +14,48 @@ export default {
 
   subscriptions: {
     setup({ dispatch, history }) {  
-      dispatch({ type: 'queryUser' });
+      //dispatch({ type: 'queryMe' });
     },
   },
 
   effects: {
-    *queryUser ({
+    *signOut({
       payload,
     }, { call, put }) {
-      const { response, err } = yield call(queryUser)
-      if(err || !response)
-          console.log(err);
-      else if(response.ok && response.payload){
-        yield put({ type: 'queryUserSuccess', payload: JSON.parse(response.payload) })
+      yield put({ type: 'signedOut'})
+    },
+    *queryMe ({
+      payload,
+    }, { call, put }) {
+      const { response, err } = yield call(queryMe)
+      if(err || !response){
+        console.log(err)
+        return
+      }
+      
+      let response_payload = JSON.parse(response.payload)
+      if(response.ok==null || !response_payload){
+        console.log(`response format error: ${response}`)
+        return
+      }
+
+      if(response.ok){
+        yield put({ type: 'queryMeSuccess', payload: response_payload })
+        console.log(`query succeeded with payload: ${response_payload}`)
+      }
+      else{
+        console.log(`query succeeded with error message: ${response_payload.errmsg}`)
       }
     },
   },
 
   reducers: {
-    queryUserSuccess(state, action) {
-      return { ...state, ...action.payload };
+    queryMeSuccess(state, action) {
+      return action.payload;
     },
+    signedOut(state, action){
+      return {}
+    }
   },
 
 };
