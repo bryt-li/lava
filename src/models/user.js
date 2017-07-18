@@ -22,7 +22,7 @@ export default {
     *signIn({
       payload,
     }, { call, put }) {
-      yield put({ type: 'signedIn'})
+      yield put({ type: 'signedIn', payload: payload})
     },
     *signOut({
       payload,
