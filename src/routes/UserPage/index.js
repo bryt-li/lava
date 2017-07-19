@@ -59,20 +59,13 @@ function UserPage({dispatch, location, user}) {
 	//get referer
 	const referer = location.hash.replace('#','');
 	const caller = location.pathname+location.hash;
-	
-	const {query} = location;
-	//check qs
-	if(user.id == null && query.id!=null){
-		dispatch({ type: 'user/signIn', payload: query })
-		return(<div/>)
-	}
 
 	if(user.id!=null){
 		//return closed page
 		return (
 			<div>
 				<h1>用户页面</h1>
-				<a href={config.api.logout}><h1>注销</h1></a>
+				<a href={`${config.api.logout}?redirect=${encodeURIComponent('/')}`}><h1>注销</h1></a>
 				<Link to="/"><h1>Home</h1></Link>
 			</div>
 		);
@@ -82,7 +75,8 @@ function UserPage({dispatch, location, user}) {
 			<Helmet>
 				<meta charSet="utf-8" />
 				<title>用户登录</title>
-				<meta http-equiv="refresh" content={`0; url=${config.api.login}?caller=${encodeURIComponent(caller)}&referer=${encodeURIComponent(referer)}`} />
+				<meta http-equiv="refresh" 
+				content={`0; url=${config.api.login}?host=${window.location.origin}&caller=${encodeURIComponent(caller)}&referer=${encodeURIComponent(referer)}`} />
 			</Helmet>
 		);
 	}

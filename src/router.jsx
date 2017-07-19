@@ -66,6 +66,7 @@ const Routers = function ({ history, app }) {
       path: '/order/confirm',
       getComponent (nextState, cb) {
         require.ensure([], require => {
+          registerModel(app, require('./models/cart'));
           cb(null, require('./routes/ConfirmOrderPage/'))
         }, 'ConfirmOrderPage')
       },
@@ -79,6 +80,15 @@ const Routers = function ({ history, app }) {
         }, 'UserPage')
       },
     },
+    {
+      path: '/model/user',
+      getComponent (nextState, cb) {
+        require.ensure([], require => {
+          registerModel(app, require('./models/user'));
+          cb(null, require('./routes/ModelUserRedirectPage/'));
+        }, 'ModelUserRedirectPage')
+      },
+    }
 
   ]
 

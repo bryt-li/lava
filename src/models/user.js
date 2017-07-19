@@ -13,22 +13,34 @@ export default {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {  
-      //dispatch({ type: 'queryMe' });
+    /* backend will redirect other pages to here '/model/user'
+     to sign in/out 
+    get_backend_user({ dispatch, history }) {
+      return history.listen(({ pathname }) => {
+        console.log(pathname)
+        if(pathname.indexOf('/model/user?')==0){
+          let ret = parse(pathname.substring(pathname.indexOf('?')+1))
+          const {clear} = ret
+          if(clear){
+            dispatch({ type: 'signedOut'});
+            dispatch(routerRedux.replace(ret.redirect))
+          }else{
+            let user = {...ret}
+            delete user.redirect
+            dispatch({ type: 'signedIn', payload:user});
+            dispatch(routerRedux.replace(ret.redirect))
+          }
+        }
+      });
+    },
+    */
+
+    setup({ dispatch, history }) {
+      dispatch({ type: 'queryMe' });
     },
   },
 
   effects: {
-    *signIn({
-      payload,
-    }, { call, put }) {
-      yield put({ type: 'signedIn', payload: payload})
-    },
-    *signOut({
-      payload,
-    }, { call, put }) {
-      yield put({ type: 'signedOut'})
-    },
     *queryMe ({
       payload,
     }, { call, put }) {

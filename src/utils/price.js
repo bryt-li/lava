@@ -1,6 +1,6 @@
 const MENU = require('../config/menu/');
 
-const calculatePrice = (items) => {
+const calculateOrderPrice = (items) => {
 	let total = 0;
 	let saving = 0;
 	let order = [];
@@ -12,7 +12,11 @@ const calculatePrice = (items) => {
 				var price = item.price;
 
 				for(var i=0;i<quantity;i++)	
-					order.push({item:item,price:item.price*1.0});
+					order.push({
+						item:item,
+						price:item.price,
+						discount:false
+					});
 			}
 		}
 	}
@@ -24,16 +28,17 @@ const calculatePrice = (items) => {
 	//how many discount，the second item have 70% discount
 	let num = parseInt(order.length / 2) - 1;
 	for(var i=0;i<=num;i++){
+		order[i].discount = true
 		order[i].price = order[i]['item'].price*0.7;
 		saving += order[i]['item'].price - order[i].price;
 	}
 	for(var i=0;i<order.length;i++){
 		total += order[i].price;
 	}
-	return {total:total, saving: saving};
+	return {total:total, saving: saving, order: order};
 }
 
 
 module.exports = {
-  calculatePrice
+  calculateOrderPrice
 }

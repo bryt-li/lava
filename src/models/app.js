@@ -12,6 +12,7 @@ export default {
   },
 
   subscriptions: {
+
     /* check user login*/
     accessControl({ dispatch, history }) {
       return history.listen(({ pathname }) => {
@@ -24,6 +25,7 @@ export default {
   },
 
   effects: {
+
     *checkLogin({payload}, { select, put }){
       
       //Notice: selecting state with namespace, IMPORTANT!!!
