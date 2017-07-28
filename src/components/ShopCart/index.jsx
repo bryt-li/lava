@@ -18,8 +18,8 @@ const ModalDialog = ({visible, onClose}) => {
 			onClose={onClose()}
 			footer={[{ text: '确定', onPress: () => { onClose()(); } }]}
 			>
-			购物车是空的。<br />
-			快饿死了......<br />
+			购物车好饿...<br />
+			立刻选购吧。<br />
 		</Modal>
 	)
 }

@@ -1,9 +1,9 @@
 module.exports={
-	"salads":require('./salads/'),
-	"yogurts":require('./yogurts/'),
-	"juices":require('./juices/'),
-	"rices":require('./rices/'),
+	salads:require('./salads/'),
+	yogurts:require('./yogurts/'),
+	juices:require('./juices/'),
+	rices:require('./rices/'),
 
-	"seasonings":require('./seasonings/'),
-	"ingredients":require('./ingredients/')
+	seasonings:require('./seasonings/'),
+	ingredients:require('./ingredients/')
 }

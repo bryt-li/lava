@@ -22,16 +22,16 @@ class ShopItem extends React.Component {
 
   	handlePlusClicked = () => {
   		const {dispatch, type, id} = this.props;
-		dispatch({ type: 'cart/plus',payload: {type:type, id:id} });
+		dispatch({ type: 'app/changeMenuItemQuantity',payload: {type:type, id:id, inc:1} });
   	}
 
   	handleMinusClicked = () => {
   		const {dispatch, type, id} = this.props;
-  		dispatch({ type: 'cart/minus',payload: {type:type, id:id} });
+  		dispatch({ type: 'app/changeMenuItemQuantity',payload: {type:type, id:id, inc:-1} });
   	}
 	
 	render(){
-		const { type, id, dispatch, items, menu } = this.props;
+		const { type, id, dispatch, menu } = this.props;
 		const { imageLoading} = this.state;
 
 		if(!id) return(
@@ -40,8 +40,8 @@ class ShopItem extends React.Component {
 		);
 
 		const item = menu[type][id];
-		const quantity = items[type][id];
-
+		const quantity = item.quantity;
+		
 		return(
 		<Flex.Item className={classNames({[styles.item]:true, [styles.item_selected]:quantity>0})}>
 			<Link to={`/i/${type}/${id}`}>
@@ -76,14 +76,10 @@ class ShopItem extends React.Component {
 ShopItem.propTypes = {
 	type: PropTypes.string,
 	id: PropTypes.string,
-	dispatch: PropTypes.func,
-	items: PropTypes.object,
-	menu: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
     menu: state.app.menu,
-    items: state.cart.items
 });
 
 export default connect(mapStateToProps)(ShopItem);

@@ -1,32 +1,59 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'dva';
-import { Link } from 'dva/router';
+import { Modal, Flex, Carousel, WhiteSpace, WingBlank,
+Button, Grid, Icon, NavBar, List, DatePicker, Picker, InputItem, Toast, TextareaItem } from 'antd-mobile';
 import {Helmet} from "react-helmet";
+import {  routerRedux } from 'dva/router'
+import { createForm } from 'rc-form'
 
-const config =  require('../../config');
+import styles from './index.less'
 
-const WechatLoginPage = ({location}) => {
-	let redirect = location.hash;
-	redirect = redirect.replace('#','').replace(/\//g,'777');
-    let url = config.api.wechatLogin.replace('CALLER_URL',redirect);
+const config = require("../../config.js")
 
-	return (
-		<Helmet>
-            <meta charSet="utf-8" />
-            <title>微信登录</title>
-            <meta http-equiv="refresh" content={`0; url=${url}`} />
-        </Helmet>
-	);
+const Item = List.Item
+
+class WechatLoginPage extends React.Component {
+	constructor(props) {
+		super(props)
+
+		window.onSignedIn = this.onSignedIn
+		window.onSignInFailed = this.onSignInFailed
+	}
+
+	onSignedIn = () => {
+		console.log('wechat signed in')
+
+    	const {dispatch} = this.props
+
+    	const dest = this.props.location.hash.replace('#','')
+
+        dispatch({ type: 'user/getMe'})
+        dispatch(routerRedux.replace(dest))
+	}
+
+	onSignInFailed  = () => {
+		console.log('wechat sign in failed')
+	}
+
+	render(){
+	  	return (
+		<div className={styles.container}>
+			<Helmet>
+	            <title>正在进行微信登录</title>
+	            <script src='/res/login.js' type="text/javascript" />
+	        </Helmet>
+		    <iframe width="100%" height="100%" frameBorder="0" 
+			    src={config.wechatLoginUrl}>
+			</iframe> 
+		</div>
+	  	);
+	}
 }
 
 WechatLoginPage.propTypes = {
-	dispatch: PropTypes.func,
-	user: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
-    user:state.user,
 });
 
-export default connect(mapStateToProps)(WechatLoginPage);
+export default connect()(WechatLoginPage);

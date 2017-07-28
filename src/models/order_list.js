@@ -4,7 +4,7 @@ import { parse } from 'qs';
 
 export default {
 
-  namespace: 'item',
+  namespace: 'order_list',
 
   state: null,
 
@@ -14,6 +14,9 @@ export default {
   },
 
   effects: {
+    *getOrderList({payload,}, { call, put }) {
+    },
+    
   },
 
   reducers: {

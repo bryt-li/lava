@@ -2,8 +2,7 @@ import React from 'react';
 import { Router, Route } from 'dva/router';
 import PropTypes from 'prop-types'
 
-const LayoutShop = require('./routes/layoutShop/');
-
+const LayoutShop = require('./routes/LayoutShop/');
 
 const registerModel = (app, model) => {
   if (!(app._models.filter(m => m.namespace === model.namespace).length === 1)) {
@@ -13,7 +12,6 @@ const registerModel = (app, model) => {
 
 const Routers = function ({ history, app }) {
   const routes = [
-    /*
     {
       path: '/',
       component: LayoutShop,
@@ -21,54 +19,41 @@ const Routers = function ({ history, app }) {
          require.ensure(
          	[],
          	require => {
-           		registerModel(app, require('./models/home'))
-              registerModel(app, require('./models/cart'))
-           		cb(null, { component: require('./routes/layoutShop/HomePage') })
+              registerModel(app, require('./models/user'))
+              registerModel(app, require('./models/home'))
+           		cb(null, { component: require('./routes/LayoutShop/HomePage/') })
          	},
         	'HomePage'
         )
       },
       childRoutes: [
         {
-          path: '/circle',
+          path: '/i/:type/:id',
           getComponent (nextState, cb) {
             require.ensure([], require => {
-              registerModel(app, require('./models/item'))
-              cb(null, require('./routes/layoutShop/CirclePage/'))
-            }, 'CirclePage')
+              registerModel(app, require('./models/app'))
+              cb(null, require('./routes/LayoutShop/ItemPage/'))
+            }, 'ItemPage')
           },
         },
       ],
     },
-    */
     {
-      path: '/',
+      path: '/address',
       getComponent (nextState, cb) {
         require.ensure([], require => {
-          registerModel(app, require('./models/home'));
           registerModel(app, require('./models/user'));
-          registerModel(app, require('./models/cart'));
-          cb(null, require('./routes/HomePage/'));
-        }, 'HomePage')
+          cb(null, require('./routes/AddressPage/'))
+        }, 'AddressPage')
       },
     },
     {
-      path: '/i/:type/:id',
+      path: '/address/map',
       getComponent (nextState, cb) {
         require.ensure([], require => {
-          registerModel(app, require('./models/item'));
-          registerModel(app, require('./models/cart'));
-          cb(null, require('./routes/ItemPage/'))
-        }, 'ItemPage')
-      },
-    },
-    {
-      path: '/order/confirm',
-      getComponent (nextState, cb) {
-        require.ensure([], require => {
-          registerModel(app, require('./models/cart'));
-          cb(null, require('./routes/ConfirmOrderPage/'))
-        }, 'ConfirmOrderPage')
+          registerModel(app, require('./models/user'));
+          cb(null, require('./routes/AddressPage/MapPage/'))
+        }, 'MapPage')
       },
     },
     {
@@ -81,15 +66,56 @@ const Routers = function ({ history, app }) {
       },
     },
     {
-      path: '/model/user',
+      path: '/order/create',
+      getComponent (nextState, cb) {
+        require.ensure([], require => {
+          registerModel(app, require('./models/app'));
+          registerModel(app, require('./models/user'));
+          registerModel(app, require('./models/order_show'));
+          registerModel(app, require('./models/order_create'));
+          cb(null, require('./routes/OrderCreatePage/'))
+        }, 'OrderCreatePage')
+      },
+    },
+    {
+      path: '/order/list',
       getComponent (nextState, cb) {
         require.ensure([], require => {
           registerModel(app, require('./models/user'));
-          cb(null, require('./routes/ModelUserRedirectPage/'));
-        }, 'ModelUserRedirectPage')
+          registerModel(app, require('./models/order_list'));
+          cb(null, require('./routes/UserPage/OrderListPage/'));
+        }, 'OrderListPage')
       },
-    }
-
+    },
+    {
+      path: '/order/show',
+      getComponent (nextState, cb) {
+        require.ensure([], require => {
+          registerModel(app, require('./models/user'));
+          registerModel(app, require('./models/order_show'));
+          cb(null, require('./routes/OrderShowPage/'));
+        }, 'OrderShowPage')
+      },
+    },
+    {
+      path: '/order/edit',
+      getComponent (nextState, cb) {
+        require.ensure([], require => {
+          registerModel(app, require('./models/user'));
+          registerModel(app, require('./models/order_edit'));
+          cb(null, require('./routes/OrderShowPage/OrderEditPage/'));
+        }, 'OrderEditPage')
+      },
+    },
+    {
+      path: '/login',
+      getComponent (nextState, cb) {
+        require.ensure([], require => {
+          registerModel(app, require('./models/user'));
+          cb(null, require('./routes/WechatLoginPage/'));
+        }, 'WechatLoginPage')
+      },
+    },
   ]
 
   return <Router history={history} routes={routes} />

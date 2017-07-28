@@ -23,7 +23,7 @@ function parseJSON(response) {
  */
 export default function request(url, options) {
   /*Must have credentials include to enable cookies*/
-  return fetch(url, {...options, credentials: 'include'})
+  return fetch(url, {...options, fetchType: 'CORS', credentials: 'include'})
     .then(checkStatus)
     .then(parseJSON)
     .then((response) => ({ response }))

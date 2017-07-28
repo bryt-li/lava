@@ -3,14 +3,10 @@ import { connect } from 'dva';
 import { Link } from 'dva/router';
 import PropTypes from 'prop-types';
 import { Carousel, WingBlank, Flex, Button, Icon } from 'antd-mobile';
-import {Helmet} from "react-helmet";
 import ReactLoading from 'react-loading';
 
-const config =  require('../../config');
-
-const Header = require('../../components/Header/');
-const ShopItem = require('../../components/ShopItem/');
-const ShopCart = require('../../components/ShopCart/');
+const ShopItem = require('../../../components/ShopItem/');
+const HomeCart = require('../../../components/HomeCart/');
 
 import styles from './index.less';
 
@@ -27,19 +23,10 @@ class HomePage extends React.Component {
   	}
 	
 	render(){
-		let {dispatch, location, home, app, user} = this.props;
-		
-		const {salads, yogurts, rices, juices} = home;
-		const {menu} = app;
+		const {salads, yogurts, juices, rices, menu} = this.props;
 
 	  	return (
 	  	<div className={styles.container}>
-  			<Helmet>
-	            <meta charSet="utf-8" />
-	            <title>活力火山微商城</title>
-	        </Helmet>
-
-	  	    <Header user_icon={user?user.headImageUrl:null} location={location} dispatch={dispatch} />
 
 			{this.state.imageLoading && <ReactLoading className={styles.loading} type='spinningBubbles' color='$444'/> }
 	  		<Carousel
@@ -90,9 +77,7 @@ class HomePage extends React.Component {
 		  	<hr />
 
 		  	<div style={{display:'block',height:'400px'}} />
-
-
-	  		<ShopCart showAdd={false}/>
+	  		<HomeCart />
 		</div>
 		);
 	}
@@ -100,15 +85,19 @@ class HomePage extends React.Component {
 
 HomePage.propTypes = {
 	dispatch: PropTypes.func,
-	home: PropTypes.object,
-	app: PropTypes.object,
-	user: PropTypes.object,
+	salads: PropTypes.array,
+	yogurts: PropTypes.array,
+	juices: PropTypes.array,
+	rices: PropTypes.array,
+	menu: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
-    home: state.home,
-    app:state.app,
-    user:state.user,
+    salads: state.home.salads,
+    yogurts: state.home.yogurts,
+    juices: state.home.juices,
+    rices: state.home.rices,
+    menu: state.app.menu,
 });
 
 export default connect(mapStateToProps)(HomePage);

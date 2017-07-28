@@ -3,10 +3,11 @@ import { connect } from 'dva';
 import { Link } from 'dva/router';
 import PropTypes from 'prop-types';
 import { Carousel, WingBlank, Flex, Button, Icon } from 'antd-mobile';
+import {Helmet} from "react-helmet";
 import ReactLoading from 'react-loading';
 
-const ShopItem = require('../../../components/ShopItem/');
-const HomeCart = require('../../../components/HomeCart/');
+const Header = require('./Header/');
+const ShopItem = require('./ShopItem/');
 
 import styles from './index.less';
 
@@ -23,10 +24,18 @@ class HomePage extends React.Component {
   	}
 	
 	render(){
-		const {salads, yogurts, juices, rices, menu} = this.props;
+		let {dispatch, location, home, menu} = this.props;
+		
+		const {salads, yogurts, rices, juices} = home;
 
 	  	return (
 	  	<div className={styles.container}>
+  			<Helmet>
+	            <meta charSet="utf-8" />
+	            <title>活力火山微商城</title>
+	        </Helmet>
+
+	  	    <Header />
 
 			{this.state.imageLoading && <ReactLoading className={styles.loading} type='spinningBubbles' color='$444'/> }
 	  		<Carousel
@@ -77,27 +86,16 @@ class HomePage extends React.Component {
 		  	<hr />
 
 		  	<div style={{display:'block',height:'400px'}} />
-	  		<HomeCart />
 		</div>
 		);
 	}
 }
 
 HomePage.propTypes = {
-	dispatch: PropTypes.func,
-	salads: PropTypes.array,
-	yogurts: PropTypes.array,
-	juices: PropTypes.array,
-	rices: PropTypes.array,
-	menu: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
-    salads: state.home.salads,
-    yogurts: state.home.yogurts,
-    juices: state.home.juices,
-    rices: state.home.rices,
-    menu: state.app.menu,
+    home: state.home,
 });
 
 export default connect(mapStateToProps)(HomePage);

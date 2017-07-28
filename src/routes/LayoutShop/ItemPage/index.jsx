@@ -6,12 +6,9 @@ import { Flex, Carousel, WhiteSpace, WingBlank,
 Button, Grid, Icon, NavBar } from 'antd-mobile';
 import ReactLoading from 'react-loading';
 import {Helmet} from "react-helmet";
-import {findObj} from '../../utils';
+import {findObj} from '../../../utils';
 
 import styles from './index.less';
-
-const ShopCart = require('../../components/ShopCart/');
-
 
 class ItemPage extends React.Component{
 
@@ -129,19 +126,12 @@ class ItemPage extends React.Component{
 		    </WingBlank>
 
 		    <div style={{display:'block',height:'200px'}}/>
-
-	  		<ShopCart showAdd={true} type={type} id={id} />
-
 		</div>
   		);
   	}
 }
 
 ItemPage.propTypes = {
-	imageLoading: PropTypes.bool,
-	dispatch: PropTypes.func,
-	params: PropTypes.object,
-	menu: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
