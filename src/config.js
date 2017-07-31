@@ -12,7 +12,7 @@ const MAP_KEY = 'FE4BZ-LJXW4-IWBUR-DXK2T-TYC7K-WTBGD'
 module.exports = {
   name: '活力火山健康轻食',
   prefix: '',
-  footerText: '活力火山微店 © 2017 HLHS',
+  footerText: '活力火山微商城 © 2017 HLHS',
   logo: '/logo.png',
   logoBig: '/logoBig.png',
   iconFontCSS: '/iconfont.css',
