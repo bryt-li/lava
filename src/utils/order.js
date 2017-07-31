@@ -27,25 +27,45 @@ const getOrderPayment = () => {
 
 //返回所有可选的时间，以及当前选中的时间
 const getOrderTime = () => {
-
-	const availableTimes = [
-		{label:'11:30之前',value:0},
-		{label:'12:30之前',value:1},
-		{label:'12:30~13:30',value:2},
-		{label:'13:30~14:30',value:3},
-		{label:'14:30~15:30',value:4},
-		{label:'15:30~16:30',value:5},
-		{label:'16:30~17:30',value:6},
-		{label:'17:30~18:30',value:7},
+	const times = [
+		'10:30之前',
+		'11:30之前',
+		'12:30之前',
+		'12:30~13:30',
+		'13:30~14:30',
+		'14:30~15:30',
+		'15:30~16:30',
+		'16:30~17:30',
+		'17:30~18:30'
 	]
-	const time = 1
+	const availableTimes = times.map((time) => {
+		return {label:time,value:time}
+	})
+	
+	const time = '12:30之前'
 	return {availableTimes,time}
+}
+
+const formatStatus = (status) => {
+	if(status==0)
+		return '已提交'
+	if(status==1)
+		return '已支付'
+	if(status==2)
+		return '已确认'
+	if(status==3)
+		return '配送'
+	if(status==4)
+		return '已完成'
+	if(status==5)
+		return '已撤销'
 }
 
 module.exports = {
   getOrderDate,
   getOrderTime,
   getOrderPayment,
+  formatStatus,
 }
 
 

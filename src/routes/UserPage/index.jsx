@@ -14,7 +14,6 @@ import styles from './index.less';
 const Item = List.Item
 const Brief = Item.Brief
 
-
 /*
 
 import FooterInfo from '../components/FooterInfo'
@@ -65,11 +64,11 @@ function UserPage() {
 
 class UserPage extends React.Component {
 	constructor(props) {
-		super(props);
+		super(props)
 	}
 
 	onOrdersClick = () => {
-		this.props.dispatch(routerRedux.push('/orders'))
+		this.props.dispatch(routerRedux.push('/order/list'))
 	}
 
 	onAddressClick = () => {
@@ -77,7 +76,6 @@ class UserPage extends React.Component {
 	}
 
 	onSoonClick = () => {
-		console.log('xxxx')
 		Toast.info('正在努力上线中');
 	}
 

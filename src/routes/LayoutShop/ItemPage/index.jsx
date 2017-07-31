@@ -8,6 +8,8 @@ import ReactLoading from 'react-loading';
 import {Helmet} from "react-helmet";
 import {findObj} from '../../../utils';
 
+import {formatMoney} from '../../../utils/price';
+
 import styles from './index.less';
 
 class ItemPage extends React.Component{
@@ -73,7 +75,7 @@ class ItemPage extends React.Component{
     		<WingBlank size="sm">
 			    <Flex className={styles.title}>
 			    	<Flex.Item className={styles.name}>{item.name}</Flex.Item>
-			    	<Flex.Item className={styles.price}><span className={styles.original_price}><span className={styles.cny}>&nbsp;&nbsp;￥</span>{item.original_price}&nbsp;&nbsp;</span><span className={styles.cny}>￥</span>{item.price}</Flex.Item>
+			    	<Flex.Item className={styles.price}><span className={styles.original_price}><span className={styles.cny}>&nbsp;&nbsp;￥</span>{formatMoney(item.original_price)}&nbsp;&nbsp;</span><span className={styles.cny}>￥</span>{formatMoney(item.price)}</Flex.Item>
 			    </Flex>
 			    <hr />
 			    <div className={styles.order}>

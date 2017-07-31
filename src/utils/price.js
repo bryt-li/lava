@@ -2,9 +2,15 @@ import {calculateDistance} from './distance'
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 
+
+const formatMoney = (cents) => {
+	return (cents/100.00).toFixed(2)
+}
+
+
 //计算预订折扣，提前一天下单，减5元
 const calculateAdvancePrice = (date) => {
-	let advancePrice = -5
+	let advancePrice = -500
 	const today = moment().locale('zh-cn').utcOffset(8)
 	if(date.toDate().format("yyyy-MM-dd") == today.toDate().format("yyyy-MM-dd"))
 		advancePrice = 0
@@ -13,6 +19,7 @@ const calculateAdvancePrice = (date) => {
 }
 
 //计算运费
+//西山汇景店坐标
 const xjh_lat = 28.21286
 const xjh_lng = 112.94879
 const calculateDeliveryDistance = (lat, lng) => {
@@ -23,22 +30,22 @@ const calculateDeliveryPrice = (items_price, lat, lng) => {
 	let km = calculateDistance(xjh_lat,xjh_lng,lat,lng)
 	console.log(`devliery distance: ${km}km`)
 
-	let deliveryPrice = km*2.5
+	let deliveryPrice = parseInt(km*250)
 
 	//免运费
-	if(items_price>36 && km < 3)
+	if(items_price>3600 && km < 3)
 		return 0
-	if(items_price>100 && km <8)
+	if(items_price>10000 && km <8)
 		return 0
-	if(items_price>150)
+	if(items_price>15000)
 		return 0
 
 	//减运费
-	if(items_price>66 && km < 5)
-		return (deliveryPrice -3)
+	if(items_price>6600 && km < 5)
+		return (deliveryPrice -300)
 
-	if(items_price>88 && km < 8)
-		return (deliveryPrice - 5)
+	if(items_price>8800 && km < 8)
+		return (deliveryPrice - 500)
 
 	return deliveryPrice
 }
@@ -67,7 +74,7 @@ const calculateOrderPrice = (menu) => {
 	//how many discount，the second item have 70% discount
 	let num = parseInt(order_items.length / 2) - 1;
 	for(var i=0;i<=num;i++){
-		order_items[i].order_price = order_items[i].price*0.7;
+		order_items[i].order_price = parseInt(order_items[i].price*0.7);
 		saving += order_items[i].price - order_items[i].order_price;
 	}
 	for(var i=0;i<order_items.length;i++){
@@ -78,8 +85,9 @@ const calculateOrderPrice = (menu) => {
 
 
 module.exports = {
-  calculateOrderPrice,
-  calculateAdvancePrice,
-  calculateDeliveryDistance,
-  calculateDeliveryPrice,
+	formatMoney,
+	calculateOrderPrice,
+	calculateAdvancePrice,
+	calculateDeliveryDistance,
+	calculateDeliveryPrice,
 }

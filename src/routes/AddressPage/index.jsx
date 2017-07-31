@@ -8,16 +8,34 @@ import { createForm } from 'rc-form'
 
 import styles from './index.less'
 
-
 const Item = List.Item
 const Brief = Item.Brief
+
+const NULL_DELIVERY = {
+  id: null,
+  name:'',
+  phone:'',
+  address:'',
+  city:'',
+  location:'',
+  lat:null,
+  lng:null
+}
 
 class AddressPage extends React.Component {
 	constructor(props) {
 		super(props);
 
+		const {user, delivery, dispatch, location} = props
+
+		console.log(user)
+		if(!user.id){
+			dispatch(routerRedux.replace(`/login#${location.pathname}`))
+			return
+		}
+
 		this.state = {
-			delivery: props.delivery,
+			delivery: delivery?delivery:NULL_DELIVERY,
 		    hasError: false,
 		    focusedName: false
 		}
@@ -71,7 +89,7 @@ class AddressPage extends React.Component {
 		}
 		
 		this.props.dispatch({
-			type: 'user/saveDelivery', 
+			type: 'address/saveDelivery', 
 			payload: delivery
 		})
 	}
@@ -81,7 +99,10 @@ class AddressPage extends React.Component {
 	}
 
 	render(){
-		const {dispatch, form} = this.props
+		const {dispatch, form, user} = this.props
+		if(!user || !user.id)
+			return null
+
 		const { getFieldProps } = form
 
 		const {name, address, city, location, lat, lng, phone} = this.state.delivery
@@ -168,6 +189,7 @@ AddressPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+	user: state.user,
     delivery:state.user.delivery,
 });
 

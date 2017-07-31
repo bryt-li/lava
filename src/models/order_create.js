@@ -1,7 +1,7 @@
-import { routerRedux } from 'dva/router';
-import { parse } from 'qs';
-import { createOrder } from '../services/order';
-
+import { routerRedux } from 'dva/router'
+import { parse } from 'qs'
+import { createOrder, convertOrderForServer } from '../services/order'
+import { Toast } from 'antd-mobile'
 
 export default {
 
@@ -15,41 +15,43 @@ export default {
   },
 
   effects: {
-    *createOrder({payload,}, { select, call, put }) {
-
+    *createOrder({payload}, { select, call, put }) {      
+      Toast.loading('正在下单', 0)
       //must signed in
       const user = yield(select(state => state.user))
       if(!user || !user.id){
+        Toast.hide()
+        Toast.info('用户必须先登录')
         yield put(routerRedux.push('/'))
         return
       }
 
-      //if user signed in, save to remote
       payload.id_user = user.id
-      const { response, err } = yield call(createOrder, payload)
-      if(err || !response){
+      const order = convertOrderForServer(payload)
+
+      const { response, err } = yield call(createOrder, order)
+      if(err || !response || !response.ok || !response.payload){
+        Toast.hide()
+        Toast.fail('服务器处理订单错误，正在抢修中')
         console.log(err)
+        console.log(response)
         return
       }
       
-      if(response.ok==null || !response.payload){
-        console.log(`response format error: ${response}`)
-        return
-      }
+      Toast.hide()
 
-      if(!response.ok){
-        console.log(`query succeeded with error message: ${response.payload.errmsg}`)
-        return
-      }
-      payload.id = response.payload.id
-      console.log(`create order succeeded with id: ${payload.id}`)
+      order.id = response.payload.id
+      order.code = response.payload.code
 
-      //update data
-      yield put({ type: 'order_show/updateOrder', payload: payload })
+      //clear menu data
+      yield put({ type: 'app/clearMenu'})
 
-      const orderUrl = `/order/show`
-      yield put(routerRedux.push(orderUrl))
-    }, 
+      //goto OrderShowPage
+      const url = `/order/show/${order.id}`
+      yield put(routerRedux.push(url))
+
+      console.log(`create order succeeded with id: ${order.id}, code: ${order.code}, clear menu and redirect to ${url}`)
+    },
   },
 
   reducers: {

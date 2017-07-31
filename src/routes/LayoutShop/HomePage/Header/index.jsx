@@ -14,14 +14,14 @@ function Header({ dispatch, location, delivery, user }) {
   }
 
   const handleAddressClicked = ()=>{
-    dispatch({ type: 'user/gotoClosedPage', payload: '/address' })
+    dispatch(routerRedux.push('/address'))
   }
 
   const handleUserClicked = ()=> {
-    dispatch({ type: 'user/gotoClosedPage',payload:'/user' })
+    dispatch(routerRedux.push('/user'))
   }
   
-  let address = delivery.location?delivery.location:'未设置收货地址'
+  let address = delivery?delivery.location:'设置收货地址'
   if(address.length>9){
     address = address.substr(0,9)+'...'
   }

@@ -8,6 +8,9 @@ import ReactLoading from 'react-loading';
 import {Helmet} from "react-helmet";
 import { createForm } from 'rc-form';
 
+import { formatStatus } from '../../../utils/order.js'
+import { formatMoney } from '../../../utils/price.js'
+
 import styles from './index.less';
 
 const Item = List.Item
@@ -17,13 +20,11 @@ const Brief = Item.Brief
 class OrderListPage extends React.Component {
 	constructor(props) {
 		super(props);
-
 	}
 
 	render(){
-	  	const {dispatch, form, order_list} = this.props
+	  	const {dispatch, form, orders} = this.props
 		const { getFieldProps } = form
-
 
 	  	return(
 		<div className={styles.container}>
@@ -34,12 +35,27 @@ class OrderListPage extends React.Component {
 		    <NavBar
 		        leftContent="返回"
 		        mode="light"
-		        onLeftClick={() => dispatch(routerRedux.push('/'))}
+		        onLeftClick={() => dispatch(routerRedux.push('/user'))}
 		    >
 		    	我的订单
 		    </NavBar>
 		    <div>
-		    	
+		    	<List renderHeader={() => '全部订单'}>
+		    {(orders&&orders.length>0)?orders.map((order,i)=>{
+		    	return(
+		    	<Item key={i} arrow="horizontal" extra={`￥${formatMoney(order.total_price)}元`}
+			    	onClick={()=> dispatch(routerRedux.push(`/order/show/${order.id}`))}>
+    		        订单编号：{order.code}
+			        <Brief>状态：{formatStatus(order.status)}</Brief>
+			    </Item>
+			    )
+		    }):
+			    <Item arrow="horizontal" extra="去下单" 
+			    	onClick={()=> dispatch(routerRedux.push('/'))}>
+			    	没有订单
+			    </Item>
+			}
+			    </List>
 		    </div>
 		</div>
 		);
@@ -50,7 +66,7 @@ OrderListPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    order_list: state.app.order_list,
+    orders: state.order_list.orders,
 });
 
 const FormWrapper = createForm()(OrderListPage);

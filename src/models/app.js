@@ -2,12 +2,16 @@
 import { routerRedux } from 'dva/router'
 import {calculateOrderPrice} from '../utils/price'
 
-const menu = require('../config/menu/');
-for(var t in menu){
-  for(var i in menu[t]){
-    menu[t][i].quantity = 0;
+const MENU = require('../config/menu/');
+
+function emptyMenu(menu){
+  for(var t in menu){
+    for(var i in menu[t]){
+      menu[t][i].quantity = 0
+    }
   }
-};
+  return menu
+}
 
 export default {
 
@@ -15,7 +19,7 @@ export default {
 
   state: {
     //全部菜品信息，且增加了quantity数量属性
-    menu: menu,
+    menu: emptyMenu(MENU),
 
     //计算折扣后的总价格
     total: 0,
@@ -25,7 +29,7 @@ export default {
 
     //所有的订单项目
     //[{...menu[type][id], order_price:订单里每个商品的实际价格（计算折扣后）}]
-    order_items: []
+    order_items: [],
   },
 
   subscriptions: {
@@ -35,11 +39,18 @@ export default {
   },
 
   effects: {
+    *checkLogin({payload},{call,select,put}){
+      console.log(payload)
+      if(payload == '/user'){
+        console.log('push /')
+        routerRedux.push('/')
+      }
+    },
 
     *restoreModelFromLocalStorage({payload},{call,select,put}){
       //这是当前的新菜单，quantity都是0
       const { app } = yield(select(_ => _))
-      const {menu} = app
+      const { menu } = app
 
       //这是原来保存的点菜菜单，注意：有可能新旧菜单中的菜品不一致
       const stored_menu = JSON.parse(window.localStorage.getItem('menu'))
@@ -84,9 +95,12 @@ export default {
         type: 'updateModel', 
         payload: {menu, total, saving, order_items}
       })
-
     },
 
+    *clearMenu({payload},{call,select,put}){
+      window.localStorage.removeItem('menu')
+      yield put({ type: 'clearModel' })
+    }
   },
 
   reducers: {
@@ -97,6 +111,15 @@ export default {
         total:total,
         saving:saving,
         order_items:order_items
+      }
+    },
+
+    clearModel(state,action){
+      return {
+        menu: emptyMenu(MENU),
+        total: 0,
+        saving: 0,
+        order_items: [],
       }
     },
   },

@@ -6,6 +6,8 @@ import PropTypes from 'prop-types'
 import { Modal, Carousel, WingBlank, Flex, Button, Icon } from 'antd-mobile'
 import ReactLoading from 'react-loading'
 
+import {formatMoney} from '../../utils/price';
+
 import styles from './index.less'
 
 const ModalDialog = ({visible, onClose}) => {
@@ -74,7 +76,7 @@ class LayoutShop extends React.Component {
     if(this.nothing_in_cart())
       this.showModal()()
     else
-      this.props.dispatch({type:'user/gotoClosedPage', payload:'/order/create'});
+      this.props.dispatch(routerRedux.push('/order/create'));
   }
 
   render(){
@@ -108,8 +110,8 @@ class LayoutShop extends React.Component {
             />
             <div className={styles.rect_info_bar}>
               <span className={styles.cny}>￥</span>
-              <span className={styles.total_money}>{total.toFixed(1)}</span>
-              <span className={styles.delivery_saving_fee}>{saving>0?`优惠${saving.toFixed(1)}元`:(total>38?'免费配送':'满38免配送费')}</span>
+              <span className={styles.total_money}>{formatMoney(total)}</span>
+              <span className={styles.delivery_saving_fee}>{saving>0?`优惠${formatMoney(saving)}元`:(total>3800?'免费配送':'满38免配送费')}</span>
             </div>
           </div>
           <div className={styles.right}></div>
@@ -131,14 +133,13 @@ class LayoutShop extends React.Component {
         />
         <div className={styles.round_info_bar}>
           <span className={styles.cny}>￥</span>
-          <span className={styles.total_money}>{total.toFixed(1)}</span>
-          <span className={styles.delivery_saving_fee}>{saving>0?`优惠${saving.toFixed(1)}元`:(total>38?'免费配送':'满38免配送费')}</span>
+          <span className={styles.total_money}>{formatMoney(total)}</span>
+          <span className={styles.delivery_saving_fee}>{saving>0?`优惠${formatMoney(saving)}元`:(total>3800?'免费配送':'满38免配送费')}</span>
         </div>
       </div>
     </div>
     );
   }//end render
-
 
 }
 

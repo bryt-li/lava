@@ -1,7 +1,7 @@
 module.exports = {
 	name: "美味饭团子",
-	original_price: 49,
-	price: 45,
+	original_price: 4900,
+	price: 4500,
 	rice: false,
 	season: "和风汁",
 	delivery_time: "07-05 周一12:30之前",

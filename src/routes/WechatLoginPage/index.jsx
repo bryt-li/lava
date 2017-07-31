@@ -13,29 +13,45 @@ const config = require("../../config.js")
 const Item = List.Item
 
 class WechatLoginPage extends React.Component {
+
 	constructor(props) {
 		super(props)
+
+		const {dispatch, user, location} = props
+		if(user.id){
+	    	const dest = location.hash.replace('#','')
+	        dispatch(routerRedux.replace(dest))
+
+	        console.log(`wechat login page find user already signed in, directly replace to ${dest}`)
+	        return
+		}
 
 		window.onSignedIn = this.onSignedIn
 		window.onSignInFailed = this.onSignInFailed
 	}
 
-	onSignedIn = () => {
-		console.log('wechat signed in')
+	onSignedIn = (json) => {
+		const user = JSON.parse(json)
 
     	const {dispatch} = this.props
+        dispatch({ type: 'user/updateUser', payload: user})
 
     	const dest = this.props.location.hash.replace('#','')
-
-        dispatch({ type: 'user/getMe'})
         dispatch(routerRedux.replace(dest))
+
+		console.log(`wechat signed in with user id: ${user.id}, replace url to: ${dest}`)
 	}
 
 	onSignInFailed  = () => {
-		console.log('wechat sign in failed')
+		dispatch(routerRedux.replace('/'))
+		console.log('wechat sign in failed, replace url to: /')
 	}
 
 	render(){
+		const {dispatch, user, location} = this.props
+		if(user.id)
+			return null
+
 	  	return (
 		<div className={styles.container}>
 			<Helmet>
@@ -54,6 +70,7 @@ WechatLoginPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+	user: state.user,
 });
 
-export default connect()(WechatLoginPage);
+export default connect(mapStateToProps)(WechatLoginPage);

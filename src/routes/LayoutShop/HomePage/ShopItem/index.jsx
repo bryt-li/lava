@@ -6,6 +6,8 @@ import { Carousel, WingBlank, Flex, Button, Icon } from 'antd-mobile';
 import ReactLoading from 'react-loading';
 import classNames from 'classnames';
 
+import {formatMoney} from '../../../../utils/price'
+
 import styles from './index.less';
 
 class ShopItem extends React.Component {
@@ -51,7 +53,7 @@ class ShopItem extends React.Component {
 			<h2>{item.name}</h2>
 			<h3>{item.slogon}</h3>
 			<div>
-				<div className={styles.price}>￥{item.price}<span>￥{item.original_price}&nbsp;</span></div>
+				<div className={styles.price}>￥{formatMoney(item.price)}<span>￥{formatMoney(item.original_price)}&nbsp;</span></div>
 				{quantity>0?
 					(
 					<div className={styles.buy}>

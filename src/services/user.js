@@ -13,20 +13,9 @@ export async function getMe() {
 	);
 }
 
-
 export async function logout() {
 	return request(
 		api.logout,
-		{
-			method: 'get',
-		}
-	);
-}
-
-
-export async function getDelivery() {
-	return request(
-		api.getDelivery,
 		{
 			method: 'get',
 		}

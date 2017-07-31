@@ -10,6 +10,7 @@ import { createForm } from 'rc-form';
 
 import {calculateAdvancePrice, calculateDeliveryDistance, calculateDeliveryPrice} from '../../utils/price'
 import {getOrderDate,getOrderTime,getOrderPayment} from '../../utils/order'
+import {formatMoney} from '../../utils/price'
 
 import styles from './index.less';
 
@@ -21,8 +22,10 @@ class OrderCreatePage extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {order_items, delivery, dispatch} = props
-		
+		const {order_items, user, delivery, dispatch, location} = props
+		if(order_items.length==0||!user)
+			return
+
 		let items_price = 0
 		for(var i=0;i<order_items.length;i++)
 			items_price += order_items[i].order_price
@@ -34,7 +37,7 @@ class OrderCreatePage extends React.Component {
 
 		let deliveryDistance = null
 		let delivery_price = null
-		const {lat,lng} = delivery
+		const {lat,lng} = delivery?delivery:{lat:null,lng:null}
 		if(lat!=null && lng!=null){
 			deliveryDistance = calculateDeliveryDistance(lat,lng)
 			delivery_price = calculateDeliveryPrice(items_price, lat,lng)
@@ -99,7 +102,7 @@ class OrderCreatePage extends React.Component {
 	}
 
 	onSubmit = () => {
-	  	const {dispatch, order_items, delivery} = this.props
+	  	const {dispatch, order_items, delivery, user} = this.props
 
 		const {
 			date,
@@ -107,11 +110,11 @@ class OrderCreatePage extends React.Component {
 			items_price,
 			advance_price,
 			delivery_price,
-			payment,
 			total_price,
+			payment,
 		} = this.state
 
-		if(delivery_price==null || delivery_price > 80){
+		if(delivery_price==null || delivery_price > 8000){
 			Toast.info('请您填写有效的收货地址')
 			return
 		}
@@ -119,22 +122,33 @@ class OrderCreatePage extends React.Component {
 		const order = {
 			date,
 			time,
-			order_items: JSON.stringify(order_items),
-			delivery: JSON.stringify(delivery),
+			order_items,
+			delivery,
 			items_price,
 			advance_price,
 			delivery_price,
-			total_price
+			total_price,
+			payment,
 		}
 
 		dispatch({type:'order_create/createOrder',payload:order})
 	}
 
 	render(){
-	  	const {dispatch, form, order_items, delivery} = this.props
+	  	const {dispatch, form, order_items, user, delivery} = this.props
+		if(order_items.length==0||!user)
+			return null
+
 		const { getFieldProps } = form
 
-		const {name, address, phone, lat, lng} = delivery
+		const {name, address, phone, lat, lng} = delivery?delivery:{
+			name:null,
+			address:null,
+			phone:null,
+			lat:null,
+			lng:null
+		}
+
 		const {
 			minDate,date,maxDate, 
 			availableTimes,	time, 
@@ -163,11 +177,11 @@ class OrderCreatePage extends React.Component {
 		    		{order_items.map((o,k)=>{
 		    			let saving = o.price-o.order_price
 		    			if(saving>0)
-		    				return(<Item key={k} thumb={<Icon type="#icon-zhe" />} extra={`${o.order_price.toFixed(1)}元 省${(saving).toFixed(1)}`}>{o.name}</Item>)
+		    				return(<Item key={k} thumb={<Icon type="#icon-zhe" />} extra={`${formatMoney(o.order_price)}元 省${formatMoney(saving)}`}>{o.name}</Item>)
 		    			else
-		    				return(<Item key={k} thumb={<Icon type="#icon-zheng" />} extra={`${o.order_price.toFixed(1)}元`}>{o.name}</Item>)
+		    				return(<Item key={k} thumb={<Icon type="#icon-zheng" />} extra={`${formatMoney(o.order_price)}元`}>{o.name}</Item>)
 		    		})}
-		    		<Item thumb={<Icon type="#icon-12" />} extra={`${items_price.toFixed(1)}元`}>
+		    		<Item thumb={<Icon type="#icon-12" />} extra={`${formatMoney(items_price)}元`}>
 			        	餐品总价
 		        	</Item>
 			    </List>
@@ -194,10 +208,12 @@ class OrderCreatePage extends React.Component {
 						{...getFieldProps('time',{
 							initialValue:[time]
 						})}>
-						<Item arrow="horizontal" thumb={<Icon type="#icon-shijian" />}>配送时间</Item>
+						<Item arrow="horizontal" thumb={<Icon type="#icon-shijian" />}>
+							配送时间
+						</Item>
 			        </Picker>
 			        {(advance_price<0) ?
-				        <Item thumb={<Icon type="#icon-12" />} extra={`${advance_price.toFixed(1)}元`}>
+				        <Item thumb={<Icon type="#icon-12" />} extra={`${formatMoney(advance_price)}元`}>
 				        预订折扣
 			        	</Item>
 			        	:
@@ -224,7 +240,7 @@ class OrderCreatePage extends React.Component {
 				        	配送半径
 				        </Item>
 				        <Item thumb={<Icon type="#icon-12" />} 
-				        	extra={delivery_price!=null?`${delivery_price.toFixed(1)}元`:'未知'}>
+				        	extra={delivery_price!=null?`${formatMoney(delivery_price)}元`:'未知'}>
 			        		配送费
 		        		</Item>
 			        </WingBlank>
@@ -232,21 +248,21 @@ class OrderCreatePage extends React.Component {
 
 		    	<WhiteSpace size="sm"/>
 		    	<List renderHeader={() => '订单总价'}>
-			        <Item extra={`${items_price.toFixed(1)}元`}>
+			        <Item extra={`${formatMoney(items_price)}元`}>
 		        		餐品费
 	        		</Item>
 			        {(advance_price<0) ?
-				        <Item extra={`${advance_price.toFixed(1)}元`}>
+				        <Item extra={`${formatMoney(advance_price)}元`}>
 			        		预订折扣
 		        		</Item>
 		        		:
 		        		null
 		        	}
-			        <Item extra={delivery_price!=null?`${delivery_price.toFixed(1)}元`:'未知'}>
+			        <Item extra={delivery_price!=null?`${formatMoney(delivery_price)}元`:'未知'}>
 		        		配送费
 	        		</Item>
 			        <Item thumb={<Icon type="#icon-12" />} 
-			        	extra={total_price?`${total_price.toFixed(1)}元`:'未知'}>
+			        	extra={total_price?`${formatMoney(total_price)}元`:'未知'}>
 		        		应付
 	        		</Item>
 		    	</List>
@@ -276,6 +292,7 @@ OrderCreatePage.propTypes = {
 
 const mapStateToProps = (state) => ({
     order_items: state.app.order_items,
+    user: state.user,
     delivery: state.user.delivery,
 });
 
