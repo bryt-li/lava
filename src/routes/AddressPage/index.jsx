@@ -140,9 +140,6 @@ class AddressPage extends React.Component {
 	  	return (
 		<div className={styles.container}>
 			<Helmet>
-	            <meta charSet="utf-8" />
-	            <meta name="viewport" content="width=device-width" />
-				<script src="/res/antm-viewport.min.js"/>
 	            <title>设置收货信息</title>
 	        </Helmet>
 	        

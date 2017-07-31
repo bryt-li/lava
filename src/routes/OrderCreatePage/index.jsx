@@ -163,7 +163,6 @@ class OrderCreatePage extends React.Component {
 	  	return(
 		<div className={styles.container}>
 			<Helmet>
-	            <meta charSet="utf-8" />
 	            <title>确认订单</title>
 	        </Helmet>
 		    <NavBar

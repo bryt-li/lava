@@ -31,7 +31,7 @@ export default {
             //更新地址
             const payload = {
               city: query.city,
-              location: query.addr,
+              location: query.name,
               address: `${query.city} ${query.addr} ${query.name} `,
               lat: lat,
               lng: lng,
