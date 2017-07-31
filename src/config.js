@@ -11,7 +11,7 @@ const MAP_KEY = 'FE4BZ-LJXW4-IWBUR-DXK2T-TYC7K-WTBGD'
 const MAP_BACK_URL = `http://apis.map.qq.com/tools/locpicker?search=1&type=1&key=${MAP_KEY}&referer=hlhs`
 
 module.exports = {
-  name: '活力火山健康商城',
+  name: '活力火山健康轻食',
   prefix: '',
   footerText: '活力火山 © 2017 HLHS',
   logo: '/logo.png',
