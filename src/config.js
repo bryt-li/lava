@@ -13,7 +13,7 @@ const MAP_BACK_URL = `http://apis.map.qq.com/tools/locpicker?search=1&type=1&key
 module.exports = {
   name: '活力火山健康轻食',
   prefix: '',
-  footerText: '活力火山 © 2017 HLHS',
+  footerText: '活力火山微店 © 2017 HLHS',
   logo: '/logo.png',
   logoBig: '/logoBig.png',
   iconFontCSS: '/iconfont.css',
