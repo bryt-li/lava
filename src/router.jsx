@@ -8,7 +8,6 @@ const config = require('./config');
 const { api } = config
 import fetch from 'dva/fetch';
 
-
 const LayoutShop = require('./routes/LayoutShop/');
 
 const registerModel = (app, model) => {
@@ -20,8 +19,9 @@ const registerModel = (app, model) => {
 const Routers = function ({ history, app }) {
 
   function checkLogin(nextState, replace, cb) {
-
-    const login = `/login#${nextState.location.pathname}`
+    //转义反斜杆是因为微信说state里面只支持字母与数字
+    const dest = nextState.location.pathname.replace(/\//g,'777')
+    const login = config.wechatLoginUrl.replace('DESTINATION',dest)
 
     function checkStatus(response) {
       if (response.status >= 200 && response.status < 300) {
@@ -47,14 +47,14 @@ const Routers = function ({ history, app }) {
         console.log(user)
       }else{
         const fail = response.payload
-        console.log(`check login NOT pass because of ${fail.errmsg}, repalce url to ${login}`)
-        replace(login)
+        console.log(`check login NOT pass because of ${fail.errmsg}, redirect url to ${login}`)
+        window.location = login
       }
       cb()
     }
     function handleError(err){
-      console.log(`check login NOT pass because of ${err}, repalce url to ${login}`)
-      replace(login)
+      console.log(`check login NOT pass because of ${err}, redirect url to ${login}`)
+      window.location = login
       cb()
     }
 
@@ -99,14 +99,6 @@ const Routers = function ({ history, app }) {
           },
         },
       ],
-    },
-    {
-      path: '/login',
-      getComponent (nextState, cb) {
-        require.ensure([], require => {
-          cb(null, require('./routes/WechatLoginPage/'));
-        }, 'WechatLoginPage')
-      },
     },
     {
       path: '/address',

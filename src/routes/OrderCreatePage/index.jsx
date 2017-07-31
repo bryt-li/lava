@@ -281,6 +281,11 @@ class OrderCreatePage extends React.Component {
 					<Button type="primary" onClick={this.onSubmit}>提交订单</Button>
 				</WingBlank>
 
+		    	<WhiteSpace size="lg"/>
+		    	<WhiteSpace size="lg"/>
+		    	<WhiteSpace size="lg"/>
+		    	<WhiteSpace size="lg"/>
+
 		    </div>
 		</div>
 		);
