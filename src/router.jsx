@@ -119,16 +119,6 @@ const Routers = function ({ history, app }) {
       },
     },
     {
-      path: '/address/map',
-      onEnter: checkLogin,
-      getComponent (nextState, cb) {
-        require.ensure([], require => {
-          registerModel(app, require('./models/address'));
-          cb(null, require('./routes/AddressPage/MapPage/'))
-        }, 'MapPage')
-      },
-    },
-    {
       path: '/user',
       onEnter: checkLogin,
       getComponent (nextState, cb) {

@@ -72,6 +72,7 @@ class UserPage extends React.Component {
 	}
 
 	onAddressClick = () => {
+		window.sessionStorage.setItem('address_page_return', this.props.location.pathname)
 		this.props.dispatch(routerRedux.push('/address'))
 	}
 

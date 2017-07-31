@@ -35,7 +35,7 @@ class HomePage extends React.Component {
 	            <title>活力火山微商城</title>
 	        </Helmet>
 
-	  	    <Header />
+	  	    <Header location={location}/>
 
 			{this.state.imageLoading && <ReactLoading className={styles.loading} type='spinningBubbles' color='$444'/> }
 	  		<Carousel

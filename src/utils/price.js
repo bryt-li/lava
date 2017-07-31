@@ -7,6 +7,13 @@ const formatMoney = (cents) => {
 	return (cents/100.00).toFixed(2)
 }
 
+//当前配送范围为直径不超过100KM内
+const outOfDeliveryRange = (lat,lng) => {
+	if(calculateDeliveryDistance(lat,lng) > 100)
+		return true
+	else
+		return false
+}
 
 //计算预订折扣，提前一天下单，减5元
 const calculateAdvancePrice = (date) => {
@@ -90,4 +97,5 @@ module.exports = {
 	calculateAdvancePrice,
 	calculateDeliveryDistance,
 	calculateDeliveryPrice,
+	outOfDeliveryRange,
 }

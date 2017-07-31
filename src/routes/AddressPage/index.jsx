@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Flex, Carousel, WhiteSpace, WingBlank,
+import { Modal, Flex, Carousel, WhiteSpace, WingBlank,
 Button, Grid, Icon, NavBar, List, DatePicker, Picker, InputItem, Toast, TextareaItem } from 'antd-mobile';
 import {Helmet} from "react-helmet";
 import {  routerRedux } from 'dva/router'
 import { createForm } from 'rc-form'
 
 import styles from './index.less'
+
+const config = require("../../config")
 
 const Item = List.Item
 const Brief = Item.Brief
@@ -20,6 +22,22 @@ const NULL_DELIVERY = {
   location:'',
   lat:null,
   lng:null
+}
+
+const ModalDialog = ({visible, onWarnClose}) => {
+  return(
+    <Modal
+      title=""
+      transparent
+      maskClosable={false}
+      visible={visible}
+      onClose={onWarnClose()}
+      footer={[{ text: '确定', onPress: () => { onWarnClose()(); } }]}
+      >
+      <p>对不起，您选择的地址我们暂时无法服务。</p>
+      <p>请在长沙市范围内选择离您最近的知名地址。</p>
+    </Modal>
+  )
 }
 
 class AddressPage extends React.Component {
@@ -40,6 +58,13 @@ class AddressPage extends React.Component {
 		    focusedName: false
 		}
 	}
+
+	onWarnClose = () => (e) => {
+		if(e)
+        	e.preventDefault();
+
+	    this.props.dispatch({type:'address/updateModel', payload:false})
+    }
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({...this.state, delivery: {...this.state.delivery, ...nextProps.delivery}});
@@ -66,10 +91,14 @@ class AddressPage extends React.Component {
 
 	onMapClick = () => {
 		//save name & phone before redirect to map
-		const {dispatch} = this.props
+		const {dispatch,location} = this.props
 		const { name, phone } = this.state.delivery
+
+		//todo：离开应用了，这时相当于没有保存用户当前输入
 		dispatch({type:'user/updateDelivery', payload:{name,phone}})
-		dispatch(routerRedux.replace('/address/map'))
+
+		//微信不支持iframe，必须结束应用跳转走
+		window.location = config.mapUrl
 	}
 
 	onSubmit = () => {
@@ -88,18 +117,20 @@ class AddressPage extends React.Component {
 			return
 		}
 		
+		const destination = window.sessionStorage.getItem('address_page_return')
 		this.props.dispatch({
 			type: 'address/saveDelivery', 
-			payload: delivery
+			payload: {delivery,destination}
 		})
 	}
 
 	onBackClick = () => {
-		this.props.dispatch(routerRedux.goBack())
+		const destination = window.sessionStorage.getItem('address_page_return')
+		this.props.dispatch(routerRedux.push(destination))
 	}
 
 	render(){
-		const {dispatch, form, user} = this.props
+		const {dispatch, form, user, showModal} = this.props
 		if(!user || !user.id)
 			return null
 
@@ -114,6 +145,9 @@ class AddressPage extends React.Component {
 				<script src="/res/antm-viewport.min.js"/>
 	            <title>设置收货信息</title>
 	        </Helmet>
+	        
+            <ModalDialog visible={showModal} onWarnClose={this.onWarnClose} />
+
 		    <NavBar
 		        leftContent="返回"
 		        mode="light"
@@ -189,6 +223,7 @@ AddressPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+	showModal: state.address.showModal,
 	user: state.user,
     delivery:state.user.delivery,
 });

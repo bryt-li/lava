@@ -97,7 +97,8 @@ class OrderCreatePage extends React.Component {
 	}
 
 	onChangeDeliveryClick = () =>{
-		const {dispatch} = this.props
+		const {dispatch,location} = this.props
+		window.sessionStorage.setItem('address_page_return', location.pathname)
 		dispatch(routerRedux.push('/address'))
 	}
 

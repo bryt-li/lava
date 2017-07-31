@@ -1,4 +1,4 @@
-import {HLHS_BACKEND,WECHAT_BACKEND} from './deploy'
+import {HLHS_BACKEND,HLHS_FRONTEND,WECHAT_BACKEND} from './deploy'
 
 const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
@@ -8,7 +8,6 @@ const WECHAT_LOGIN_REDIRECT_URL=`${HLHS_BACKEND}/user/wxlogin`
 const WECHAT_LOGIN_SCOPE='snsapi_userinfo'
 
 const MAP_KEY = 'FE4BZ-LJXW4-IWBUR-DXK2T-TYC7K-WTBGD'
-const MAP_BACK_URL = `http://apis.map.qq.com/tools/locpicker?search=1&type=1&key=${MAP_KEY}&referer=hlhs`
 
 module.exports = {
   name: '活力火山健康轻食',
@@ -21,7 +20,7 @@ module.exports = {
   openPages: ['/','/signin','/signup','/item'],
 
   wechatLoginUrl: `${WECHAT_BACKEND}/authorize?appid=${WECHAT_APP_ID}&redirect_uri=${WECHAT_LOGIN_REDIRECT_URL}&response_type=code&scope=${WECHAT_LOGIN_SCOPE}&state=DESTINATION#wechat_redirect`,
-  mapUrl: `http://apis.map.qq.com/tools/locpicker?search=1&type=1&key=${MAP_KEY}&referer=hlhs`,
+  mapUrl: `http://apis.map.qq.com/tools/locpicker?search=1&type=0&backurl=${HLHS_FRONTEND}/address&key=${MAP_KEY}&referer=hlhs`,
 
   api: {
     getMe: `${HLHS_BACKEND}/user/me`,

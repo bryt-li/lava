@@ -14,6 +14,7 @@ function Header({ dispatch, location, delivery, user }) {
   }
 
   const handleAddressClicked = ()=>{
+    window.sessionStorage.setItem('address_page_return', location.pathname)
     dispatch(routerRedux.push('/address'))
   }
 
