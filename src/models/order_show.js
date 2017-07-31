@@ -50,6 +50,13 @@ export default {
     *wechatPay({payload,}, { call, select, put }) {
       Toast.loading('正在发起支付',0)
 
+/*
+      if (typeof WeixinJSBridge == "undefined"){
+        Toast.hide()
+        Toast.fail('只支持微信浏览器')
+        return
+      }
+*/
       console.log('start wechat pay')
       const {order} = yield(select(state => state.order_show))
 
@@ -71,12 +78,6 @@ export default {
 
       const payment = response.payload
       console.log(payment)
-
-      if (typeof WeixinJSBridge == "undefined"){
-        Toast.hide()
-        Toast.fail('只支持微信浏览器')
-        return
-      }
 
       //调用微信支付JSAPI
       WeixinJSBridge.invoke(
