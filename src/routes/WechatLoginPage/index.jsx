@@ -18,33 +18,17 @@ class WechatLoginPage extends React.Component {
 		super(props)
 
 		const {dispatch, user, location} = props
-		if(user.id){
-	    	const dest = location.hash.replace('#','')
-	        dispatch(routerRedux.replace(dest))
+    	const dest = location.hash.replace('#','')
 
+		if(user.id){
+	        dispatch(routerRedux.replace(dest))
 	        console.log(`wechat login page find user already signed in, directly replace to ${dest}`)
 	        return
 		}
 
-		window.onSignedIn = this.onSignedIn
-		window.onSignInFailed = this.onSignInFailed
-	}
-
-	onSignedIn = (json) => {
-		const user = JSON.parse(json)
-
-    	const {dispatch} = this.props
-        dispatch({ type: 'user/updateUser', payload: user})
-
-    	const dest = this.props.location.hash.replace('#','')
-        dispatch(routerRedux.replace(dest))
-
-		console.log(`wechat signed in with user id: ${user.id}, replace url to: ${dest}`)
-	}
-
-	onSignInFailed  = () => {
-		dispatch(routerRedux.replace('/'))
-		console.log('wechat sign in failed, replace url to: /')
+		//因为微信浏览器不支持iframe跳转登录
+		//必须离开当前H5应用
+		window.location = config.wechatLoginUrl.replace('DESTINATION',dest.replace(/\//g,'777'))
 	}
 
 	render(){
@@ -58,9 +42,6 @@ class WechatLoginPage extends React.Component {
 	            <title>正在进行微信登录</title>
 	            <script src='/res/login.js' type="text/javascript" />
 	        </Helmet>
-		    <iframe width="100%" height="100%" frameBorder="0" 
-			    src={config.wechatLoginUrl}>
-			</iframe> 
 		</div>
 	  	);
 	}

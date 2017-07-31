@@ -21,7 +21,7 @@ const Routers = function ({ history, app }) {
 
   function checkLogin(nextState, replace, cb) {
 
-    const dest = `/login#${nextState.location.pathname}`
+    const login = `/login#${nextState.location.pathname}`
 
     function checkStatus(response) {
       if (response.status >= 200 && response.status < 300) {
@@ -47,14 +47,14 @@ const Routers = function ({ history, app }) {
         console.log(user)
       }else{
         const fail = response.payload
-        console.log(`check login NOT pass because of ${fail.errmsg}, repalce url to ${dest}`)
-        replace(dest)
+        console.log(`check login NOT pass because of ${fail.errmsg}, repalce url to ${login}`)
+        replace(login)
       }
       cb()
     }
     function handleError(err){
-      console.log(`check login NOT pass because of ${err}, repalce url to ${dest}`)
-      replace(dest)
+      console.log(`check login NOT pass because of ${err}, repalce url to ${login}`)
+      replace(login)
       cb()
     }
 
