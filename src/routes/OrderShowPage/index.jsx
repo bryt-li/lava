@@ -22,20 +22,8 @@ class OrderShowPage extends React.Component {
 	}
 
 	handlePayClicked = () => {
-		const {order,dispatch} = this.props
-		if(!order || !order.id || order.status>0 || order.total_price<=0){
-			Toast.info('订单状态错误')
-			return
-		}
-
-		//生成一个支付订单，支付金额order.total_price，订单号order.id
-		dispatch({
-			type:'order_show/wechatPay',
-			payload:{
-				order_code:order.code,
-				total_fee:order.total_price
-			}
-		})
+		const {dispatch} = this.props
+		dispatch({type:'order_show/wechatPay'})
 	}
 
 	render(){

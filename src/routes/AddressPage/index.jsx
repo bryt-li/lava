@@ -46,12 +46,6 @@ class AddressPage extends React.Component {
 
 		const {user, delivery, dispatch, location} = props
 
-		console.log(user)
-		if(!user.id){
-			dispatch(routerRedux.replace(`/login#${location.pathname}`))
-			return
-		}
-
 		this.state = {
 			delivery: delivery?delivery:NULL_DELIVERY,
 		    hasError: false,

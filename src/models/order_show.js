@@ -1,6 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { parse } from 'qs';
-import { wechatPay, getOrder, convertOrderForClient } from '../services/order';
+import { getWechatPayJsapiArgs, getOrder, convertOrderForClient } from '../services/order';
 import { Toast } from 'antd-mobile'
 import pathToRegexp from 'path-to-regexp';
 
@@ -48,33 +48,60 @@ export default {
     },
 
     *wechatPay({payload,}, { call, select, put }) {
-      const {order_code, total_fee} = payload
+      Toast.loading('正在发起支付',0)
+
       console.log('start wechat pay')
-      const { response, err } = yield call(wechatPay)
-      if(err || !response){
+      const {order} = yield(select(state => state.order_show))
+
+      if(!order || !order.id || order.status>0 || order.total_price<=0){
+        Toast.hide()
+        Toast.fail('订单状态错误')
+        return
+      }
+
+      const { response, err } = yield call(getWechatPayJsapiArgs, order.id)
+      if(err || !response || !response.ok || !response.payload){
         console.log('wechatPay error')
         console.error(err)
+        console.error(response)
+        Toast.hide()
+        Toast.fail('创建微信支付订单失败')
         return
       }
 
-      if(response.ok==null || !response.payload){
-        console.log(`wechat pay response format error: ${response}`)
-        return
-      }
-
-      if(!response.ok){
-        console.log(`wechat pay succeeded with error message: ${response.payload.errmsg}`)
-        return
-      }
-
-      const payment = JSON.parse(response.payload)
-//      yield put({ type: 'updateUser', payload: user })
-
-      console.log('wechat pay succeeded with payload:')
+      const payment = response.payload
       console.log(payment)
 
+      if (typeof WeixinJSBridge == "undefined"){
+        Toast.hide()
+        Toast.fail('只支持微信浏览器')
+        return
+      }
+
+      //调用微信支付JSAPI
+      WeixinJSBridge.invoke(
+        'getBrandWCPayRequest',
+        payment,
+        function(res){
+          if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+            order.status = 1
+            put({ type: 'updateOrder', payload: order })
+            Toast.hide()
+            Toast.info('微信支付成功')
+          }
+          if(res.err_msg == "get_brand_wcpay_request:fail" ) {
+            Toast.hide()
+            Toast.fail('微信支付失败')            
+          }
+          if(res.err_msg == "get_brand_wcpay_request:cancel" ) {
+            Toast.hide()
+            Toast.info('取消微信支付')
+          }
+        }
+      )
+
+      Toast.hide()
     },
-    
   },
 
   reducers: {

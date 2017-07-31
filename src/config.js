@@ -29,7 +29,7 @@ module.exports = {
     createOrder: `${HLHS_BACKEND}/order/create`,
     getOrder: `${HLHS_BACKEND}/order/get`,
     getOrderList: `${HLHS_BACKEND}/order/list`,
-    wechatPay:  `${HLHS_BACKEND}/order/pay/wechat`,
+    getWechatPayJsapiArgs:  `${HLHS_BACKEND}/order/pay/wechat/jsapi`,
 
     userLogin: `${APIV1}/user/login`,
     userLogout: `${APIV1}/user/logout`,
