@@ -22,6 +22,9 @@ const calculateAdvancePrice = (date) => {
 	if(date.toDate().format("yyyy-MM-dd") == today.toDate().format("yyyy-MM-dd"))
 		advancePrice = 0
 
+	//todo:测试用，全部无折扣
+	return 0
+
 	return advancePrice
 }
 
