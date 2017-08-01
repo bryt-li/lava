@@ -47,7 +47,7 @@ export default {
       yield put({ type: 'app/clearMenu'})
 
       //goto OrderShowPage
-      const url = `/order/show/${order.id}`
+      const url = `/shop/order/show/${order.id}`
       yield put(routerRedux.push(url))
 
       console.log(`create order succeeded with id: ${order.id}, code: ${order.code}, clear menu and redirect to ${url}`)

@@ -16,7 +16,7 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({pathname}) => {
-        const match = pathToRegexp('/order/list').exec(pathname);
+        const match = pathToRegexp('/shop/order/list').exec(pathname);
         if (match) {
           dispatch({type:'getOrderList'})
         }

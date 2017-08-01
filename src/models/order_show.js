@@ -15,7 +15,7 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({pathname}) => {
-        const match = pathToRegexp('/order/show/:id').exec(pathname);
+        const match = pathToRegexp('/shop/order/show/:id').exec(pathname);
         if (match) {
           const id = match[1]
           dispatch({type:'getOrder',payload:id})
@@ -67,9 +67,7 @@ export default {
         Toast.hide()
         Toast.fail('创建微信支付订单失败')
         return
-      }
-
-      
+      }      
 
       //调用微信支付JSAPI
       WeixinJSBridge.invoke(
