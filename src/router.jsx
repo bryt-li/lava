@@ -72,12 +72,11 @@ const Routers = function ({ history, app }) {
       cb()
       console.log('check Login passed because of local user exists.')
     }
-
   }
 
   const routes = [
     {
-      path: '/',
+      path: '/shop',
       component: LayoutShop,
       getIndexRoute (nextState, cb) {
          require.ensure(
@@ -91,7 +90,7 @@ const Routers = function ({ history, app }) {
       },
       childRoutes: [
         {
-          path: '/i/:type/:id',
+          path: '/shop/i/:type/:id',
           getComponent (nextState, cb) {
             require.ensure([], require => {
               cb(null, require('./routes/LayoutShop/ItemPage/'))
@@ -101,7 +100,7 @@ const Routers = function ({ history, app }) {
       ],
     },
     {
-      path: '/address',
+      path: '/shop/address',
       onEnter: checkLogin,
       getComponent (nextState, cb) {
         require.ensure([], require => {
@@ -111,7 +110,7 @@ const Routers = function ({ history, app }) {
       },
     },
     {
-      path: '/user',
+      path: '/shop/user',
       onEnter: checkLogin,
       getComponent (nextState, cb) {
         require.ensure([], require => {
@@ -120,7 +119,7 @@ const Routers = function ({ history, app }) {
       },
     },
     {
-      path: '/order/create',
+      path: '/shop/order/create',
       onEnter: checkLogin,
       getComponent (nextState, cb) {
         require.ensure([], require => {
@@ -130,7 +129,7 @@ const Routers = function ({ history, app }) {
       },
     },
     {
-      path: '/order/list',
+      path: '/shop/order/list',
       onEnter: checkLogin,
       getComponent (nextState, cb) {
         require.ensure([], require => {
@@ -140,7 +139,7 @@ const Routers = function ({ history, app }) {
       },
     },
     {
-      path: '/order/show/:id',
+      path: '/shop/order/show/:id',
       onEnter: checkLogin,
       getComponent (nextState, cb) {
         require.ensure([], require => {
@@ -150,7 +149,7 @@ const Routers = function ({ history, app }) {
       },
     },
     {
-      path: '/order/edit/:id',
+      path: '/shop/order/edit/:id',
       onEnter: checkLogin,
       getComponent (nextState, cb) {
         require.ensure([], require => {

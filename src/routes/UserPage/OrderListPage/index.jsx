@@ -35,7 +35,7 @@ class OrderListPage extends React.Component {
 		    <NavBar
 		        leftContent="返回"
 		        mode="light"
-		        onLeftClick={() => dispatch(routerRedux.push('/user'))}
+		        onLeftClick={() => dispatch(routerRedux.push('/shop/user'))}
 		    >
 		    	我的订单
 		    </NavBar>
@@ -44,14 +44,14 @@ class OrderListPage extends React.Component {
 		    {(orders&&orders.length>0)?orders.map((order,i)=>{
 		    	return(
 		    	<Item key={i} arrow="horizontal" extra={`￥${formatMoney(order.total_price)}元`}
-			    	onClick={()=> dispatch(routerRedux.push(`/order/show/${order.id}`))}>
+			    	onClick={()=> dispatch(routerRedux.push(`/shop/order/show/${order.id}`))}>
     		        订单编号：{order.code}
 			        <Brief>状态：{formatStatus(order.status)}</Brief>
 			    </Item>
 			    )
 		    }):
 			    <Item arrow="horizontal" extra="去下单" 
-			    	onClick={()=> dispatch(routerRedux.push('/'))}>
+			    	onClick={()=> dispatch(routerRedux.push('/shop/'))}>
 			    	没有订单
 			    </Item>
 			}

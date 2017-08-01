@@ -8,7 +8,7 @@ const WECHAT_BACKEND = `${HLHS_BACKEND}/wechat_login_mock`
 
 //服务器部署
 
-const HLHS_FRONTEND = 'https://m.huolihuoshan.com/wechat-app'
+const HLHS_FRONTEND = 'https://m.huolihuoshan.com'
 const HLHS_BACKEND = 'https://m.huolihuoshan.com/hlhs-backend'
 const WECHAT_BACKEND = 'https://open.weixin.qq.com/connect/oauth2'
 

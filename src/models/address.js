@@ -14,7 +14,7 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({pathname, search, query}) => {
-        const match = pathToRegexp('/address').exec(pathname);
+        const match = pathToRegexp('/shop/address').exec(pathname);
         console.log(search)
         console.log(query)
         if (match && query.latng) {

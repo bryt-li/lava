@@ -68,12 +68,12 @@ class UserPage extends React.Component {
 	}
 
 	onOrdersClick = () => {
-		this.props.dispatch(routerRedux.push('/order/list'))
+		this.props.dispatch(routerRedux.push('/shop/order/list'))
 	}
 
 	onAddressClick = () => {
 		window.sessionStorage.setItem('address_page_return', this.props.location.pathname)
-		this.props.dispatch(routerRedux.push('/address'))
+		this.props.dispatch(routerRedux.push('/shop/address'))
 	}
 
 	onSoonClick = () => {
@@ -92,7 +92,7 @@ class UserPage extends React.Component {
 				<NavBar
 			        leftContent="返回"
 			        mode="light"
-			        onLeftClick={() => dispatch(routerRedux.push('/'))}
+			        onLeftClick={() => dispatch(routerRedux.push('/shop/'))}
 			    >
 			    	活力火山会员
 			    </NavBar>

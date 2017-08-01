@@ -35,7 +35,7 @@ class OrderEditPage extends React.Component {
 		    <NavBar
 		        leftContent="返回"
 		        mode="light"
-		        onLeftClick={() => dispatch(routerRedux.push('/'))}
+		        onLeftClick={() => dispatch(routerRedux.push('/shop/'))}
 		    >
 		    	我的订单
 		    </NavBar>

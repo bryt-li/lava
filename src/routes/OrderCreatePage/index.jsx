@@ -99,7 +99,7 @@ class OrderCreatePage extends React.Component {
 	onChangeDeliveryClick = () =>{
 		const {dispatch,location} = this.props
 		window.sessionStorage.setItem('address_page_return', location.pathname)
-		dispatch(routerRedux.push('/address'))
+		dispatch(routerRedux.push('/shop/address'))
 	}
 
 	onSubmit = () => {
@@ -168,7 +168,7 @@ class OrderCreatePage extends React.Component {
 		    <NavBar
 		        leftContent="返回"
 		        mode="light"
-		        onLeftClick={() => dispatch(routerRedux.push('/'))}
+		        onLeftClick={() => dispatch(routerRedux.push('/shop/'))}
 		    >
 		    	确认订单
 		    </NavBar>

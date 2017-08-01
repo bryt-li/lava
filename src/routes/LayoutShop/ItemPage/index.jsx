@@ -53,7 +53,7 @@ class ItemPage extends React.Component{
 		    <NavBar
 		        leftContent="返回"
 		        mode="light"
-		        onLeftClick={() => this.props.dispatch(routerRedux.push('/'))}
+		        onLeftClick={() => this.props.dispatch(routerRedux.push('/shop/'))}
 		        rightContent={[
 		          <Icon key="0" type="search" style={{marginRight: '0.32rem'}} />,
 		          <Icon key="1" type="ellipsis" />

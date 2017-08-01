@@ -46,7 +46,7 @@ class ShopItem extends React.Component {
 		
 		return(
 		<Flex.Item className={classNames({[styles.item]:true, [styles.item_selected]:quantity>0})}>
-			<Link to={`/i/${type}/${id}`}>
+			<Link to={`/shop/i/${type}/${id}`}>
 				{imageLoading && <ReactLoading className={styles.loading} type='spinningBubbles' color='$444'/> }
 				<img onLoad={this.handleImageLoaded} src={`/menu/${type}/${id}/home.jpg`} />
 			</Link>

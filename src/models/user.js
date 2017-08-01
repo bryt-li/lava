@@ -32,7 +32,7 @@ export default {
       }
 
       yield put({type:'updateUser', payload: {}})
-      yield put(routerRedux.push('/'))
+      yield put(routerRedux.push('/shop/'))
     },
 
   },

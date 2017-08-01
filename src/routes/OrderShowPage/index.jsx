@@ -39,7 +39,7 @@ class OrderShowPage extends React.Component {
 			    <NavBar
 			        leftContent="返回"
 			        mode="light"
-			        onLeftClick={() => dispatch(routerRedux.push('/order/list'))}
+			        onLeftClick={() => dispatch(routerRedux.push('/shop/order/list'))}
 			    >
 			    	查看订单
 			    </NavBar>
@@ -74,7 +74,7 @@ class OrderShowPage extends React.Component {
 		    <NavBar
 		        leftContent="返回"
 		        mode="light"
-		        onLeftClick={() => dispatch(routerRedux.push('/order/list'))}
+		        onLeftClick={() => dispatch(routerRedux.push('/shop/order/list'))}
 		    >
 		    	查看订单
 		    </NavBar>

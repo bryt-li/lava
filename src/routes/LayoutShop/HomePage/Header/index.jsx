@@ -10,16 +10,16 @@ import styles from './index.less';
 function Header({ dispatch, location, delivery, user }) {
 
   const handleHomeClicked = ()=>{
-    dispatch(routerRedux.push(`/`))
+    dispatch(routerRedux.push('/shop/'))
   }
 
   const handleAddressClicked = ()=>{
     window.sessionStorage.setItem('address_page_return', location.pathname)
-    dispatch(routerRedux.push('/address'))
+    dispatch(routerRedux.push('/shop/address'))
   }
 
   const handleUserClicked = ()=> {
-    dispatch(routerRedux.push('/user'))
+    dispatch(routerRedux.push('/shop/user'))
   }
   
   let address = delivery?delivery.location:'设置收货地址'

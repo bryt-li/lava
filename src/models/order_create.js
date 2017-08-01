@@ -22,7 +22,7 @@ export default {
       if(!user || !user.id){
         Toast.hide()
         Toast.info('用户必须先登录')
-        yield put(routerRedux.push('/'))
+        yield put(routerRedux.push('/shop/'))
         return
       }
 

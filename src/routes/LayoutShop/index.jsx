@@ -76,7 +76,7 @@ class LayoutShop extends React.Component {
     if(this.nothing_in_cart())
       this.showModal()()
     else
-      this.props.dispatch(routerRedux.push('/order/create'));
+      this.props.dispatch(routerRedux.push('/shop/order/create'));
   }
 
   render(){

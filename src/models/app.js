@@ -39,13 +39,6 @@ export default {
   },
 
   effects: {
-    *checkLogin({payload},{call,select,put}){
-      console.log(payload)
-      if(payload == '/user'){
-        console.log('push /')
-        routerRedux.push('/')
-      }
-    },
 
     *restoreModelFromLocalStorage({payload},{call,select,put}){
       //这是当前的新菜单，quantity都是0
