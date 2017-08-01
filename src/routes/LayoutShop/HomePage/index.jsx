@@ -20,14 +20,14 @@ class HomePage extends React.Component {
 	}
 
   	handleImageLoaded = () => {
-  		this.setState({...this.state, imageLoading:false});
+  		this.setState({...this.state, imageLoading:false})
   	}
 	
 	render(){
-		let {dispatch, location, home, menu} = this.props;
+		let {dispatch, location, home, user} = this.props
 		
-		const {salads, yogurts, rices, juices} = home;
-
+		const {salads, yogurts, rices, juices, tests} = home
+		console.log(home)
 	  	return (
 	  	<div className={styles.container}>
   			<Helmet>
@@ -49,6 +49,8 @@ class HomePage extends React.Component {
 				<img alt="icon" src={`/home/3.jpg`} />
 				<img onLoad={this.handleImageLoaded} alt="icon" src={`/home/4.jpg`} />
 		    </Carousel>
+
+
 		    <h1><span>主食沙拉</span></h1>
 	  		<WingBlank size="sm">
 	  			{salads.map((id,key) => {
@@ -85,6 +87,36 @@ class HomePage extends React.Component {
 		  	
 		  	<hr />
 
+		  	{(user&&(user.nickname=='李昕'||user.nickname=='HLHS'))?
+		  	<div>
+			  	<h1><span>内部测试</span></h1>
+		  		<WingBlank size="sm">
+		  			{tests.map((id,key) => {
+		  				let prevId=null;
+		  				let output = false;
+
+		  				if(key%2==1){
+		  					prevId = tests[key-1];
+		  					output = true;
+		  				}else if(key==tests.length-1){
+		  					prevId = id;
+		  					id=null;
+		  					output = true;
+		  				}
+
+			  			if (output)	return (  				
+		  					<Flex key={key}>
+			  					<ShopItem type="tests" id={prevId} />
+			  					<ShopItem type="tests" id={id} />
+			  				</Flex>
+		  				);
+		  			})}
+			  	</WingBlank>
+			  	<hr />
+		  	</div>
+		  	:null
+		  	}
+
 		  	<div style={{display:'block',height:'400px'}} />
 		</div>
 		);
@@ -96,6 +128,7 @@ HomePage.propTypes = {
 
 const mapStateToProps = (state) => ({
     home: state.home,
+    user: state.user,
 });
 
 export default connect(mapStateToProps)(HomePage);

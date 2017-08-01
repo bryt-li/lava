@@ -1,12 +1,13 @@
 
-import { routerRedux } from 'dva/router';
-import { getMe } from '../services/user';
+import { routerRedux } from 'dva/router'
+import { getMe } from '../services/user'
 
-const HOME = require('../config/home.js');
-const HOME_SALADS = HOME.salads;
-const HOME_JUICES = HOME.juices;
-const HOME_RICES = HOME.rices;
-const HOME_YOGURTS = HOME.yogurts;
+const HOME = require('../config/home.js')
+const HOME_SALADS = HOME.salads
+const HOME_JUICES = HOME.juices
+const HOME_RICES = HOME.rices
+const HOME_YOGURTS = HOME.yogurts
+const HOME_TESTS = HOME.tests
 
 export default {
 
@@ -16,14 +17,15 @@ export default {
     salads:HOME_SALADS,
     juices:HOME_JUICES,
     rices:HOME_RICES,
-    yogurts:HOME_YOGURTS
+    yogurts:HOME_YOGURTS,
+    tests:HOME_TESTS,
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
       //首页进入的时候，执行一次自动登录的尝试
       //看server session是不是仍然有效
-      dispatch({ type: 'getMe' });
+      dispatch({ type: 'getMe' })
     },
   },
 
