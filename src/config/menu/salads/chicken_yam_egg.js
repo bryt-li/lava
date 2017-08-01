@@ -1,7 +1,7 @@
 module.exports={
 	name: "鸡胸紫薯鸡蛋沙拉",
 	original_price: 4900,
-	price: 4500,
+	price: 45,
 	rice: false,
 	season: "和风汁",
 	delivery_time: "07-05 周一12:30之前",
