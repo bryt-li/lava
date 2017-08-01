@@ -99,7 +99,7 @@ export default {
 
   reducers: {
     updateOrder(state, action){
-      return { ...state, order: action.payload }
+      return { ...state, order: {...action.payload} }
     },
   },
 
