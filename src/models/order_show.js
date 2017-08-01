@@ -69,16 +69,12 @@ export default {
         return
       }      
 
+      const jsapi = response.payload
+
       //调用微信支付JSAPI
       WeixinJSBridge.invoke(
-        'getBrandWCPayRequest', {
-          "appId": response.payload.appId,
-          "timeStamp": response.payload.timeStamp,
-          "nonceStr": response.payload.nonceStr,
-          "package": response.payload.package,
-          "signType": response.payload.signType,
-          "paySign": response.payload.paySign
-        },
+        'getBrandWCPayRequest', 
+        jsapi,
         function(res){
           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
             order.status = 1
