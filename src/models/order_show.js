@@ -78,9 +78,15 @@ export default {
         function(res){
           if(res.err_msg == "get_brand_wcpay_request:ok" ) {
             order.status = 1
-            put({ type: 'updateOrder', payload: order })
+
+            //Todo: 这里put没有用，只好直接跳转走
+            //put({ type: 'updateOrder', payload: order })
+            
             Toast.hide()
             Toast.info('微信支付成功')
+
+            url = `/shop/order/show/${order.id}`
+            window.location = url
           }
           if(res.err_msg == "get_brand_wcpay_request:fail" ) {
             Toast.hide()

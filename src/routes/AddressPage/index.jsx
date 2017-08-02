@@ -89,7 +89,7 @@ class AddressPage extends React.Component {
 		const { name, phone } = this.state.delivery
 
 		//todo：离开应用了，这时相当于没有保存用户当前输入
-		dispatch({type:'user/updateDelivery', payload:{name,phone}})
+		//dispatch({type:'user/updateDelivery', payload:{name,phone}})
 
 		//微信不支持iframe，必须结束应用跳转走
 		window.location = config.mapUrl

@@ -23,7 +23,7 @@ const calculateAdvancePrice = (date) => {
 		advancePrice = 0
 
 	//todo:测试用，全部无折扣
-	return 0
+	//return 0
 
 	return advancePrice
 }
@@ -43,7 +43,7 @@ const calculateDeliveryPrice = (items_price, lat, lng) => {
 	let deliveryPrice = parseInt(km*250)
 
 	//todo:测试用，全部免运费
-	return 0
+	//return 0
 
 	//免运费
 	if(items_price>3600 && km < 3)
