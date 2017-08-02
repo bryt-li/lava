@@ -1,7 +1,7 @@
 module.exports = {
 	name: "缤纷水果沙拉",
 	original_price: 3900,
-	price: 50,
+	price: 550,
 	rice: false,
 	season: "和风汁",
 	delivery_time: "07-05 周一12:30之前",
