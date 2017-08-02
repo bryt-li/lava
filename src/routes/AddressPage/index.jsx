@@ -205,6 +205,7 @@ class AddressPage extends React.Component {
 					<Button type="primary" onClick={this.onSubmit}>保存配送信息</Button>
 				</WingBlank>
 		    </div>
+		    <div style={{display:'block',height:'500px'}} />
 		</div>
 	  	);
 	}

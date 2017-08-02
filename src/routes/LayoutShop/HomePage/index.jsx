@@ -27,8 +27,8 @@ class HomePage extends React.Component {
 		let {dispatch, location, home, user} = this.props
 		
 		const {salads, yogurts, rices, juices, tests} = home
-		console.log(home)
-	  	return (
+		
+		return (
 	  	<div className={styles.container}>
   			<Helmet>
 	            <meta charSet="utf-8" />
@@ -117,7 +117,7 @@ class HomePage extends React.Component {
 		  	:null
 		  	}
 
-		  	<div style={{display:'block',height:'400px'}} />
+		  	<div style={{display:'block',height:'500px'}} />
 		</div>
 		);
 	}

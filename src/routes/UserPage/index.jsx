@@ -161,12 +161,9 @@ class UserPage extends React.Component {
 						<Button type="primary" onClick={this.onLogoutClicked}>退出微信登录</Button>
 					</WingBlank>
 
-  					<WhiteSpace size="lg"/>
-  					<WhiteSpace size="lg"/>
-  					<WhiteSpace size="lg"/>
-  					<WhiteSpace size="lg"/>
-
 		      	</div>
+
+		      	<div style={{display:'block',height:'500px'}} />
 			</div>
 		);
 	}

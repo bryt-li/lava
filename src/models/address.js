@@ -15,8 +15,6 @@ export default {
     setup({ dispatch, history }) {
       return history.listen(({pathname, search, query}) => {
         const match = pathToRegexp('/shop/address').exec(pathname);
-        console.log(search)
-        console.log(query)
         if (match && query.latng) {
           const loc = query.latng.split(',')
           const lat = parseFloat(loc[0])

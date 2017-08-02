@@ -16,7 +16,6 @@ import styles from './index.less';
 const Item = List.Item
 const Brief = Item.Brief
 
-
 class OrderListPage extends React.Component {
 	constructor(props) {
 		super(props);
@@ -52,11 +51,13 @@ class OrderListPage extends React.Component {
 		    }):
 			    <Item arrow="horizontal" extra="去下单" 
 			    	onClick={()=> dispatch(routerRedux.push('/shop/'))}>
-			    	没有订单
+			    	当前没有订单
 			    </Item>
 			}
 			    </List>
 		    </div>
+
+		    <div style={{display:'block',height:'500px'}} />
 		</div>
 		);
 	}

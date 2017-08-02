@@ -20,5 +20,16 @@ module.exports={
 			Fat:14,
 			Pro:42
 		}
-	}
+	},
+	italian_pesto_dressing:{
+		name:'意式罗勒酱',
+		intro:'清香淡咸',
+		ingredients:'橄榄油,罗勒叶,核桃仁',
+		nutrition:{
+			C:188,
+			Cx:0,
+			Fat:21,
+			Pro:1
+		}
+	},
 }

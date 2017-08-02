@@ -79,11 +79,8 @@ class ItemPage extends React.Component{
 			    </Flex>
 			    <hr />
 			    <div className={styles.order}>
-			    	<div className={styles.order_desc}>
-			    		<div><span>沙拉标配</span>{`${item.season}(${item.bread?'小圆面包':'无面包'})`}</div>
-			    		<div><span>配送时间</span>至少提前一天预订</div>
-			    	</div>
-		    		<Button className={styles.order_btn}>购买</Button>
+		    		<div><span>沙拉标配</span>{`${item.season}(${item.bread?'小圆面包':'无面包'})`}</div>
+		    		<div><span>配送时间</span>至少提前一天预订</div>
 			    </div>
 		    </WingBlank>
 		   
@@ -93,7 +90,7 @@ class ItemPage extends React.Component{
 		    </div>
 		    <div className={styles.majors}>
 		    	<h1><span>特色食材</span></h1>
-		    	<p>以下为部分主要食材，百分比为表示总量使用比例。</p>
+		    	<p>以下为部分主要食材<br />百分比为表示总量使用比例。</p>
 		    	<MajorIngredients majors={item.ingredients} ingredients={menu.ingredients}/>
 		    </div>
 
@@ -127,7 +124,7 @@ class ItemPage extends React.Component{
 			    </div>
 		    </WingBlank>
 
-		    <div style={{display:'block',height:'200px'}}/>
+		    <div style={{display:'block',height:'500px'}}/>
 		</div>
   		);
   	}

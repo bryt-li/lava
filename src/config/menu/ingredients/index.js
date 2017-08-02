@@ -274,5 +274,17 @@ module.exports={
 	green_mustard:{
 		name:'绿芥末',
 		intro:''
-	}
+	},
+	olive_old:{
+		name:'橄榄油',
+		intro:''
+	},
+	basil_leave:{
+		name:'罗勒叶',
+		intro:''
+	},
+	walnut_kernel:{
+		name:'核桃仁',
+		intro:''
+	},
 }

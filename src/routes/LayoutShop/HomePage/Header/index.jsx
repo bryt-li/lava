@@ -31,7 +31,7 @@ function Header({ dispatch, location, delivery, user }) {
     <div className={styles.container}>
       <NavBar
         iconName={null}
-        leftContent={<Icon type="#icon-shouye" size='md' />}
+        leftContent={<Icon type="#icon-icon-test" className={styles.home_icon}/>}
         rightContent={
           <div onClick={handleUserClicked}>
           {
