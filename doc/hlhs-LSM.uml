@@ -1,0 +1,17 @@
+@startuml
+
+	(*) --> [saved in OrderCreatePage] "0\ncreated" as created
+	created --> [payment succeeded] "1\npaid" as paid
+	paid --> [confirmed] "2\nconfirmed" as confirmed
+	created --> [confirmed] confirmed
+	confirmed --> [delivery] "3\ndelivery" as delivery
+	delivery --> [finish] "4\nfinished" as finished
+	
+	created --> [cancel] "5\ncancelled" as cancelled
+	paid --> [cancel] cancelled
+	confirmed --> [cancel] cancelled
+	delivery --> [cancel] cancelled
+	cancelled --> (*)
+	finished --> (*)
+@enduml
+

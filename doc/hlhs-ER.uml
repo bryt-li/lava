@@ -1,0 +1,73 @@
+@startuml
+
+skinparam packageStyle rect
+
+class user{
+	id
+	String nickname
+	String sex
+	String country
+	String province
+	String city
+	String headImageUrl
+}
+
+class delivery{
+	id
+	String name
+	String phone
+	String address
+	String city
+	String location
+	float lat
+	float lng
+}
+
+class account{
+	id
+	float balance
+}
+
+class order{
+	id
+	id_user
+	String code
+	DateTime create_time
+	int status
+	Date date
+	String time
+	String order_items <<json>>
+	String delivery <<json>>
+	float items_price
+	float advance_price
+	float delivery_price
+	float total_price
+	int payment
+}
+
+class payment{
+	id
+	id_order
+	code(out_trade_no)
+	create_time
+	-- 以下是参考wechat API --
+	return_code
+	result_code
+	trade_state
+	err_code
+	err_code_des	
+	openid
+	total_fee
+	transaction_id
+	time_end
+	trade_state_desc
+	……
+}
+
+payment "*" --> "1" order
+
+user "1" *-- account : belong to
+user "1" *-- delivery : belong to
+user "1" --> "many" order : has
+
+@enduml

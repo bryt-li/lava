@@ -55,19 +55,19 @@ class LayoutShop extends React.Component {
   handlePlusClicked = () => {
     const {dispatch,params} = this.props
     const {type,id} = params;
-    dispatch({ type: 'app/changeMenuItemQuantity',payload: {type:type, id:id, inc:1} })
+    dispatch({ type: 'menu/changeMenuItemQuantity',payload: {type:type, id:id, inc:1} })
   }
 
   handleMinusClicked = () => {
     const {dispatch,params} = this.props
     const {type,id} = params;
-    dispatch({ type: 'app/changeMenuItemQuantity',payload: {type:type, id:id, inc:-1} })
+    dispatch({ type: 'menu/changeMenuItemQuantity',payload: {type:type, id:id, inc:-1} })
   }
 
   nothing_in_cart = () => {
-  for(var t in this.props.menu)
-    for(var i in this.props.menu[t])
-      if(this.props.menu[t][i].quantity>0)
+  for(var t in this.props.catalog)
+    for(var i in this.props.catalog[t])
+      if(this.props.catalog[t][i].quantity>0)
         return false
   return true
   }
@@ -76,14 +76,15 @@ class LayoutShop extends React.Component {
     if(this.nothing_in_cart())
       this.showModal()()
     else
-      this.props.dispatch(routerRedux.push('/shop/order/create'));
+      this.props.dispatch(routerRedux.push('/user/cart'));
   }
 
   render(){
-    const {params, children, dispatch, location, menu, total, saving} = this.props
+    const {params, children, dispatch, location, catalog, total, saving} = this.props
     const {type,id} = params;
+    
     if(type && id){
-      let item = menu[type][id]
+      let item = catalog[type][id]
       return(
       <div>
         {children}
@@ -147,9 +148,9 @@ LayoutShop.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  menu: state.app.menu,
-  total: state.app.total,
-  saving: state.app.saving
+  catalog: state.menu.catalog,
+  total: state.menu.total,
+  saving: state.menu.saving
 });
 
 export default connect(mapStateToProps)(LayoutShop);

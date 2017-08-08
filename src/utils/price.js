@@ -68,32 +68,32 @@ const calculateDeliveryPrice = (items_price, lat, lng) => {
 const calculateOrderPrice = (menu) => {
 	let total = 0;
 	let saving = 0;
-	let order_items = [];
+	let items = [];
 	for(var t in menu){
 		for(var i in menu[t]){
 			var item = menu[t][i];
 			for(var i=0;i<item.quantity;i++)
-				order_items.push({
+				items.push({
 					...item,
 					order_price:item.price,
 				});
 		}
 	}
 
-	order_items.sort((a,b) =>{
+	items.sort((a,b) =>{
 		return b.price - a.price;
 	});
 
 	//how many discount，the second item have 70% discount
-	let num = parseInt(order_items.length / 2) - 1;
+	let num = parseInt(items.length / 2) - 1;
 	for(var i=0;i<=num;i++){
-		order_items[i].order_price = parseInt(order_items[i].price*0.7);
-		saving += order_items[i].price - order_items[i].order_price;
+		items[i].order_price = parseInt(items[i].price*0.7);
+		saving += items[i].price - items[i].order_price;
 	}
-	for(var i=0;i<order_items.length;i++){
-		total += order_items[i].order_price;
+	for(var i=0;i<items.length;i++){
+		total += items[i].order_price;
 	}
-	return {total:total, saving: saving, order_items: order_items};
+	return {total, saving, items};
 }
 
 

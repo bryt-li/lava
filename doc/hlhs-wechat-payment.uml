@@ -1,0 +1,57 @@
+@startuml
+
+autonumber
+
+OrderShowPage -> order_show : submit payment
+order_show -> OrderModule : get prepay_id
+OrderModule -> OrderModule : generate unique out_trade_no
+OrderModule -> WechatPay : https://api.mch.weixin.qq.com/pay/unifiedorder
+WechatPay -> OrderModule : prepay_id
+
+alt failed 
+	WechatPay --> OrderModule : fail
+	OrderModule --> order_show : fail
+	order_show -->x OrderShowPage
+end
+
+autonumber 6
+OrderModule -> OrderModule : save out_trade_no & prepay_id
+OrderModule -> order_show : prepay_id
+order_show -> order_show : WeixinJSBridge.invoke(getBrandWCPayRequest)
+
+alt succeeded
+	order_show -> WechatPay : pay
+	WechatPay -> OrderModule : pay result notification\n[transaction_id, out_trade_no]
+	OrderModule -> OrderModule : save pay result
+
+	autonumber 10
+	WechatPay -> order_show : get_brand_wcpay_request:ok
+	order_show -> order_show : update order
+	order_show -> OrderShowPage
+end
+
+alt failed
+	autonumber 9
+	order_show -> WechatPay : pay
+	WechatPay -> OrderModule : pay result notification\n[transaction_id, out_trade_no]
+	OrderModule -> OrderModule : save pay result
+
+	autonumber 10
+	WechatPay -> order_show : get_brand_wcpay_request:fail
+	order_show -> OrderShowPage
+end
+
+alt cancelled
+	autonumber 9
+	order_show -> order_show : get_brand_wcpay_request:cancel
+	order_show -> OrderShowPage
+end
+
+alt cancelled
+	autonumber stop
+	OrderManager -> WechatPay : query payment
+	WechatPay -> OrderManager: payment result
+	OrderManager -> OrderManager: change payment/order status
+end
+
+@enduml

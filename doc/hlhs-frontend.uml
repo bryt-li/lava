@@ -1,0 +1,155 @@
+@startuml
+
+skinparam packageStyle rect
+
+
+package data {
+	class Category  <<Object>> #ddd{
+		[type]
+		        [id]
+		                ...item
+	}
+
+	class Item <<Object>> #ddd{
+		-name
+		-original_price
+		-price
+		-rice
+		-season
+		-delivery_time
+		-slogon
+		-ingredients
+		-intro
+		-ingredients_intro
+		-nutrition
+	}
+}
+
+
+enum app #ccc{
+	-home
+}
+
+enum menu #ccc{
+	-menu
+	-total
+	-saving
+	-items
+}
+
+enum user #ccc{
+	id
+	.. wechat info ..
+	openid
+	nickname
+	sex
+	country/province/city
+	headImageUrl
+}
+
+enum delivery #ccc{
+	id
+	name
+	phone
+	address
+	location_name
+	lat
+	lng
+}
+
+
+abstract localStorage #cyan{
+	menu
+}
+
+abstract sessionStorage #cyan{
+	address_back_url
+}
+
+class Routers{
+	checkLogin(nextState, replace)
+	onEnter
+}
+
+Routers -() API: /user/me
+
+class LayoutDefault  #eee{
+	/
+}
+
+LayoutDefault -() API: /user/me\nauto login
+
+class LayoutShop #eee{
+	/shop/
+}
+
+abstract LandingPage {
+	/
+}
+
+abstract ItemPage {
+	/item
+}
+
+
+class LayoutUser <<closed>> #eee {
+	/user/
+}
+
+abstract CartPage <<cloased>> {
+	/cart
+}
+
+abstract UserHomePage {
+	foo()
+}
+
+abstract AddressPage {	
+	/address
+}
+abstract OrderShowPage {		
+	/order/show/:id
+}
+
+abstract WechatPayPage <<entry>> {
+	/order/wxpay/:id
+	wechatPay()
+}
+
+OrderShowPage --() API : /order/show
+
+abstract OrderListPage {
+	/order/list
+}
+abstract OrderEditPage {
+	/order/edit/:id
+}
+
+LayoutUser --> UserHomePage
+LayoutUser --> AddressPage
+LayoutUser --> OrderListPage
+LayoutUser --> OrderShowPage
+LayoutUser --> OrderEditPage
+LayoutUser --> WechatPayPage
+LayoutUser --> CartPage
+Routers --> LayoutDefault
+
+Routers ..> TencentWechatLoginPage : leave
+TencentWechatLoginPage ..> wxlogin : redirect
+wxlogin ..> LandingPage : fail
+wxlogin ..> ClosedPages : success
+
+LayoutDefault --> LayoutShop
+LayoutShop --> LandingPage
+LayoutShop --> ItemPage
+
+LayoutDefault --> LayoutUser
+
+class TencentMapPage <<external>> #darkgrey
+class TencentWechatLoginPage <<external>> #darkgrey
+class wxlogin <<Server Side Page>> #darkgrey
+
+AddressPage --> TencentMapPage : leave
+TencentMapPage --> AddressPage : entry
+
+@enduml

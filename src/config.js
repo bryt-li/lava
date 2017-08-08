@@ -20,7 +20,7 @@ module.exports = {
   openPages: ['/','/signin','/signup','/item'],
 
   wechatLoginUrl: `${WECHAT_BACKEND}/authorize?appid=${WECHAT_APP_ID}&redirect_uri=${WECHAT_LOGIN_REDIRECT_URL}&response_type=code&scope=${WECHAT_LOGIN_SCOPE}&state=DESTINATION#wechat_redirect`,
-  mapUrl: `http://apis.map.qq.com/tools/locpicker?search=1&type=0&backurl=${HLHS_FRONTEND}/shop/address&key=${MAP_KEY}&referer=hlhs`,
+  mapUrl: `http://apis.map.qq.com/tools/locpicker?search=1&type=0&backurl=${HLHS_FRONTEND}/user/address&key=${MAP_KEY}&referer=hlhs`,
 
   api: {
     getMe: `${HLHS_BACKEND}/user/me`,

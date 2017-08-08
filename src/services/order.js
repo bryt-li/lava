@@ -6,17 +6,21 @@ const config = require('../config');
 const { api } = config
 
 export function convertOrderForClient(order){
-	order.delivery = JSON.parse(order.delivery)
-	order.order_items = JSON.parse(order.order_items)
-	order.date = moment(order.date).toDate();
-	return order
+	return {
+		...order,
+		date: moment(order.date).toDate(),
+		items:  JSON.parse(order.items),
+		delivery: JSON.parse(order.delivery),
+	}
 }
 
 export function convertOrderForServer(order){
-	order.date = order.date.format("YYYY-MM-DD")
-	order.order_items = JSON.stringify(order.order_items)
-	order.delivery = JSON.stringify(order.delivery)
-	return order
+	return {
+		...order,
+		date: order.date.format("YYYY-MM-DD"),
+		items: JSON.stringify(order.items),
+		delivery: JSON.stringify(order.delivery)
+	}
 }
 
 export async function getOrderList() {
