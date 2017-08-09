@@ -51,7 +51,7 @@ const calculateDeliveryPrice = (items_price, lat, lng) => {
 		return 0
 	if(items_price>10000 && km <8)
 		return 0
-	if(items_price>15000)
+	if(items_price>15000 && km <10)
 		return 0
 
 	//减运费

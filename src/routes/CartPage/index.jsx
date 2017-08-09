@@ -110,11 +110,11 @@ function CartPage({ dispatch, form, location, ui, order }) {
 				        	{order.delivery.address}
 				        </Item>
 			        </List>
-			        <Item extra={ui.deliveryDistance?`${ui.deliveryDistance.toFixed(2)}公里`:'未知'}>
+			        <Item extra={ui.deliveryDistance!=null?`${ui.deliveryDistance.toFixed(2)}公里`:'未知'}>
 			        	配送半径
 			        </Item>
 			        <Item thumb={<Icon type="#icon-12" />} 
-			        	extra={order.delivery_price?`${formatMoney(order.delivery_price)}元`:'未知'}>
+			        	extra={order.delivery_price!=null?`${formatMoney(order.delivery_price)}元`:'未知'}>
 		        		配送费
 	        		</Item>
 		        </WingBlank>

@@ -85,8 +85,8 @@ export default {
 
       if(delivery && delivery.lat && delivery.lng){
         order.delivery = delivery
-        ui.deliveryDistance = calculateDeliveryDistance(delivery.lat,delivery.lng)
         order.delivery_price = calculateDeliveryPrice(order.items_price, delivery.lat,delivery.lng)
+        ui.deliveryDistance = calculateDeliveryDistance(delivery.lat,delivery.lng)
       }
 
       const {availablePayments, payment} = getOrderPayment()
