@@ -107,7 +107,7 @@ export default {
       const {user,CartPage} = yield select(state => state)
       const {order} = CartPage
 
-      if(!order.delivery_price || order.delivery_price>8000){
+      if(order.delivery_price==null || order.delivery_price>8000){
         Toast.info('请输入有效的配送地址')
         return
       }
