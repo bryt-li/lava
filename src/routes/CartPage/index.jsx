@@ -136,7 +136,7 @@ function CartPage({ dispatch, form, location, ui, order }) {
 	        		配送费
         		</Item>
 		        <Item thumb={<Icon type="#icon-12" />} 
-		        	extra={order.total_price?`${formatMoney(order.total_price)}元`:'未知'}>
+		        	extra={order.total_price!=null?`${formatMoney(order.total_price)}元`:'未知'}>
 	        		应付
         		</Item>
 	    	</List>

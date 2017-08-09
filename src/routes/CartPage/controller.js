@@ -94,8 +94,11 @@ export default {
       order.payment = payment
       ui.availablePayments = availablePayments
 
-      if(order.delivery_price)
+      if(order.delivery_price!=null){
         order.total_price = order.items_price + order.advance_price + order.delivery_price
+        if(order.total_price<0)
+          order.total_price = 0
+      }
 
       yield put({type:'updateModel',payload:{ui,order}})
     },
