@@ -60,18 +60,3 @@ export async function createOrder(order) {
 		}
 	);
 }
-
-
-export async function getWechatPayJsapiArgs(id) {
-	return request(
-		api.getWechatPayJsapiArgs,
-		{
-			method: "POST",
-			headers: {
-				/*Must have this to make Nutz backend recognize.*/
-				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-			},
-			body: qs.stringify({id})
-		}
-	);
-}

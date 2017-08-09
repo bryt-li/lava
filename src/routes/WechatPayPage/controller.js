@@ -1,7 +1,7 @@
 import { routerRedux } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
-import { getOrderList, convertOrderForClient } from '../../services/order';
+import { getWechatPayJsapiArgs } from '../../services/pay';
 import { Toast } from 'antd-mobile'
 
 export default {

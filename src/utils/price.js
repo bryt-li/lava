@@ -33,20 +33,21 @@ const calculateAdvancePrice = (date) => {
 const xjh_lat = 28.21286
 const xjh_lng = 112.94879
 const calculateDeliveryDistance = (lat, lng) => {
-	return calculateDistance(xjh_lat,xjh_lng,lat,lng)
+	const km = calculateDistance(xjh_lat,xjh_lng,lat,lng)
+	console.log(`devliery distance: ${km}km`)
+	return km
 }
 
 const calculateDeliveryPrice = (items_price, lat, lng) => {
 	let km = calculateDistance(xjh_lat,xjh_lng,lat,lng)
-	console.log(`devliery distance: ${km}km`)
-
+	
 	let deliveryPrice = parseInt(km*250)
 
 	//todo:测试用，全部免运费
 	//return 0
 
 	//免运费
-	if(items_price>3600 && km < 3)
+	if(km < 3)
 		return 0
 	if(items_price>10000 && km <8)
 		return 0
@@ -54,11 +55,13 @@ const calculateDeliveryPrice = (items_price, lat, lng) => {
 		return 0
 
 	//减运费
-	if(items_price>6600 && km < 5)
-		return (deliveryPrice -300)
+	if(items_price>5000 && km < 5)
+		return (deliveryPrice - 500)
 
 	if(items_price>8800 && km < 8)
-		return (deliveryPrice - 500)
+		return (deliveryPrice - 600)
+
+	console.log(`devliery price: ${deliveryPrice/100}`)
 
 	return deliveryPrice
 }

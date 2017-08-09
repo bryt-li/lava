@@ -1,6 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { parse } from 'qs';
-import { getWechatPayJsapiArgs, getOrder, convertOrderForClient } from '../../services/order';
+import { getOrder, convertOrderForClient } from '../../services/order';
 import { Toast } from 'antd-mobile'
 import pathToRegexp from 'path-to-regexp';
 
