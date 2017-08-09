@@ -74,6 +74,7 @@ export default {
         order.items_price += items[i].order_price
 
       const {minDate, date, maxDate} = getOrderDate()
+      
       order.date = date
       order.advance_price = calculateAdvancePrice(date)
       ui.minDate = minDate
