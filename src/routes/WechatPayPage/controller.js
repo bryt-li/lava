@@ -19,7 +19,7 @@ export default {
           const id = match[1]
           dispatch({type:'wechatPay',payload:id})
         }
-      });  
+      })
     },
   },
 

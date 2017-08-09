@@ -63,9 +63,25 @@ module.exports={
 		name:'羽衣甘蓝',
 		intro:"翠绿蔬叶，今你唇齿清新"
 	},
+	flying_fish_roe:{
+		name:'飞鱼籽',
+		intro:'粒粒分明，富含蛋白和矿物质'
+	},
+	udaria:{
+		name:'裙带菜',
+		intro:"鲜美甘咸，降低胆固醇"
+	},
+	black_rice:{
+		name:'黑米',
+		intro:'口感微糯，锰锌含量比大米高2倍'
+	},
 	tuna:{
 		name:'吞拿鱼',
 		intro:"味道鲜美，给你高蛋白"
+	},
+	roast_tuna:{
+		name:'炙吞拿鱼',
+		intro:"柔嫩鲜美，补充氨基酸"
 	},
 	soba_udon:{
 		name:'荞麦乌冬面',
@@ -275,15 +291,15 @@ module.exports={
 		name:'绿芥末',
 		intro:''
 	},
-	olive_old:{
+	olive_oil:{
 		name:'橄榄油',
 		intro:''
 	},
-	basil_leave:{
+	basil:{
 		name:'罗勒叶',
 		intro:''
 	},
-	walnut_kernel:{
+	walnut:{
 		name:'核桃仁',
 		intro:''
 	},

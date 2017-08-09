@@ -21,7 +21,7 @@ module.exports={
 			Pro:42
 		}
 	},
-	italian_pesto_dressing:{
+	italian_pesto:{
 		name:'意式罗勒酱',
 		intro:'清香淡咸',
 		ingredients:'橄榄油,罗勒叶,核桃仁',
@@ -30,6 +30,11 @@ module.exports={
 			Cx:0,
 			Fat:21,
 			Pro:1
+		},
+		extra: ()=>{
+			return (
+				<p>有丁香气息，<br/>不影响质感与原味，同时滋润每种食材！</p>
+			)
 		}
 	},
 }

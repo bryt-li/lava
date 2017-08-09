@@ -26,7 +26,7 @@ function LayoutUser({ children, dispatch, location, props }) {
 	    	<div>
 		        {children}
 	        </div>
-	      	<div style={{display:'block',height:'1000px'}} />
+	      	<div style={{display:'block',height:'300px'}} />
         </div>
     </div>
 	);

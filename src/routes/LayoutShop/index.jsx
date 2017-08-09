@@ -88,6 +88,8 @@ class LayoutShop extends React.Component {
       return(
       <div>
         {children}
+        <div style={{display:'block',height:'300px'}} />
+
         <div className={styles.cart}>
           <ModalDialog visible={this.state.showModal} onClose={this.onClose} />
 

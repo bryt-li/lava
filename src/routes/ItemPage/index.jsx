@@ -69,8 +69,7 @@ class ItemPage extends React.Component{
 		      selectedIndex={0}
 		      swipeSpeed={35}>
 				<img alt="icon" src={`/menu/${type}/${id}/1.jpg`} />
-				<img alt="icon" src={`/menu/${type}/${id}/2.jpg`} />
-				<img onLoad={this.handleImageLoaded} alt="icon" src={`/menu/${type}/${id}/3.jpg`} />
+				<img onLoad={this.handleImageLoaded} alt="icon" src={`/menu/${type}/${id}/2.jpg`} />
 		    </Carousel>
     		<WingBlank size="sm">
 			    <Flex className={styles.title}>
@@ -79,7 +78,7 @@ class ItemPage extends React.Component{
 			    </Flex>
 			    <hr />
 			    <div className={styles.order}>
-		    		<div><span>沙拉标配</span>{`${item.season}(${item.bread?'小圆面包':'无面包'})`}</div>
+		    		<div><span>沙拉标配</span>{`${item.season?item.season:'无酱汁'}(${item.rice?'小饭团':'无饭团'})`}</div>
 		    		<div><span>配送时间</span>至少提前一天预订</div>
 			    </div>
 		    </WingBlank>
@@ -108,23 +107,65 @@ class ItemPage extends React.Component{
 			    </div>
 		    </WingBlank>
 
-		    <div className={styles.season}>
+		    {seasoning?
+		    (<div className={styles.season}>
 		    	<h1><span>酱汁</span></h1>
 		    	<h2>{seasoning.name}</h2>
 		    	<h3>{seasoning_id.toEnglish()}</h3>
 		    	<h4>{seasoning.intro}</h4>
-		    	<img src={`/menu/seasonings/${seasoning_id}.png`} />
+		    	<img src={`/menu/seasonings/${seasoning_id}.jpg`} />
 		    	<MinorIngredients minors={seasoning.ingredients.split(',')}  ingredients={catalog.ingredients}/>
-		    </div>
 
-    		<WingBlank size="lg">
-			    <div className={styles.nutrition}>
-			    	<h1><span>酱汁营养价值</span></h1>
-			    	<NutritionTable nutrition={seasoning.nutrition}/>
+	    		<WingBlank size="lg">
+				    <div className={styles.nutrition}>
+				    	<h1><span>酱汁营养价值</span></h1>
+				    	<NutritionTable nutrition={seasoning.nutrition}/>
+				    </div>
+			    </WingBlank>
+			    {seasoning.extra?
+			    (<div className={styles.season_extra}>
+				    <seasoning.extra/>
+			    </div>):null
+				}
+		    </div>):null
+			}
+
+			<WingBlank size="lg">
+			    <div className={styles.delivery}>
+			    	<h1><span>配送范围</span></h1>
+			    	<img src="/res/delivery.jpg" />
+			    	<p>西二环、北二环、东二环、南二环以内<br/>
+			    	五一路、王府井、奥克斯商圈、以及麓谷地区</p>
+			    	<h1><span>配送费用说明</span></h1>
+			    	<p>3公里内提前一天预订免费配送</p>
+			    	<p>当日订餐按每公里2.5元收取配送费</p>
 			    </div>
 		    </WingBlank>
 
-		    <div style={{display:'block',height:'500px'}}/>
+		    <WingBlank size="lg">
+			    <div className={styles.brand}>
+			    	<h1><span>品牌特色</span></h1>
+			    	<h2>饮食越简单，身体越轻盈</h2>
+			    	<div className={styles.brandbox}>
+				    	<div className={styles.brand3}>
+				    		<h3>3S品质</h3>
+				    		<p>精选Selected</p>
+				    		<p>应季Seasonal</p>
+				    		<p>无公害Safety</p>
+				    	</div>
+				    	<div className={styles.brand1}>
+					    	<h3>1心为你</h3>
+				    		<p>给你最好、最新鲜的食物</p>
+				    	</div>
+				    	<div className={styles.brand2}>
+					    	<h3>2步加工</h3>
+				    		<p>深度清洗</p>
+				    		<p>极简加工</p>
+				    	</div>
+			    	</div>
+			    </div>
+		    </WingBlank>
+	    	<div style={{clear:'both'}}></div>
 		</div>
   		);
   	}

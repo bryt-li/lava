@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import {  routerRedux } from 'dva/router';
 import PropTypes from 'prop-types';
-import {  NavBar, Icon, Input } from 'antd-mobile';
+import {  NavBar, Icon, Input, Result } from 'antd-mobile';
 import { Link } from 'dva/router';
 
 import styles from './index.less';
@@ -15,7 +15,11 @@ function WechatPayPage({ dispatch, location  }) {
 
 	return (
 	<div className={styles.container}>
-		<h4>正在进行微信支付</h4>
+		<Result
+		    img={<Icon type='#icon-waiting' size='lg'/>}
+		    title="等待处理"
+		    message="正在提交付款申请，等待银行处理"
+		/>
 	</div>
 	);
 }
