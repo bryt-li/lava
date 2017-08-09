@@ -8,8 +8,6 @@ import ReactLoading from 'react-loading';
 import {Helmet} from "react-helmet";
 import { createForm } from 'rc-form';
 
-import {calculateAdvancePrice, calculateDeliveryDistance, calculateDeliveryPrice} from '../../utils/price'
-import {getOrderDate,getOrderTime,getOrderPayment} from '../../utils/order'
 import {formatMoney} from '../../utils/price'
 
 import styles from './index.less';
