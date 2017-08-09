@@ -8,11 +8,14 @@ const getOrderDate = () => {
 	let today = moment().locale('zh-cn').utcOffset(8)
 	let minDate = today
 	let now = new Date()
-	if(now.getHours()>17)
+	let date = minDate.clone()
+	date.add(1,'day')
+	if(now.getHours()>17){
 		minDate.add(1,'day')
+		date = minDate
+	}
 
-	const date = minDate
-	const maxDate = minDate.clone().add(15, 'day')
+	const maxDate = minDate.clone().add(7, 'day')
 	return {minDate, date, maxDate}
 }
 
