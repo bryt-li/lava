@@ -160,8 +160,8 @@ export default {
       const date = action.payload
       const advance_price = calculateAdvancePrice(date)
       let total_price = null
-      if(state.delivery_price!=null)
-        total_price = state.items_price+state.delivery_price+advance_price
+      if(state.order.delivery_price!=null)
+        total_price = state.order.items_price+state.order.delivery_price+advance_price
 
       return {
         ...state,
