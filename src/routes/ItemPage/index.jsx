@@ -44,6 +44,8 @@ class ItemPage extends React.Component{
 		  	}
   		}
 
+		window.scrollTo(0,0)
+
   		return(
 		<div className={styles.container}>
 			<Helmet>
@@ -71,6 +73,7 @@ class ItemPage extends React.Component{
 				<img alt="icon" src={`/menu/${type}/${id}/1.jpg`} />
 				<img onLoad={this.handleImageLoaded} alt="icon" src={`/menu/${type}/${id}/2.jpg`} />
 		    </Carousel>
+
     		<WingBlank size="sm">
 			    <Flex className={styles.title}>
 			    	<Flex.Item className={styles.name}>{item.name}</Flex.Item>
@@ -78,37 +81,44 @@ class ItemPage extends React.Component{
 			    </Flex>
 			    <hr />
 			    <div className={styles.order}>
+		    		{type=='salads'?
 		    		<div><span>沙拉标配</span>{`${item.season?item.season:'无酱汁'}(${item.rice?'小饭团':'无饭团'})`}</div>
+					:null}		    		
 		    		<div><span>配送条款</span>{item.delivery_term}</div>
 			    </div>
 		    </WingBlank>
 		   
+		   	{item.intro?
 		    <div className={styles.intro}>
 		    	<h1><span>产品介绍</span></h1>
 		    	<div><item.intro/></div>
-		    </div>
+		    </div>:null}
+
+		    {item.ingredients?
 		    <div className={styles.majors}>
 		    	<h1><span>特色食材</span></h1>
 		    	<p>以下为部分主要食材<br />百分比为表示总量使用比例。</p>
 		    	<MajorIngredients majors={item.ingredients} ingredients={catalog.ingredients}/>
-		    </div>
+		    </div>:null}
 
+		    {item.ingredients_intro?
     		<WingBlank size="lg">
 			    <div className={styles.ingredients}>
 			    	<h1><span>配料</span></h1>
 			    	<item.ingredients_intro/>
 			    </div>
-		    </WingBlank>
+		    </WingBlank>:null}
 
+		    {item.nutrition?
     		<WingBlank size="lg">
 			    <div className={styles.nutrition}>
 			    	<h1><span>营养价值</span></h1>
 			    	<NutritionTable nutrition={item.nutrition}/>
 			    </div>
-		    </WingBlank>
+		    </WingBlank>:null}
 
 		    {seasoning?
-		    (<div className={styles.season}>
+		    <div className={styles.season}>
 		    	<h1><span>酱汁</span></h1>
 		    	<h2>{seasoning.name}</h2>
 		    	<h3>{seasoning_id.toEnglish()}</h3>
@@ -127,8 +137,16 @@ class ItemPage extends React.Component{
 				    <seasoning.extra/>
 			    </div>):null
 				}
-		    </div>):null
-			}
+		    </div>:null}
+
+		    {type=='juices'?
+			<WingBlank size="lg">
+			    <div className={styles.juices}>
+			    	<img src="/res/juices1.jpg" />
+			    	<img src="/res/juices2.jpg" />
+			    	<img src="/res/juices3.jpg" />
+			    </div>
+			</WingBlank>:null}
 
 			<WingBlank size="lg">
 			    <div className={styles.delivery}>
@@ -168,8 +186,16 @@ class ItemPage extends React.Component{
 				    	</div>
 			    	</div>
 			    </div>
+    	    	<div style={{clear:'both'}}></div>
 		    </WingBlank>
-	    	<div style={{clear:'both'}}></div>
+
+	    	<WingBlank size="lg">
+			    <div className={styles.slogon}>
+			    	<img src="/res/100percent.jpg" />
+			    	<h4>新鲜食材，当日制作</h4>
+			    	<h4>无糖无添加无防腐</h4>
+			    </div>
+			</WingBlank>
 		</div>
   		);
   	}

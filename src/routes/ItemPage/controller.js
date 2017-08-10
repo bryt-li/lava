@@ -1,5 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { parse } from 'qs';
+import pathToRegexp from 'path-to-regexp';
 
 
 export default {
@@ -14,8 +15,6 @@ export default {
   },
 
   effects: {
-    *createOrder({payload,}, { call, put }) {
-    },
     
   },
 

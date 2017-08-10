@@ -66,17 +66,34 @@ function HomePage({ children, dispatch, location, home, ui, user }) {
   				);
   			})}
 	  	</WingBlank>
-	  	<hr />
 
 	    <h1><span>美味饭团子</span></h1>
-	  	<hr />
 
 	    <h1><span>酸奶沙拉</span></h1>
 	  	
-	  	<hr />
-
 	    <h1><span>轻断食-果蔬稀</span></h1>
-	  	
+	  	<WingBlank size="sm">
+  			{juices.map((id,key) => {
+  				let prevId=null;
+  				let output = false;
+
+  				if(key%2==1){
+  					prevId = juices[key-1];
+  					output = true;
+  				}else if(key==juices.length-1){
+  					prevId = id;
+  					id=null;
+  					output = true;
+  				}
+
+	  			if (output)	return (  				
+  					<Flex key={key}>
+	  					<ShopItem type="juices" id={prevId} />
+	  					<ShopItem type="juices" id={id} />
+	  				</Flex>
+  				);
+  			})}
+	  	</WingBlank>
 	  	<hr />
 
 	  	{(user && (user.nickname=='李昕'||user.nickname=='HLHS'))?
