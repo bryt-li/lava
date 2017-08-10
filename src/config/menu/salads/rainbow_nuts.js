@@ -4,7 +4,7 @@ module.exports = {
 	price: 128,
 	rice: false,
 	season: "和风汁",
-	delivery_time: "07-05 周一12:30之前",
+	delivery_term: "07-05 周一12:30之前",
 	slogon: "元气满满，补充全天能量",
 	ingredients: {
 		混合干果:"9%",

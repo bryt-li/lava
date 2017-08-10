@@ -79,7 +79,7 @@ class ItemPage extends React.Component{
 			    <hr />
 			    <div className={styles.order}>
 		    		<div><span>沙拉标配</span>{`${item.season?item.season:'无酱汁'}(${item.rice?'小饭团':'无饭团'})`}</div>
-		    		<div><span>配送时间</span>至少提前一天预订</div>
+		    		<div><span>配送条款</span>{item.delivery_term}</div>
 			    </div>
 		    </WingBlank>
 		   
@@ -139,26 +139,30 @@ class ItemPage extends React.Component{
 			    	<h1><span>配送费用说明</span></h1>
 			    	<p>3公里内提前一天预订免费配送</p>
 			    	<p>当日订餐按每公里2.5元收取配送费</p>
+			    	<h1><span>配送时间</span></h1>
+			    	<p>周一至周五配送（09:30至19:00）</p>
+			    	<p>周六配送（09:30至18:00）</p>
+			    	<p>周日公休（不配单哦）</p>
 			    </div>
 		    </WingBlank>
 
 		    <WingBlank size="lg">
 			    <div className={styles.brand}>
 			    	<h1><span>品牌特色</span></h1>
-			    	<h2>饮食越简单，身体越轻盈</h2>
+			    	<h4>饮食简单，身体轻盈</h4>
 			    	<div className={styles.brandbox}>
 				    	<div className={styles.brand3}>
-				    		<h3>3S品质</h3>
+				    		<h4>3S品质</h4>
 				    		<p>精选Selected</p>
 				    		<p>应季Seasonal</p>
 				    		<p>无公害Safety</p>
 				    	</div>
 				    	<div className={styles.brand1}>
-					    	<h3>1心为你</h3>
+					    	<h4>1心为你</h4>
 				    		<p>给你最好、最新鲜的食物</p>
 				    	</div>
 				    	<div className={styles.brand2}>
-					    	<h3>2步加工</h3>
+					    	<h4>2步加工</h4>
 				    		<p>深度清洗</p>
 				    		<p>极简加工</p>
 				    	</div>

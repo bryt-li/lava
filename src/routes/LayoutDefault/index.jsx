@@ -15,7 +15,7 @@ function LayoutDefault({ children, dispatch, location, loading }) {
       	{loading?
 	      	(<ActivityIndicator
 	            toast
-	            text="正在努力加载"
+	            text="全力加载..."
 	            animating={true}
 	      	/>):null
       	}

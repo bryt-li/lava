@@ -4,8 +4,8 @@ module.exports = {
 	price: 3400,
 	rice: false,
 	season: null,
-	delivery_time: "08-10 周一12:30之前",
-	slogon: "激活你所有的感官",
+	delivery_term: "提前一天预订",
+	slogon: "激活你所有的感官，黑米绝配烤吞拿",
 	ingredients: {
 		炙吞拿鱼:"12%",
 		牛油果:"6%",

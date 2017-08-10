@@ -25,20 +25,16 @@ export default {
 
   effects: {
     *getOrderList({payload,}, { call, put }) {
-      Toast.loading('正在加载订单列表',0)
-
       const { response, err } = yield call(getOrderList)
       if(err || !response || !response.ok || !response.payload){
         console.error(err)
         console.error(response)
-        Toast.hide()
         return
       }
 
       const orders = response.payload.map((order)=>convertOrderForClient(order))
 
       yield put({type:'updateOrders',payload:orders})
-      Toast.hide()
 
       console.log('server return orders:')
       console.log(orders)

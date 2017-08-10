@@ -115,26 +115,21 @@ export default {
 
       //must signed in
       if(!user || !user.id){
-        Toast.hide()
         Toast.info('用户必须先登录')
         yield put(routerRedux.push('/shop/home'))
         return
       }
 
-      Toast.loading('正在下单', 0)
-
       const server_order = convertOrderForServer(order)
 
       const { response, err } = yield call(createOrder, server_order)
       if(err || !response || !response.ok || !response.payload){
-        Toast.hide()
         Toast.fail('服务器处理订单错误，正在抢修中')
         console.log(err)
         console.log(response)
         return
       }
       
-      Toast.hide()
       const {id,code} = response.payload
 
       //clear menu data

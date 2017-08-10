@@ -25,8 +25,6 @@ export default {
 
   effects: {
     *wechatPay({payload,}, { call, select, put }) {
-      Toast.loading('正在发起支付',0)
-
       console.log('start wechat pay')
       const id = payload
 
@@ -35,7 +33,6 @@ export default {
         console.log('wechatPay error')
         console.error(err)
         console.error(response)
-        Toast.hide()
         Toast.fail('创建微信支付订单失败')
         return
       }
@@ -48,8 +45,6 @@ export default {
           'getBrandWCPayRequest', 
           jsapi,
           function(res){
-            Toast.hide()
-
             if(res.err_msg == "get_brand_wcpay_request:ok" ) {            
               Toast.info('微信支付成功')
             }

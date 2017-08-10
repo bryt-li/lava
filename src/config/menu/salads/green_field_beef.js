@@ -4,7 +4,7 @@ module.exports={
 	price: 3900,
 	rice: false,
 	season: "意式罗勒酱",
-	delivery_time: "提前一天预订 18:30之前",
+	delivery_term: "提前一天预订",
 	slogon: "牛肉、水果、味蕾大和谐",
 	ingredients: {
 		烤牛肉:"14%",

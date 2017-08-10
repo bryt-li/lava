@@ -4,7 +4,7 @@ module.exports={
 	price: 545,
 	rice: false,
 	season: "和风汁",
-	delivery_time: "07-05 周一12:30之前",
+	delivery_term: "提前一天预订",
 	slogon: "元气满满，补充全天能量",
 	ingredients: {
 		鸡胸肉丝:"9%",
