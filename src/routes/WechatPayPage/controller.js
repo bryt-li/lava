@@ -43,24 +43,37 @@ export default {
       const jsapi = response.payload
 
       //调用微信支付JSAPI
-      WeixinJSBridge.invoke(
-        'getBrandWCPayRequest', 
-        jsapi,
-        function(res){
-          Toast.hide()
+      function onBridgeReady(){
+        WeixinJSBridge.invoke(
+          'getBrandWCPayRequest', 
+          jsapi,
+          function(res){
+            Toast.hide()
 
-          if(res.err_msg == "get_brand_wcpay_request:ok" ) {            
-            Toast.info('微信支付成功')
+            if(res.err_msg == "get_brand_wcpay_request:ok" ) {            
+              Toast.info('微信支付成功')
+            }
+            if(res.err_msg == "get_brand_wcpay_request:fail" ) {
+              Toast.fail('微信支付失败')            
+            }
+            if(res.err_msg == "get_brand_wcpay_request:cancel" ) {
+              Toast.info('取消微信支付')
+            }
+            window.onWechatPayFinished()
           }
-          if(res.err_msg == "get_brand_wcpay_request:fail" ) {
-            Toast.fail('微信支付失败')            
-          }
-          if(res.err_msg == "get_brand_wcpay_request:cancel" ) {
-            Toast.info('取消微信支付')
-          }
-          window.onWechatPayFinished()
+        )
+      }
+
+      if (typeof WeixinJSBridge == "undefined"){
+        if( document.addEventListener ){
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        }else if (document.attachEvent){
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
         }
-      )
+      }else{
+         onBridgeReady();
+      }
 
     },
   },
