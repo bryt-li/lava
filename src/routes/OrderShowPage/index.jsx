@@ -33,8 +33,11 @@ class OrderShowPage extends React.Component {
 	}
 
 	render(){
-	  	const {dispatch, form, order} = this.props  	
-
+	  	const {dispatch, form, order, loading} = this.props  	
+	  	if(loading){
+	  		return null
+	  	}
+	  	
 	  	if(!order){
 	  		return(
 			<div className={styles.container}>
@@ -169,6 +172,7 @@ OrderShowPage.onBackClick = (dispatch, props)=> ()=>{
 
 const mapStateToProps = (state) => ({
     order: state.OrderShowPage.order,
+    loading: state.loading.effects['OrderShowPage/getOrder']
 });
 
 const FormWrapper = createForm()(OrderShowPage);

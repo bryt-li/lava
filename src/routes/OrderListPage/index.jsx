@@ -22,8 +22,10 @@ class OrderListPage extends React.Component {
 	}
 
 	render(){
-	  	const {dispatch, form, orders} = this.props
+	  	const {dispatch, form, orders, loading} = this.props
 		const { getFieldProps } = form
+		if(loading)
+			return null
 
 	  	return(
 		<div className={styles.container}>
@@ -60,6 +62,7 @@ OrderListPage.onBackClick = (dispatch, props)=> ()=>{
 
 const mapStateToProps = (state) => ({
     orders: state.OrderListPage.orders,
+    loading: state.loading.effects['OrderListPage/getOrderList']
 });
 
 const FormWrapper = createForm()(OrderListPage);
