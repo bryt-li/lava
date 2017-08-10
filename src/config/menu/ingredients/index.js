@@ -295,6 +295,14 @@ module.exports={
 		name:'橄榄油',
 		intro:''
 	},
+	sesame:{
+		name:'芝麻',
+		intro:''
+	},
+	yolk:{
+		name:'蛋黄',
+		intro:''
+	},
 	basil:{
 		name:'罗勒叶',
 		intro:''

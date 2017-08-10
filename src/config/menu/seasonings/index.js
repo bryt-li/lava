@@ -37,4 +37,21 @@ module.exports={
 			)
 		}
 	},
+	roasted_sesame_dressing:{
+		name:'香培酱',
+		intro:'咸鲜芝香',
+		ingredients:'芝麻,橄榄油,蛋黄',
+		nutrition:{
+			C:104,
+			Cx:1,
+			Fat:19,
+			Pro:7
+		},
+		extra: ()=>{
+			return (
+				<p>烤芝麻香气扑鼻、蛋黄再提鲜<br/>
+				最佳搭配肉类和乌冬面，蔬菜秒变美味！</p>
+			)
+		}
+	},
 }
