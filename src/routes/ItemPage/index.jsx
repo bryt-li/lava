@@ -148,6 +148,33 @@ class ItemPage extends React.Component{
 			    </div>
 			</WingBlank>:null}
 
+			{type=='rices'?
+			<WingBlank size="lg">
+			    <div className={styles.rices}>
+			    	<h1><span>打开方式</span></h1>
+			    	<img src="/res/rices1.jpg" />
+			    	<h1><span>特A极海苔</span></h1>
+			    	<img src="/res/rices2.jpg" />
+			    	<h1><span>美味轻口、适合宝宝</span></h1>
+			    	<img src="/res/rices7.jpg" />
+			    	<img src="/res/rices3.jpg" />
+			    	<img src="/res/rices4.jpg" />
+			    	<img src="/res/rices5.jpg" />
+			    	<img src="/res/rices6.jpg" />
+			    </div>
+			</WingBlank>:null}
+
+			{type=='yogurts'?
+			<WingBlank size="lg">
+			    <div className={styles.yogurts}>
+			    	<h1><span>一勺美味</span></h1>
+			    	<img src="/res/yogurts2.jpg" />
+			    	<h1><span>激活你的味蕾</span></h1>
+			    	<img src="/res/yogurts1.jpg" />
+			    </div>
+			</WingBlank>:null}
+
+
 			<WingBlank size="lg">
 			    <div className={styles.delivery}>
 			    	<h1><span>配送范围</span></h1>

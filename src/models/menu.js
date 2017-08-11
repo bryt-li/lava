@@ -1,8 +1,10 @@
 
 import { routerRedux } from 'dva/router'
 import {calculateOrderPrice} from '../utils/price'
+import pathToRegexp from 'path-to-regexp';
 
 const MENU = require('../config/menu/');
+const SUITES = require('../config/suites');
 
 function emptyMenu(menu){
   const new_menu = {}
@@ -38,8 +40,12 @@ export default {
 
   subscriptions: {
     setup({ dispatch, history }) {
-      
-      dispatch({type:'restoreModelFromLocalStorage'})
+      return history.listen(({pathname,query}) => {
+        const match = pathToRegexp('/shop/home').exec(pathname);
+        if (match) {
+          dispatch({type:'restoreModelFromLocalStorage',payload:query})
+        }
+      });  
     },
   },
 
@@ -50,9 +56,16 @@ export default {
       const { menu } = yield(select(_ => _))
       const { catalog } = menu
 
-      //这是原来保存的点菜菜单，注意：有可能新旧菜单中的菜品不一致
-      const stored_menu = JSON.parse(window.localStorage.getItem('menu'))
-      
+      const { suite } = payload
+      let stored_menu = null
+      if(suite==null){
+        //这是原来保存的点菜菜单，注意：有可能新旧菜单中的菜品不一致
+        stored_menu = JSON.parse(window.localStorage.getItem('menu'))
+      }else{
+        if(SUITES[suite])
+          stored_menu = SUITES[suite].menu
+      }
+
       if(stored_menu){
         //恢复原来保存的点菜数量
         for(var t in catalog){

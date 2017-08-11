@@ -22,6 +22,8 @@ function HomePage({ children, dispatch, location, home, ui, user }) {
 
 	return (
   	<div className={styles.container}>
+		<img src="/res/logo.jpg" style={{visibility:'hidden',float:'left', height:0,width:0}} />
+
 		<Helmet>
             <meta charSet="utf-8" />
             <title>活力火山微商城</title>
@@ -41,7 +43,6 @@ function HomePage({ children, dispatch, location, home, ui, user }) {
 			<img alt="icon" src={`/home/3.jpg`} />
 			<img onLoad={handleImageLoaded} alt="icon" src={`/home/4.jpg`} />
 	    </Carousel>
-
 
 	    <h1><span>主食沙拉</span></h1>
   		<WingBlank size="sm">
@@ -68,9 +69,53 @@ function HomePage({ children, dispatch, location, home, ui, user }) {
 	  	</WingBlank>
 
 	    <h1><span>美味饭团子</span></h1>
+		<WingBlank size="sm">
+  			{rices.map((id,key) => {
+  				let prevId=null;
+  				let output = false;
+
+  				if(key%2==1){
+  					prevId = rices[key-1];
+  					output = true;
+  				}else if(key==rices.length-1){
+  					prevId = id;
+  					id=null;
+  					output = true;
+  				}
+
+	  			if (output)	return (  				
+  					<Flex key={key}>
+	  					<ShopItem type="rices" id={prevId} />
+	  					<ShopItem type="rices" id={id} />
+	  				</Flex>
+  				);
+  			})}
+	  	</WingBlank>
 
 	    <h1><span>酸奶沙拉</span></h1>
-	  	
+	  	<WingBlank size="sm">
+  			{yogurts.map((id,key) => {
+  				let prevId=null;
+  				let output = false;
+
+  				if(key%2==1){
+  					prevId = yogurts[key-1];
+  					output = true;
+  				}else if(key==yogurts.length-1){
+  					prevId = id;
+  					id=null;
+  					output = true;
+  				}
+
+	  			if (output)	return (  				
+  					<Flex key={key}>
+	  					<ShopItem type="yogurts" id={prevId} />
+	  					<ShopItem type="yogurts" id={id} />
+	  				</Flex>
+  				);
+  			})}
+	  	</WingBlank>
+
 	    <h1><span>轻断食-果蔬稀</span></h1>
 	  	<WingBlank size="sm">
   			{juices.map((id,key) => {
