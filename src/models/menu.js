@@ -39,32 +39,59 @@ export default {
   },
 
   subscriptions: {
+
     setup({ dispatch, history }) {
+      //restore from localstorage only once
+      dispatch({type:'restoreMenuFromLocalStorage'})
+
       return history.listen(({pathname,query}) => {
+        //load from qs when url changes
         const match = pathToRegexp('/shop/home').exec(pathname);
         if (match) {
-          dispatch({type:'restoreModelFromLocalStorage',payload:query})
+          dispatch({type:'loadMenuFromQueryString',payload:query})
         }
-      });  
+      })
     },
+
   },
 
   effects: {
+    *restoreMenuFromLocalStorage({payload},{call,select,put}){
+      //这是当前的新菜单，quantity都是0
+      const { menu } = yield(select(_ => _))
+      const { catalog } = menu
+      const stored_menu = JSON.parse(window.localStorage.getItem('menu'))
+      
+      if(stored_menu){
+        //恢复原来保存的点菜数量
+        for(var t in catalog){
+          for(var i in catalog[t]){
+            if( stored_menu[t]&&
+                stored_menu[t][i]&&
+                stored_menu[t][i].quantity>0)
+              catalog[t][i].quantity = stored_menu[t][i].quantity
+          }
+        }
+      }
 
-    *restoreModelFromLocalStorage({payload},{call,select,put}){
+      //重新计算
+      const {total, saving, items} = calculateOrderPrice(catalog)
+
+      yield put({ 
+        type: 'updateModel', 
+        payload: {catalog, total, saving, items}
+      })
+    },
+
+    *loadMenuFromQueryString({payload},{call,select,put}){
       //这是当前的新菜单，quantity都是0
       const { menu } = yield(select(_ => _))
       const { catalog } = menu
 
       const { suite } = payload
       let stored_menu = null
-      if(suite==null){
-        //这是原来保存的点菜菜单，注意：有可能新旧菜单中的菜品不一致
-        stored_menu = JSON.parse(window.localStorage.getItem('menu'))
-      }else{
-        if(SUITES[suite])
+      if(suite!=null && SUITES[suite])
           stored_menu = SUITES[suite].menu
-      }
 
       if(stored_menu){
         //恢复原来保存的点菜数量
@@ -77,6 +104,10 @@ export default {
           }
         }
       }
+
+      //save menu to localStorage
+      window.localStorage.setItem('menu', JSON.stringify(catalog))
+
 
       //重新计算
       const {total, saving, items} = calculateOrderPrice(catalog)

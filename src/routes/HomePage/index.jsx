@@ -18,7 +18,7 @@ function HomePage({ children, dispatch, location, home, ui, user }) {
 	}
 	
 	const { salads, yogurts, rices, juices, tests } = home
-	const { imageLoading } = ui
+	const { imageLoading, title } = ui
 
 	return (
   	<div className={styles.container}>
@@ -26,7 +26,7 @@ function HomePage({ children, dispatch, location, home, ui, user }) {
 
 		<Helmet>
             <meta charSet="utf-8" />
-            <title>活力火山微商城</title>
+            <title>{title}</title>
         </Helmet>
 
   	    <Header location={location}/>

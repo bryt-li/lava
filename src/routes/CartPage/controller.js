@@ -130,7 +130,7 @@ export default {
         return
       }
       
-      const {id,code} = response.payload
+      const {id} = response.payload
 
       //clear menu data
       yield put({ type: 'menu/clearMenu'})
@@ -140,7 +140,7 @@ export default {
 
       yield put(routerRedux.push(url))
 
-      console.log(`create order succeeded with id: ${id}, code: ${code}, clear menu and redirect to ${url}`)
+      console.log(`create order succeeded with id: ${id}, clear menu and redirect to ${url}`)
     },
   },
 

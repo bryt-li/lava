@@ -1,6 +1,7 @@
 import { routerRedux } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
+import { getWechatJsapiConfig } from '../../services/wechat';
 import { getWechatPayJsapiArgs } from '../../services/pay';
 import { Toast } from 'antd-mobile'
 
@@ -28,47 +29,41 @@ export default {
       console.log('start wechat pay')
       const id = payload
 
-      const { response, err } = yield call(getWechatPayJsapiArgs, id)
+      const jsApiList = ['chooseWXPay']
+      const { response, err } = yield call(getWechatJsapiConfig, url, jsApiList)
       if(err || !response || !response.ok || !response.payload){
         console.log('wechatPay error')
         console.error(err)
         console.error(response)
+        Toast.fail('获取微信JSAPI配置失败')
+        return
+      }
+      const jsapi_config = response.payload
+
+      const { response1, err1 } = yield call(getWechatPayJsapiArgs, id)
+      if(err1 || !response1 || !response1.ok || !response1.payload){
+        console.log('wechatPay error')
+        console.error(err1)
+        console.error(response1)
         Toast.fail('创建微信支付订单失败')
         return
       }
+      const jsapi_pay = response1.payload
 
-      const jsapi = response.payload
+      wx.config({
+        debug:true,
+        ...jsapi_config
+      })
 
-      //调用微信支付JSAPI
-      function onBridgeReady(){
-        WeixinJSBridge.invoke(
-          'getBrandWCPayRequest', 
-          jsapi,
-          function(res){
-            if(res.err_msg == "get_brand_wcpay_request:ok" ) {            
-              Toast.info('微信支付成功')
-            }
-            if(res.err_msg == "get_brand_wcpay_request:fail" ) {
-              Toast.fail('微信支付失败')            
-            }
-            if(res.err_msg == "get_brand_wcpay_request:cancel" ) {
-              Toast.info('取消微信支付')
-            }
+      wx.ready(function(){
+        wx.chooseWXPay({
+          ...jsapi_pay,
+          success: function (res) {
+            Toast.info('微信支付成功')
             window.onWechatPayFinished()
           }
-        )
-      }
-
-      if (typeof WeixinJSBridge == "undefined"){
-        if( document.addEventListener ){
-            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-        }else if (document.attachEvent){
-            document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
-            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-        }
-      }else{
-         onBridgeReady();
-      }
+        })
+      })
 
     },
   },
