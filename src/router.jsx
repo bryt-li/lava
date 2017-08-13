@@ -77,7 +77,6 @@ const Routers = function ({ history, app }) {
     }
   }
 
-
   const layout_shop_children = [
     {
       path: 'home',
@@ -161,7 +160,7 @@ const Routers = function ({ history, app }) {
       },
     },
     {
-      path: 'order/wechatpay/:id',
+      path: 'wechatpay/:id',
       onEnter: checkLogin,
       getComponent (nextState, cb) {
         require.ensure([], require => {

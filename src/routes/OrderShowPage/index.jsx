@@ -24,12 +24,13 @@ class OrderShowPage extends React.Component {
 	handlePayClicked = () => {
 
 		const {dispatch,order} = this.props
-		const url = `/user/order/wechatpay/${order.id}`
+		const url = `/user/wechatpay/${order.id}`
 
 		//ios下的微信浏览器没办法正常刷新SPA应用的URL
 		//所以这里只好重新进入应用
 		//才能和微信支付配置的安全URL匹配上
-		window.location = url
+		//window.location = url
+		dispatch(routerRedux.push(url))
 	}
 
 	render(){
