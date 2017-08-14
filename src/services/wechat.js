@@ -5,7 +5,8 @@ import moment from 'moment';
 const config = require('../config');
 const { api } = config
 
-export async function getWechatPayJsapiArgs(url, jsApiList) {
+export async function getWechatJsapiConfig(jsApiList) {
+
 	return request(
 		api.getWechatJsapiConfig,
 		{
@@ -14,7 +15,7 @@ export async function getWechatPayJsapiArgs(url, jsApiList) {
 				/*Must have this to make Nutz backend recognize.*/
 				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 			},
-			body: qs.stringify({url, jsApiList})
+			body: qs.stringify({jsApiList})
 		}
 	);
 }

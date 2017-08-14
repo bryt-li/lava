@@ -15,10 +15,10 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({pathname}) => {
-        const match = pathToRegexp('/user/order/wechatpay/:id').exec(pathname);
+        const match = pathToRegexp('/user/wechatpay/:id').exec(pathname);
         if (match) {
           const id = match[1]
-          dispatch({type:'wechatPay',payload:{id,pathname}})
+          dispatch({type:'wechatPay',payload:{id}})
         }
       })
     },
@@ -27,10 +27,10 @@ export default {
   effects: {
     *wechatPay({payload,}, { call, select, put }) {
       console.log('start wechat pay')
-      const {id,pathname} = payload
+      const {id} = payload
 
-      const jsApiList = ['chooseWXPay']
-      const { response, err } = yield call(getWechatJsapiConfig, pathname, jsApiList)
+      const jsApiList = 'chooseWXPay'
+      const { response, err } = yield call(getWechatJsapiConfig, jsApiList)
       if(err || !response || !response.ok || !response.payload){
         console.log('wechatPay error')
         console.error(err)
@@ -53,6 +53,7 @@ export default {
       const jsapi_pay = response1.payload
       console.log(jsapi_pay)
 
+      //wechat pay begine
       wx.config({
         debug:true,
         ...jsapi_config
