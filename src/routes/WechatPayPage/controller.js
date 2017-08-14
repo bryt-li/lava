@@ -48,10 +48,10 @@ export default {
         console.error(err1)
         console.error(response1)
         
-        log(err1)
-        log(response1)
+        alert(err1)
+        alert(response1)
         if(response1)
-          log(response1.payload)
+          alert(response1.payload)
 
         Toast.fail('创建微信支付订单失败')
         return
