@@ -55,7 +55,8 @@ export default {
 
       const jsapi_pay = response.payload
       console.log(jsapi_pay)
-
+      alert(jsapi_pay)
+      
       //wechat pay begine
       wx.config({
         debug:true,
