@@ -47,8 +47,6 @@ export default {
         console.log('wechatPay error')
         console.error(err1)
         console.error(response1)
-        alert(err1)
-        alert(response1)
         Toast.fail('创建微信支付订单失败')
         return
       }
