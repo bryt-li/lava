@@ -6,6 +6,7 @@ const config = require('../config');
 const { api } = config
 
 export async function getWechatPayJsapiArgs(id) {
+	
 	return request(
 		api.getWechatPayJsapiArgs,
 		{
@@ -16,5 +17,5 @@ export async function getWechatPayJsapiArgs(id) {
 			},
 			body: qs.stringify({id})
 		}
-	);
+	)
 }

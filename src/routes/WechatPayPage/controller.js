@@ -30,7 +30,7 @@ export default {
       const {id} = payload
 
       const jsApiList = 'chooseWXPay'
-      const { response, err } = yield call(getWechatJsapiConfig, jsApiList)
+      let { response, err } = yield call(getWechatJsapiConfig, jsApiList)
       if(err || !response || !response.ok || !response.payload){
         console.log('wechatPay error')
         console.error(err)
@@ -42,22 +42,17 @@ export default {
       const jsapi_config = response.payload
       console.log(jsapi_config)
 
-      const { response1, err1 } = yield call(getWechatPayJsapiArgs, id)
-      if(err1 || !response1 || !response1.ok || !response1.payload){
+      let { response, err } = yield call(getWechatPayJsapiArgs, id)
+      if(err || !response || !response.ok || !response.payload){
         console.log('wechatPay error')
-        console.error(err1)
-        console.error(response1)
-        
-        alert(err1)
-        alert(response1)
-        if(response1)
-          alert(response1.payload)
+        console.error(err)
+        console.error(response)
 
         Toast.fail('创建微信支付订单失败')
         return
       }
 
-      const jsapi_pay = response1.payload
+      const jsapi_pay = response.payload
       console.log(jsapi_pay)
 
       //wechat pay begine
