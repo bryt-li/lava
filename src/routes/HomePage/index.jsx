@@ -22,7 +22,7 @@ function HomePage({ children, dispatch, location, home, ui, user }) {
 
 	return (
   	<div className={styles.container}>
-		<img src="/res/logo.jpg" style={{visibility:'hidden',float:'left', height:0,width:0}} />
+		<img src="/app/res/logo.jpg" style={{visibility:'hidden',float:'left', height:0,width:0}} />
 
 		<Helmet>
             <meta charSet="utf-8" />

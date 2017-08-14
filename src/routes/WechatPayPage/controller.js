@@ -38,6 +38,7 @@ export default {
         Toast.fail('获取微信JSAPI配置失败')
         return
       }
+      
       const jsapi_config = response.payload
       console.log(jsapi_config)
 
