@@ -6,7 +6,7 @@ module.exports = {
 		rice: false,
 		season: null,
 		delivery_term: "提前一天预订",
-		slogon: "特A级海苔，精选东北大米，日式和风汁调味，好评连连推荐",
+		slogon: "特A级海苔，精选东北大米，日式和风汁调味",
 		ingredients: {
 			炙吞拿鱼:"12%",
 			牛油果:"6%",
