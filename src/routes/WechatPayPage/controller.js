@@ -29,8 +29,9 @@ export default {
       console.log('start wechat pay')
       const {id} = payload
 
+
       const jsApiList = 'chooseWXPay'
-      let { response, err } = yield call(getWechatJsapiConfig, jsApiList)
+      var { response, err } = yield call(getWechatJsapiConfig, jsApiList)
       if(err || !response || !response.ok || !response.payload){
         console.log('wechatPay error')
         console.error(err)
@@ -42,7 +43,7 @@ export default {
       const jsapi_config = response.payload
       console.log(jsapi_config)
 
-      let { response, err } = yield call(getWechatPayJsapiArgs, id)
+      var { response, err } = yield call(getWechatPayJsapiArgs, id)
       if(err || !response || !response.ok || !response.payload){
         console.log('wechatPay error')
         console.error(err)
