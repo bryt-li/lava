@@ -22,8 +22,6 @@ function HomePage({ children, dispatch, location, home, ui, user }) {
 
 	return (
   	<div className={styles.container}>
-		<img src="/app/res/logo.jpg" style={{visibility:'hidden',float:'left', height:0,width:0}} />
-
 		<Helmet>
             <meta charSet="utf-8" />
             <title>{title}</title>

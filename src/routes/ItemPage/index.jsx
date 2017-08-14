@@ -55,11 +55,7 @@ class ItemPage extends React.Component{
 		    <NavBar
 		        leftContent="返回"
 		        mode="light"
-		        onLeftClick={() => this.props.dispatch(routerRedux.goBack())}
-		        rightContent={[
-		          <Icon key="0" type="search" style={{marginRight: '0.32rem'}} />,
-		          <Icon key="1" type="ellipsis" />
-		        ]}>
+		        onLeftClick={() => this.props.dispatch(routerRedux.goBack())}>
 		      {item.name}
 		    </NavBar>
 
@@ -142,9 +138,9 @@ class ItemPage extends React.Component{
 		    {type=='juices'?
 			<WingBlank size="lg">
 			    <div className={styles.juices}>
-			    	<img src="/res/juices1.jpg" />
-			    	<img src="/res/juices2.jpg" />
-			    	<img src="/res/juices3.jpg" />
+			    	<img src="./res/juices1.jpg" />
+			    	<img src="./res/juices2.jpg" />
+			    	<img src="./res/juices3.jpg" />
 			    </div>
 			</WingBlank>:null}
 
@@ -152,15 +148,15 @@ class ItemPage extends React.Component{
 			<WingBlank size="lg">
 			    <div className={styles.rices}>
 			    	<h1><span>打开方式</span></h1>
-			    	<img src="/res/rices1.jpg" />
+			    	<img src="./res/rices1.jpg" />
 			    	<h1><span>特A极海苔</span></h1>
-			    	<img src="/res/rices2.jpg" />
+			    	<img src="./res/rices2.jpg" />
 			    	<h1><span>美味轻口、适合宝宝</span></h1>
-			    	<img src="/res/rices7.jpg" />
-			    	<img src="/res/rices3.jpg" />
-			    	<img src="/res/rices4.jpg" />
-			    	<img src="/res/rices5.jpg" />
-			    	<img src="/res/rices6.jpg" />
+			    	<img src="./res/rices7.jpg" />
+			    	<img src="./res/rices3.jpg" />
+			    	<img src="./res/rices4.jpg" />
+			    	<img src="./res/rices5.jpg" />
+			    	<img src="./res/rices6.jpg" />
 			    </div>
 			</WingBlank>:null}
 
@@ -168,9 +164,9 @@ class ItemPage extends React.Component{
 			<WingBlank size="lg">
 			    <div className={styles.yogurts}>
 			    	<h1><span>一勺美味</span></h1>
-			    	<img src="/res/yogurts2.jpg" />
+			    	<img src="./res/yogurts2.jpg" />
 			    	<h1><span>激活你的味蕾</span></h1>
-			    	<img src="/res/yogurts1.jpg" />
+			    	<img src="./res/yogurts1.jpg" />
 			    </div>
 			</WingBlank>:null}
 
@@ -178,7 +174,7 @@ class ItemPage extends React.Component{
 			<WingBlank size="lg">
 			    <div className={styles.delivery}>
 			    	<h1><span>配送范围</span></h1>
-			    	<img src="/res/delivery.jpg" />
+			    	<img src="./res/delivery.jpg" />
 			    	<p>西二环、北二环、东二环、南二环以内<br/>
 			    	五一路、王府井、奥克斯商圈、以及麓谷地区</p>
 			    	<h1><span>配送费用说明</span></h1>
@@ -218,7 +214,7 @@ class ItemPage extends React.Component{
 
 	    	<WingBlank size="lg">
 			    <div className={styles.slogon}>
-			    	<img src="/res/100percent.jpg" />
+			    	<img src="./res/100percent.jpg" />
 			    	<h4>新鲜食材，当日制作</h4>
 			    	<h4>无糖无添加无防腐</h4>
 			    </div>
