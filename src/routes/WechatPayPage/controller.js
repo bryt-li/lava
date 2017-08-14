@@ -55,7 +55,10 @@ export default {
 
       const jsapi_pay = response.payload
       console.log(jsapi_pay)
-      alert(jsapi_pay)
+      
+      jsapi_pay.timestamp = jsapi_pay.timeStamp
+      delete jsapi_pay.timeStamp
+      delete jsapi_pay.appId
       
       //wechat pay begine
       wx.config({
