@@ -55,14 +55,16 @@ export default {
 
       const jsapi_pay = response.payload
       console.log(jsapi_pay)
-      
+
+      //坑，请看微信支付文档
+      //https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115
       jsapi_pay.timestamp = jsapi_pay.timeStamp
       delete jsapi_pay.timeStamp
       delete jsapi_pay.appId
       
       //wechat pay begine
       wx.config({
-        debug:true,
+        debug:false,
         ...jsapi_config
       })
 
