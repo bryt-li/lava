@@ -2,6 +2,7 @@ import React from 'react';
 import { Router, Route } from 'dva/router';
 import PropTypes from 'prop-types'
 import {  routerRedux } from 'dva/router'
+import qs from 'qs'
 
 import { request } from './utils'
 const config = require('./config');
@@ -52,9 +53,18 @@ const Routers = function ({ history, app }) {
     }
 
     //get stored user
+    const url = window.location.href
     const state = app._store.getState();
     if(!state.app.jsapi_config){
-      fetch(api.getWechatJsapiConfig, {method: 'get', fetchType: 'CORS', credentials: 'include'})
+      fetch(api.getWechatJsapiConfig, {
+        method: 'POST',
+        fetchType: 'CORS',
+        credentials: 'include',
+        headers: {
+          /*Must have this to make Nutz backend recognize.*/
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        body: qs.stringify({url})})
       .then(checkStatus)
       .then(parseJSON)
       .then(handleResponse)

@@ -1,7 +1,7 @@
 import { request } from '../utils'
-import qs from 'qs';
+import qs from 'qs'
 
-const config = require('../config');
+const config = require('../config')
 const { api } = config
 
 export async function getMe() {
