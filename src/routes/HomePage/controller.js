@@ -4,7 +4,6 @@ import { getMe } from '../../services/user'
 import pathToRegexp from 'path-to-regexp';
 
 const HOME = require('../../config/home')
-const SUITES = require('../../config/suites');
 const config = require('../../config');
 
 export default {
@@ -28,8 +27,8 @@ export default {
         const match = pathToRegexp('/shop/home').exec(pathname);
         if (match) {
           let title = config.name
-          if(query.suite && SUITES[query.suite])
-            title = `${title} - ${SUITES[query.suite].name}`
+          if(query.name)
+            title = query.name
 
           dispatch({type:'updateUI',payload:{title}})
 /*
@@ -48,6 +47,7 @@ export default {
             }
           })
 */
+
         }
       });  
     },

@@ -64,7 +64,7 @@ export default {
       
       //wechat pay begine
       wx.config({
-        debug:false,
+        debug:true,
         ...jsapi_config
       })
 

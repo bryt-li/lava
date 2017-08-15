@@ -4,7 +4,6 @@ import {calculateOrderPrice} from '../utils/price'
 import pathToRegexp from 'path-to-regexp';
 
 const MENU = require('../config/menu/');
-const SUITES = require('../config/suites');
 
 function emptyMenu(menu){
   const new_menu = {}
@@ -88,23 +87,19 @@ export default {
       const { menu } = yield(select(_ => _))
       const { catalog } = menu
 
-      const { suite } = payload
-      let stored_menu = null
-      if(suite!=null && SUITES[suite])
-          stored_menu = SUITES[suite].menu
+      const url_menu = payload
 
-      if(stored_menu){
-        //恢复原来保存的点菜数量
-        for(var t in catalog){
-          for(var i in catalog[t]){
-            if( stored_menu[t]&&
-                stored_menu[t][i]&&
-                stored_menu[t][i].quantity>0)
-              catalog[t][i].quantity = stored_menu[t][i].quantity
-          }
+      if(Object.keys(url_menu).length === 0)
+        return
+
+      //恢复原来保存的点菜数量
+      for(var t in catalog){
+        for(var i in catalog[t]){
+          if( url_menu[i] )
+            catalog[t][i].quantity = parseInt(url_menu[i])
         }
       }
-
+    
       //save menu to localStorage
       window.localStorage.setItem('menu', JSON.stringify(catalog))
 
