@@ -13,18 +13,11 @@ export default {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({pathname}) => {
-        const match = pathToRegexp('/user/order/list').exec(pathname);
-        if (match) {
-          dispatch({type:'getOrderList'})
-        }
-      });  
-    },
+
   },
 
   effects: {
-    *getOrderList({payload,}, { call, put }) {
+    *componentWillMount({payload,}, { call, put }) {
       const { response, err } = yield call(getOrderList)
       if(err || !response || !response.ok || !response.payload){
         console.error(err)

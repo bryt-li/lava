@@ -1,7 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { parse } from 'qs';
 import pathToRegexp from 'path-to-regexp';
-import { getWechatJsapiConfig } from '../../services/wechat';
 import { getWechatPayJsapiArgs } from '../../services/pay';
 import { Toast } from 'antd-mobile'
 
@@ -13,35 +12,19 @@ export default {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({pathname}) => {
-        const match = pathToRegexp('/user/wechatpay/:id').exec(pathname);
-        if (match) {
-          const id = match[1]
-          dispatch({type:'wechatPay',payload:{id}})
-        }
-      })
-    },
+
   },
 
   effects: {
-    *wechatPay({payload,}, { call, select, put }) {
+    *componentWillMount({payload,}, { call, select, put }) {
       console.log('start wechat pay')
       const {id} = payload
-
-      const jsApiList = 'chooseWXPay'
-      const url = window.location.href
-      var { response, err } = yield call(getWechatJsapiConfig, url, jsApiList)
-      if(err || !response || !response.ok || !response.payload){
-        console.log('wechatPay error')
-        console.error(err)
-        console.error(response)
-        Toast.fail('获取微信JSAPI配置失败')
+      
+      const { app } = yield(select(_ => _))
+      if(null === app.jsapi_config){
+        Toast.fail('初始化微信支付环境失败')
         return
       }
-      
-      const jsapi_config = response.payload
-      console.log(jsapi_config)
 
       var { response, err } = yield call(getWechatPayJsapiArgs, id)
       if(err || !response || !response.ok || !response.payload){
@@ -65,7 +48,7 @@ export default {
       //wechat pay begine
       wx.config({
         debug:true,
-        ...jsapi_config
+        ...app.jsapi_config
       })
 
       wx.ready(function(){
@@ -73,7 +56,7 @@ export default {
           ...jsapi_pay,
           success: function (res) {
             Toast.info('微信支付成功')
-            window.onWechatPayFinished()
+            put(routerRedux.goBack())
           }
         })
       })

@@ -20,6 +20,51 @@ const registerModel = (app, model) => {
 
 const Routers = function ({ history, app }) {
 
+  function init(nextState, replace, cb){
+    function checkStatus(response) {
+      if (response.status >= 200 && response.status < 300) {
+        return response;
+      }
+      const error = new Error(response.statusText);
+      error.response = response;
+      throw error;
+    }
+    function parseJSON(response) {
+      return response.json();
+    }
+    function handleResponse(response){
+      if(response.ok){
+        const config = response.payload
+        app._store.dispatch({ type: 'app/updateJsApiConfig', payload: config })
+
+        console.log('wechat jsapi init as server returns config')
+        console.log(config)
+      }else{
+        const fail = response.payload
+        console.log(`wechat jsapi init fail because of ${fail.errmsg}`)
+      }
+      cb()
+    }
+    function handleError(err){
+      console.log(`check login NOT pass because of ${err}, redirect url to ${login}`)
+      window.location = login
+      cb()
+    }
+
+    //get stored user
+    const state = app._store.getState();
+    if(!state.app.jsapi_config){
+      fetch(api.getWechatJsapiConfig, {method: 'get', fetchType: 'CORS', credentials: 'include'})
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(handleResponse)
+      .catch(handleError);
+    }else{
+      cb()
+      console.log('check jsapi passed because of local config exists.')
+    }
+  }
+
   function checkLogin(nextState, replace, cb) {
     
     //转义反斜杆是因为微信说state里面只支持字母与数字
@@ -80,6 +125,7 @@ const Routers = function ({ history, app }) {
   const layout_shop_children = [
     {
       path: 'home',
+      onEnter: init,
       getComponent (nextState, cb) {
         require.ensure([], require => {
           registerModel(app, require('./routes/HomePage/controller'))
@@ -89,6 +135,7 @@ const Routers = function ({ history, app }) {
     },
     {
       path: 'item/:type/:id',
+      onEnter: init,      
       getComponent (nextState, cb) {
         require.ensure([], require => {
           registerModel(app, require('./routes/ItemPage/controller'))

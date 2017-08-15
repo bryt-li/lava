@@ -1,10 +1,25 @@
 
 import { routerRedux } from 'dva/router'
-import { getMe } from '../../services/user'
 import pathToRegexp from 'path-to-regexp';
+import {calculateOrderPrice} from '../../utils/price'
+import qs from 'qs'
+import {wechat_share} from '../../utils/wechat'
 
-const HOME = require('../../config/home')
 const config = require('../../config');
+
+function menuToQs(menu){
+  const qs_menu = {}
+  for(var t in menu){
+    for(var i in menu[t]){
+      var quantity = menu[t][i].quantity
+      if(quantity>0)
+        qs_menu[i] = quantity
+    }
+  }
+  return qs.stringify(qs_menu)
+}
+
+
 
 export default {
 
@@ -18,59 +33,71 @@ export default {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
-      //首页进入的时候，执行一次自动登录的尝试
-      //看server session是不是仍然有效
-      dispatch({ type: 'getMe' })
-
-      return history.listen(({pathname,query}) => {
-        const match = pathToRegexp('/shop/home').exec(pathname);
-        if (match) {
-          let title = config.name
-          if(query.name)
-            title = query.name
-
-          dispatch({type:'updateUI',payload:{title}})
-/*
-          wx.onMenuShareAppMessage({
-            title: '这是标题', // 分享标题
-            desc: '这是描述', // 分享描述
-            link: 'http://m.huolihuoshan.com/', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: 'http://192.168.1.232:8080/res/logo.jpg', // 分享图标
-            type: 'link', // 分享类型,music、video或link，不填默认为link
-            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-            success: function () { 
-                // 用户确认分享后执行的回调函数
-            },
-            cancel: function () { 
-                // 用户取消分享后执行的回调函数
-            }
-          })
-*/
-
-        }
-      });  
-    },
   },
 
   effects: {
-    *getMe ({payload,}, { call, put }) {
-      const { response, err } = yield call(getMe)
-      if(err || !response || !response.ok || !response.payload){
-        console.error(err)
-        console.error(response)
-        return
+
+    *componentWillMount({payload,}, { call, select, put }) {
+      let title = config.name
+      if(payload.name)
+        title = payload.name
+      yield put({type:'updateUI',payload:{title}})
+
+      //这是当前的新菜单，quantity都是0
+      const { menu, user, app } = yield(select(_ => _))
+      const { catalog } = menu
+
+      if(Object.keys(payload).length > 0){
+        //从url中恢复
+        for(var t in catalog){
+          for(var i in catalog[t]){
+            if( payload[i] )
+              catalog[t][i].quantity = parseInt(payload[i])
+            else
+              catalog[t][i].quantity = 0
+          }
+        }
+      }else{
+        //从localStorage恢复
+        const stored_menu = JSON.parse(window.localStorage.getItem('menu'))
+        if(stored_menu){
+          //恢复原来保存的点菜数量
+          for(var t in catalog){
+            for(var i in catalog[t]){
+              if( stored_menu[t]&&
+                  stored_menu[t][i]&&
+                  stored_menu[t][i].quantity>0)
+                catalog[t][i].quantity = stored_menu[t][i].quantity
+            }
+          }
+        }
       }
 
-      const user = response.payload
-      yield put({ type: 'user/updateUser', payload: user })
-  
-      if(user.delivery)
-        yield put({ type: 'user/updateDelivery', payload: user.delivery })
+      //save menu to localStorage
+      window.localStorage.setItem('menu', JSON.stringify(catalog))
 
-      console.log('home get me succeeded with user')
-      console.log(user)
+      //重新计算
+      const {total, saving, items} = calculateOrderPrice(catalog)
+
+      yield put({ 
+        type: 'menu/updateModel', 
+        payload: {catalog, total, saving, items}
+      })
+
+      //微信分享
+      if(null == app.jsapi_config)
+        return
+
+      title = payload.name?payload.name:config.name
+      title = user.id?`${user.nickname}分享了【${title}】`:title
+      const jsapi_config = app.jsapi_config
+      const qs = menuToQs(catalog)
+      const link = qs?`${config.rootUrl}app/?hlhs#/shop/home?${qs}`:`${config.rootUrl}app/?hlhs#/shop/home`
+      const imgUrl = `${config.rootUrl}app/res/suite.jpg`
+      const desc = '购买套餐，更有十足优惠'
+      wechat_share(jsapi_config,title,link,imgUrl,desc)
     },
+
   },
 
   reducers: {
@@ -82,5 +109,6 @@ export default {
     }
 
   },
+
 
 };

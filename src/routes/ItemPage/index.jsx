@@ -12,52 +12,42 @@ import {formatMoney} from '../../utils/price';
 
 import styles from './index.less';
 
+class ItemPage extends React.Component {
+	constructor(props) {
+		super(props);
+	}
 
-class ItemPage extends React.Component{
-
-	constructor (props) {
-    	super(props)
-	    this.state = {
-		    imageLoading: true,
-	    }
-	}	
+	componentWillMount() {
+		const {location,dispatch,params} = this.props
+		dispatch({type:'ItemPage/componentWillMount',payload:params})
+	}
 
   	handleImageLoaded = () => {
-  		this.setState({...this.state, imageLoading:false});
+  		this.props.dispatch({type:'ItemPage/updateUI', payload:{imageLoading:false}})
   	}
 
   	render(){
-  		const {imageLoading} = this.state;
-  		const {dispatch, params, catalog} = this.props;
-  		const {type,id} = params;
-  		const item = catalog[type][id];
-  		
-  		let seasoning = null;
-  		let seasoning_id = null;
-  		if(item.season){
-  			let result = findObj(catalog['seasonings'],item.season);
-  			if(result){
-		  		seasoning = result.obj;
-		  		seasoning_id = result.key;
-		  	}
-  		}
+		const { dispatch, location, ui, item, ingredients } = this.props
 
-		window.scrollTo(0,0)
+	  	if(item==null)
+	  		return null
 
-  		return(
+	  	const {type,id} = item
+
+		return(
 		<div className={styles.container}>
 			<Helmet>
-                <meta charSet="utf-8" />
-                <title>{item.name}</title>
-            </Helmet>
+	            <meta charSet="utf-8" />
+	            <title>{item.name}</title>
+	        </Helmet>
 		    <NavBar
 		        leftContent="返回"
 		        mode="light"
-		        onLeftClick={() => this.props.dispatch(routerRedux.goBack())}>
+		        onLeftClick={() => dispatch(routerRedux.push('/shop/home'))}>
 		      {item.name}
 		    </NavBar>
 
-			{imageLoading && <ReactLoading className={styles.loading} type='spinningBubbles' color='$444'/> }
+			{ui.imageLoading && <ReactLoading className={styles.loading} type='spinningBubbles' color='$444'/> }
 			<Carousel
 		      className={styles.carousel}
 		      autoplay={true}
@@ -68,7 +58,7 @@ class ItemPage extends React.Component{
 				<img onLoad={this.handleImageLoaded} alt="icon" src={`/menu/${type}/${id}/2.jpg`} />
 		    </Carousel>
 
-    		<WingBlank size="sm">
+			<WingBlank size="sm">
 			    <Flex className={styles.title}>
 			    	<Flex.Item className={styles.name}>{item.name}</Flex.Item>
 			    	<Flex.Item className={styles.price}><span className={styles.original_price}><span className={styles.cny}>&nbsp;&nbsp;￥</span>{formatMoney(item.original_price)}&nbsp;&nbsp;</span><span className={styles.cny}>￥</span>{formatMoney(item.price)}</Flex.Item>
@@ -76,7 +66,7 @@ class ItemPage extends React.Component{
 			    <hr />
 			    <div className={styles.order}>
 		    		{type=='salads'?
-		    		<div><span>沙拉标配</span>{`${item.season?item.season:'无酱汁'}(${item.rice?'小饭团':'无饭团'})`}</div>
+		    		<div><span>沙拉标配</span>{`${item.season?item.season.name:'无酱汁'}(${item.rice?'小饭团':'无饭团'})`}</div>
 					:null}		    		
 		    		<div><span>配送条款</span>{item.delivery_term}</div>
 			    </div>
@@ -92,11 +82,11 @@ class ItemPage extends React.Component{
 		    <div className={styles.majors}>
 		    	<h1><span>特色食材</span></h1>
 		    	<p>以下为部分主要食材<br />百分比为表示总量使用比例。</p>
-		    	<MajorIngredients majors={item.ingredients} ingredients={catalog.ingredients}/>
+		    	<MajorIngredients majors={item.ingredients} ingredients={ingredients} />
 		    </div>:null}
 
 		    {item.ingredients_intro?
-    		<WingBlank size="lg">
+			<WingBlank size="lg">
 			    <div className={styles.ingredients}>
 			    	<h1><span>配料</span></h1>
 			    	<item.ingredients_intro/>
@@ -104,31 +94,31 @@ class ItemPage extends React.Component{
 		    </WingBlank>:null}
 
 		    {item.nutrition?
-    		<WingBlank size="lg">
+			<WingBlank size="lg">
 			    <div className={styles.nutrition}>
 			    	<h1><span>营养价值</span></h1>
 			    	<NutritionTable nutrition={item.nutrition}/>
 			    </div>
 		    </WingBlank>:null}
 
-		    {seasoning?
+		    {item.season?
 		    <div className={styles.season}>
 		    	<h1><span>酱汁</span></h1>
-		    	<h2>{seasoning.name}</h2>
-		    	<h3>{seasoning_id.toEnglish()}</h3>
-		    	<h4>{seasoning.intro}</h4>
-		    	<img src={`/menu/seasonings/${seasoning_id}.jpg`} />
-		    	<MinorIngredients minors={seasoning.ingredients.split(',')}  ingredients={catalog.ingredients}/>
+		    	<h2>{item.season.name}</h2>
+		    	<h3>{item.season.id.toEnglish()}</h3>
+		    	<h4>{item.season.intro}</h4>
+		    	<img src={`/menu/seasonings/${item.season.id}.jpg`} />
+		    	<MinorIngredients minors={item.season.ingredients.split(',')} ingredients={ingredients}/>
 
 	    		<WingBlank size="lg">
 				    <div className={styles.nutrition}>
 				    	<h1><span>酱汁营养价值</span></h1>
-				    	<NutritionTable nutrition={seasoning.nutrition}/>
+				    	<NutritionTable nutrition={item.season.nutrition}/>
 				    </div>
 			    </WingBlank>
-			    {seasoning.extra?
+			    {item.season.extra?
 			    (<div className={styles.season_extra}>
-				    <seasoning.extra/>
+				    <item.season.extra/>
 			    </div>):null
 				}
 		    </div>:null}
@@ -207,7 +197,7 @@ class ItemPage extends React.Component{
 				    	</div>
 			    	</div>
 			    </div>
-    	    	<div style={{clear:'both'}}></div>
+		    	<div style={{clear:'both'}}></div>
 		    </WingBlank>
 
 	    	<WingBlank size="lg">
@@ -218,11 +208,11 @@ class ItemPage extends React.Component{
 			    </div>
 			</WingBlank>
 		</div>
-  		);
-  	}
+		)
+	}
 }
 
-const MajorIngredients = ({majors, ingredients}) => {
+const MajorIngredients = ({majors,ingredients}) => {
 	const data = Object.entries(majors).map((entry,key)=>{
 
 		const name = entry[0];
@@ -256,7 +246,7 @@ const MajorIngredients = ({majors, ingredients}) => {
 	);
 }
 
-const MinorIngredients = ({minors, ingredients}) => {
+const MinorIngredients = ({minors,ingredients}) => {
 	const data = minors.map((name) => {
 		const result = findObj(ingredients,name);
 		const minor = result.obj;
@@ -266,17 +256,16 @@ const MinorIngredients = ({minors, ingredients}) => {
 			name: minor.name,
 			image: `/menu/ingredients/${minor_id}.png`
 		}
-	});
+	})
 	return (
-		<WingBlank size="lg">
-			<Grid data={data} columnNum={3} renderItem={i => (
-		        <div className={styles.minor}>
-					<img src={i.image} alt="icon" />
-					<h3>{i.name}</h3>
-		        </div>
-      		)} />
-		</WingBlank>
-	);
+		<Grid data={data} columnNum={3} renderItem={i => (
+	        <div className={styles.minor}>
+				<img src={i.image} alt="icon" />
+				<h3>{i.name}</h3>
+	        </div>
+  		)}
+  		/>
+	)
 }
 
 const NutritionTable = ({nutrition}) => {
@@ -297,16 +286,16 @@ const NutritionTable = ({nutrition}) => {
 				<td>{nutrition['Pro']}<span>g</span></td>
 			</tr>
 		</tbody></table>
-	);
+	)
 }
 
 ItemPage.propTypes = {
-};
+}
 
 const mapStateToProps = (state) => ({
-    catalog: state.menu.catalog,
     item: state.ItemPage.item,
+    ingredients: state.ItemPage.ingredients,
     ui: state.ItemPage.ui,
-});
+})
 
-export default connect(mapStateToProps)(ItemPage);
+export default connect(mapStateToProps)(ItemPage)

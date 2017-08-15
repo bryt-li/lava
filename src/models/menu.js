@@ -1,9 +1,13 @@
 
 import { routerRedux } from 'dva/router'
 import {calculateOrderPrice} from '../utils/price'
-import pathToRegexp from 'path-to-regexp';
+import pathToRegexp from 'path-to-regexp'
+import qs from 'qs'
+import {wechat_share} from '../utils/wechat'
 
-const MENU = require('../config/menu/');
+const MENU = require('../config/menu/')
+
+const config = require('../config')
 
 function emptyMenu(menu){
   const new_menu = {}
@@ -15,6 +19,18 @@ function emptyMenu(menu){
     }
   }
   return new_menu
+}
+
+function menuToQs(menu){
+  const qs_menu = {}
+  for(var t in menu){
+    for(var i in menu[t]){
+      var quantity = menu[t][i].quantity
+      if(quantity>0)
+        qs_menu[i] = quantity
+    }
+  }
+  return qs.stringify(qs_menu)
 }
 
 export default {
@@ -39,84 +55,12 @@ export default {
 
   subscriptions: {
 
-    setup({ dispatch, history }) {
-      //restore from localstorage only once
-      dispatch({type:'restoreMenuFromLocalStorage'})
-
-      return history.listen(({pathname,query}) => {
-        //load from qs when url changes
-        const match = pathToRegexp('/shop/home').exec(pathname);
-        if (match) {
-          dispatch({type:'loadMenuFromQueryString',payload:query})
-        }
-      })
-    },
-
   },
 
   effects: {
-    *restoreMenuFromLocalStorage({payload},{call,select,put}){
-      //这是当前的新菜单，quantity都是0
-      const { menu } = yield(select(_ => _))
-      const { catalog } = menu
-      const stored_menu = JSON.parse(window.localStorage.getItem('menu'))
-      
-      if(stored_menu){
-        //恢复原来保存的点菜数量
-        for(var t in catalog){
-          for(var i in catalog[t]){
-            if( stored_menu[t]&&
-                stored_menu[t][i]&&
-                stored_menu[t][i].quantity>0)
-              catalog[t][i].quantity = stored_menu[t][i].quantity
-          }
-        }
-      }
-
-      //重新计算
-      const {total, saving, items} = calculateOrderPrice(catalog)
-
-      yield put({ 
-        type: 'updateModel', 
-        payload: {catalog, total, saving, items}
-      })
-    },
-
-    *loadMenuFromQueryString({payload},{call,select,put}){
-      //这是当前的新菜单，quantity都是0
-      const { menu } = yield(select(_ => _))
-      const { catalog } = menu
-
-      const url_menu = payload
-
-      if(Object.keys(url_menu).length === 0)
-        return
-
-      //恢复原来保存的点菜数量
-      for(var t in catalog){
-        for(var i in catalog[t]){
-          if( url_menu[i] )
-            catalog[t][i].quantity = parseInt(url_menu[i])
-        }
-      }
-    
-      //save menu to localStorage
-      window.localStorage.setItem('menu', JSON.stringify(catalog))
-
-
-      //重新计算
-      const {total, saving, items} = calculateOrderPrice(catalog)
-
-      yield put({ 
-        type: 'updateModel', 
-        payload: {catalog, total, saving, items}
-      })
-
-    },
-
     *changeMenuItemQuantity({payload},{call,select,put}){
       const {type, id, inc} = payload
-      const { menu } = yield(select(_ => _))
+      const { menu,user,app } = yield(select(_ => _))
       const { catalog } = menu
 
       let quantity = catalog[type][id].quantity
@@ -133,12 +77,40 @@ export default {
         type: 'updateModel', 
         payload: {catalog, total, saving, items}
       })
+
+      //微信分享
+      if(null == app.jsapi_config)
+        return
+      
+      const jsapi_config = app.jsapi_config
+      let title = config.name
+      title = user.id?`${user.nickname}分享了【${title}】`:title
+      const qs = menuToQs(catalog)
+      const link = qs?`${config.rootUrl}app/?hlhs#/shop/home?${qs}`:`${config.rootUrl}app/?hlhs#/shop/home`
+      const imgUrl = `${config.rootUrl}app/res/suite.jpg`
+      const desc = '购买套餐，更有十足优惠'
+      wechat_share(jsapi_config,title,link,imgUrl,desc)
     },
 
     *clearMenu({payload},{call,select,put}){
+      const { user,app } = yield(select(_ => _))
+
       window.localStorage.removeItem('menu')
       yield put({ type: 'clearModel' })
-    }
+
+      //微信分享
+      if(null == app.jsapi_config)
+        return
+      
+      const jsapi_config = app.jsapi_config
+      let title = config.name
+      title = user.id?`${user.nickname}分享了【${title}】`:title
+      const link = `${config.rootUrl}app/?hlhs#/shop/home`
+      const imgUrl = `${config.rootUrl}app/res/suite.jpg`
+      const desc = '购买套餐，更有十足优惠'
+      wechat_share(jsapi_config,title,link,imgUrl,desc)
+    },
+
   },
 
   reducers: {
@@ -162,4 +134,5 @@ export default {
     },
   },
 
-};
+}
+

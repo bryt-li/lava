@@ -26,17 +26,11 @@ export default {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({pathname, search, query}) => {
-        const match = pathToRegexp('/user/address').exec(pathname);
-        if (match)
-          dispatch({type:'prepareDelivery',payload:query})
-      });
-    },
+    
   },
 
   effects: {
-    *prepareDelivery({payload},{call,select,put}){
+    *componentWillMount({payload},{call,select,put}){
       const {user} = yield select(state => state)
       let delivery = {}
       if(user.delivery)

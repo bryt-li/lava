@@ -16,6 +16,8 @@ export default {
       tests:HOME.tests,
     },
 
+    jsapi_config: null,
+
   },
 
   subscriptions: {
@@ -25,12 +27,12 @@ export default {
   },
 
   effects: {
-    *foo ({payload,}, { call, put }) {
-    },
+
   },
 
   reducers: {
-    updateFoo(state, action) {
+    updateJsApiConfig(state, action) {
+      return {...state, jsapi_config:action.payload}
     },
   },
 

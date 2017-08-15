@@ -38,18 +38,11 @@ export default {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({pathname}) => {
-        const match = pathToRegexp('/user/cart').exec(pathname);
-        if (match) {
-          dispatch({type:'prepareOrder'})
-        }
-      });        
-    },
+
   },
 
   effects: {
-    *prepareOrder({payload}, { select, call, put }) {
+    *componentWillMount({payload}, { select, call, put }) {
       const {menu,user} = yield select(state => state)
       const {items} = menu
       const {delivery} = user

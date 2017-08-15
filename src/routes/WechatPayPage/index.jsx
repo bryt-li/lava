@@ -7,21 +7,27 @@ import { Link } from 'dva/router';
 
 import styles from './index.less';
 
-function WechatPayPage({ dispatch, location  }) {
-
-	window.onWechatPayFinished = () => {
-		dispatch(routerRedux.goBack())
+class WechatPayPage extends React.Component {
+	constructor(props) {
+		super(props);
 	}
 
-	return (
-	<div className={styles.container}>
-		<Result
-		    img={<Icon type='#icon-waiting' size='lg'/>}
-		    title="等待处理"
-		    message="正在提交付款申请，等待银行处理"
-		/>
-	</div>
-	);
+	componentWillMount() {
+		const {location,dispatch,params} = this.props
+		dispatch({type:'WechatPayPage/componentWillMount',payload:{id:params.id}})
+	}
+
+	render(){
+		return (
+		<div className={styles.container}>
+			<Result
+			    img={<Icon type='#icon-waiting' size='lg'/>}
+			    title="等待处理"
+			    message="正在提交付款申请，等待银行处理"
+			/>
+		</div>
+		)
+	}
 }
 
 WechatPayPage.title = '微信支付'

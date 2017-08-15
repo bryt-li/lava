@@ -13,20 +13,11 @@ export default {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({pathname}) => {
-        const match = pathToRegexp('/user/order/show/:id').exec(pathname);
-        if (match) {
-          const id = match[1]
-          dispatch({type:'getOrder',payload:id})
-        }
-      });
-      
-    },
+    
   },
 
   effects: {
-    *getOrder({payload,}, { call, select, put }) {
+    *componentWillMount({payload,}, { call, select, put }) {
       const id = payload
 
       const { response, err } = yield call(getOrder, id)

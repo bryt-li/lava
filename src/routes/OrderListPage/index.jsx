@@ -21,6 +21,11 @@ class OrderListPage extends React.Component {
 		super(props);
 	}
 
+	componentWillMount() {
+		const {location,dispatch,params} = this.props
+		dispatch({type:'OrderListPage/componentWillMount'})
+	}
+
 	render(){
 	  	const {dispatch, form, orders, loading} = this.props
 		const { getFieldProps } = form

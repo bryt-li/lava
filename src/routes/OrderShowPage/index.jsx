@@ -21,6 +21,12 @@ class OrderShowPage extends React.Component {
 		super(props);
 	}
 
+	componentWillMount() {
+		const {location,dispatch,params} = this.props
+		dispatch({type:'OrderShowPage/componentWillMount',payload:params.id})
+	}
+
+
 	handlePayClicked = () => {
 
 		const {dispatch,order} = this.props
