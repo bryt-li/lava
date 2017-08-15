@@ -32,15 +32,11 @@ class OrderShowPage extends React.Component {
 		const {dispatch,order} = this.props
 		const url = `/user/wechatpay/${order.id}`
 
-		//ios下的微信浏览器没办法正常刷新SPA应用的URL
-		//所以这里只好重新进入应用
-		//才能和微信支付配置的安全URL匹配上
-		//window.location = url
 		dispatch(routerRedux.push(url))
 	}
 
 	render(){
-	  	const {dispatch, form, order, loading} = this.props  	
+	  	const {dispatch, form, order, loading} = this.props
 	  	if(loading){
 	  		return null
 	  	}
@@ -179,7 +175,7 @@ OrderShowPage.onBackClick = (dispatch, props)=> ()=>{
 
 const mapStateToProps = (state) => ({
     order: state.OrderShowPage.order,
-    loading: state.loading.effects['OrderShowPage/getOrder']
+    loading: state.loading.effects['OrderShowPage/componentWillMount']
 });
 
 const FormWrapper = createForm()(OrderShowPage);

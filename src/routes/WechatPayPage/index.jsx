@@ -10,6 +10,9 @@ import styles from './index.less';
 class WechatPayPage extends React.Component {
 	constructor(props) {
 		super(props);
+		window.goBack = () => {
+			props.dispatch(routerRedux.goBack())
+		}
 	}
 
 	componentWillMount() {

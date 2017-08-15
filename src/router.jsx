@@ -52,9 +52,28 @@ const Routers = function ({ history, app }) {
       cb()
     }
 
-    //get stored user
-    const url = window.location.href
+    //获得全局状态
     const state = app._store.getState();
+    let catalog = state.menu.catalog
+
+    //从localStorage恢复菜单
+    const stored_menu = JSON.parse(window.localStorage.getItem('menu'))
+    if(stored_menu){
+      //恢复原来保存的点菜数量
+      for(var t in catalog){
+        for(var i in catalog[t]){
+          if( stored_menu[t]&&
+              stored_menu[t][i]&&
+              stored_menu[t][i].quantity>0)
+            catalog[t][i].quantity = stored_menu[t][i].quantity
+        }
+      }
+
+      app._store.dispatch({ type: 'menu/updateCatalog', payload: catalog })
+    }
+
+    //再从服务器获取jsapi config
+    const url = window.location.href
     if(!state.app.jsapi_config){
       fetch(api.getWechatJsapiConfig, {
         method: 'POST',
@@ -135,7 +154,6 @@ const Routers = function ({ history, app }) {
   const layout_shop_children = [
     {
       path: 'home',
-      onEnter: init,
       getComponent (nextState, cb) {
         require.ensure([], require => {
           registerModel(app, require('./routes/HomePage/controller'))
@@ -145,7 +163,6 @@ const Routers = function ({ history, app }) {
     },
     {
       path: 'item/:type/:id',
-      onEnter: init,      
       getComponent (nextState, cb) {
         require.ensure([], require => {
           registerModel(app, require('./routes/ItemPage/controller'))
@@ -231,6 +248,7 @@ const Routers = function ({ history, app }) {
   const routes = [
     {
       path: '/',
+      onEnter: init,
       component: LayoutDefault,
       childRoutes: [
         {

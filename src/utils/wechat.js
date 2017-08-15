@@ -3,7 +3,7 @@
 
 const wechat_share = (jsapi_config, title, link, imgUrl, desc) => {  
   wx.config({
-    debug:true,
+    debug:false,
     ...jsapi_config
   })
   

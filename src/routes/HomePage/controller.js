@@ -1,7 +1,6 @@
 
 import { routerRedux } from 'dva/router'
 import pathToRegexp from 'path-to-regexp';
-import {calculateOrderPrice} from '../../utils/price'
 import qs from 'qs'
 import {wechat_share} from '../../utils/wechat'
 
@@ -57,32 +56,13 @@ export default {
               catalog[t][i].quantity = 0
           }
         }
-      }else{
-        //从localStorage恢复
-        const stored_menu = JSON.parse(window.localStorage.getItem('menu'))
-        if(stored_menu){
-          //恢复原来保存的点菜数量
-          for(var t in catalog){
-            for(var i in catalog[t]){
-              if( stored_menu[t]&&
-                  stored_menu[t][i]&&
-                  stored_menu[t][i].quantity>0)
-                catalog[t][i].quantity = stored_menu[t][i].quantity
-            }
-          }
-        }
+      
+        //save menu to localStorage
+        window.localStorage.setItem('menu', JSON.stringify(catalog))
+
+        yield put({ type: 'menu/updateCatalog', payload: catalog})
       }
 
-      //save menu to localStorage
-      window.localStorage.setItem('menu', JSON.stringify(catalog))
-
-      //重新计算
-      const {total, saving, items} = calculateOrderPrice(catalog)
-
-      yield put({ 
-        type: 'menu/updateModel', 
-        payload: {catalog, total, saving, items}
-      })
 
       //微信分享
       if(null == app.jsapi_config)

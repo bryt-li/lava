@@ -68,14 +68,13 @@ export default {
       if(quantity<0)
         quantity=0
       catalog[type][id].quantity = quantity
-      const {total, saving, items} = calculateOrderPrice(catalog)
 
       //save menu to localStorage
       window.localStorage.setItem('menu', JSON.stringify(catalog))
 
       yield put({ 
-        type: 'updateModel', 
-        payload: {catalog, total, saving, items}
+        type: 'updateCatalog', 
+        payload: catalog
       })
 
       //微信分享
@@ -96,7 +95,7 @@ export default {
       const { user,app } = yield(select(_ => _))
 
       window.localStorage.removeItem('menu')
-      yield put({ type: 'clearModel' })
+      yield put({ type: 'clearCatalog' })
 
       //微信分享
       if(null == app.jsapi_config)
@@ -114,17 +113,17 @@ export default {
   },
 
   reducers: {
-    updateModel(state, action) {
-      const {catalog, total, saving, items} = action.payload
+    updateCatalog(state, action) {
+      const {total, saving, items} = calculateOrderPrice(action.payload)
       return {
-        catalog:{...catalog}, //must make a copy
+        catalog:{...action.payload},
         total:total,
         saving:saving,
         items:items
       }
     },
 
-    clearModel(state,action){
+    clearCatalog(state,action){
       return {
         catalog: emptyMenu(MENU),
         total: 0,

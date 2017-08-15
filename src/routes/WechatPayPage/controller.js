@@ -56,7 +56,7 @@ export default {
           ...jsapi_pay,
           success: function (res) {
             Toast.info('微信支付成功')
-            put(routerRedux.goBack())
+            window.goBack()
           }
         })
       })

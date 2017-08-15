@@ -67,7 +67,7 @@ OrderListPage.onBackClick = (dispatch, props)=> ()=>{
 
 const mapStateToProps = (state) => ({
     orders: state.OrderListPage.orders,
-    loading: state.loading.effects['OrderListPage/getOrderList']
+    loading: state.loading.effects['OrderListPage/componentWillMount']
 });
 
 const FormWrapper = createForm()(OrderListPage);
