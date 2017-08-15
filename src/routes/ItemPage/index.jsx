@@ -12,6 +12,7 @@ import {formatMoney} from '../../utils/price';
 
 import styles from './index.less';
 
+
 class ItemPage extends React.Component{
 
 	constructor (props) {
@@ -19,10 +20,7 @@ class ItemPage extends React.Component{
 	    this.state = {
 		    imageLoading: true,
 	    }
-	}
-	
-	componentWillMount() {
-	}
+	}	
 
   	handleImageLoaded = () => {
   		this.setState({...this.state, imageLoading:false});
@@ -307,6 +305,8 @@ ItemPage.propTypes = {
 
 const mapStateToProps = (state) => ({
     catalog: state.menu.catalog,
+    item: state.ItemPage.item,
+    ui: state.ItemPage.ui,
 });
 
 export default connect(mapStateToProps)(ItemPage);

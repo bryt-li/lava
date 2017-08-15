@@ -29,9 +29,9 @@ export default {
       console.log('start wechat pay')
       const {id} = payload
 
-
       const jsApiList = 'chooseWXPay'
-      var { response, err } = yield call(getWechatJsapiConfig, jsApiList)
+      const url = window.location.href
+      var { response, err } = yield call(getWechatJsapiConfig, url, jsApiList)
       if(err || !response || !response.ok || !response.payload){
         console.log('wechatPay error')
         console.error(err)
