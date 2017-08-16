@@ -243,6 +243,38 @@ const Routers = function ({ history, app }) {
         }, 'WechatPayPage')
       },
     },
+
+    /*Admin Pages*/
+    {
+      path: 'admin/home',
+      onEnter: checkLogin,
+      getComponent (nextState, cb) {
+        require.ensure([], require => {
+          registerModel(app, require('./routes/AdminHomePage/controller'));
+          cb(null, require('./routes/AdminHomePage/'));
+        }, 'AdminHomePage')
+      },
+    },
+    {
+      path: 'admin/order/list/:status',
+      onEnter: checkLogin,
+      getComponent (nextState, cb) {
+        require.ensure([], require => {
+          registerModel(app, require('./routes/AdminOrderListPage/controller'));
+          cb(null, require('./routes/AdminOrderListPage/'));
+        }, 'AdminOrderListPage')
+      },
+    },
+    {
+      path: 'admin/order/show/:id',
+      onEnter: checkLogin,
+      getComponent (nextState, cb) {
+        require.ensure([], require => {
+          registerModel(app, require('./routes/AdminOrderShowPage/controller'));
+          cb(null, require('./routes/AdminOrderShowPage/'));
+        }, 'AdminOrderShowPage')
+      },
+    },
   ]
 
   const routes = [

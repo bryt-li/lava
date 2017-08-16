@@ -16,7 +16,7 @@ const Item = List.Item
 const Brief = Item.Brief
 const Step = Steps.Step;
 
-class OrderShowPage extends React.Component {
+class AdminOrderShowPage extends React.Component {
 	constructor(props) {
 		super(props);
 	}
@@ -24,18 +24,33 @@ class OrderShowPage extends React.Component {
 	componentWillMount() {
 		const {location,dispatch,params} = this.props
 		dispatch({
-			type:'OrderShowPage/componentWillMount',
+			type:'AdminOrderShowPage/componentWillMount',
 			payload:{id:params.id}
 		})
 	}
 
-
-	handlePayClicked = () => {
-
+	handleChangeStatusClicked = (status) => () => {
 		const {dispatch,order} = this.props
-		const url = `/user/wechatpay/${order.id}`
+		dispatch({
+			type:'AdminOrderShowPage/changeOrderStatus',
+			payload: {
+				id: order.id,
+				status: status
+			}
+		})
+	}
 
-		dispatch(routerRedux.push(url))
+	OrderStatusChangeButtons = ({status}) => {
+		return(
+		<WingBlank className={styles.buttons} size='lg'>
+			{<Button type="primary" disabled={status==0} onClick={this.handleChangeStatusClicked(0)} icon="#icon-icon">未付款订单</Button>}
+			{<Button type="primary" disabled={status==1} onClick={this.handleChangeStatusClicked(1)} icon="#icon-qianbao">已付款订单</Button>}
+			{<Button type="primary" disabled={status==2} onClick={this.handleChangeStatusClicked(2)} icon="#icon-querendingdan">已确认订单</Button>}
+			{<Button type="primary" disabled={status==3} onClick={this.handleChangeStatusClicked(3)} icon="#icon-peisong">待配送订单</Button>}
+			{<Button type="primary" disabled={status==4} onClick={this.handleChangeStatusClicked(4)} icon="#icon-iconfontwancheng">已完成订单</Button>}
+			{<Button type="primary" disabled={status==5} onClick={this.handleChangeStatusClicked(5)} icon="cross-circle-o">已取消订单</Button>}
+		</WingBlank>
+		)
 	}
 
 	render(){
@@ -79,7 +94,7 @@ class OrderShowPage extends React.Component {
 					      <Step title="下单" icon={<Icon type='#icon-icon' />} description="客户已确认提交订单" />
 					      <Step title="付款" icon={<Icon type='#icon-12' />} description="客户已完成订单付款" />
 					      <Step title="确认" icon={<Icon type='#icon-querendingdan' />} description="客服已确认订单" />
-					      <Step title="配送" icon={<Icon type='#icon-peisong' />} description="快递完成订单配送" />
+					      <Step title="配送" icon={<Icon type='#icon-peisong' />} description="进行订单配送" />
 					      <Step title="完成" icon={<Icon type='#icon-iconfontwancheng' />} description="订单已完成" />
 					      <Step title="取消" icon={<Icon type='#icon-iconfontwancheng' />} description="订单已取消" />
 					    </Steps>
@@ -88,20 +103,13 @@ class OrderShowPage extends React.Component {
 		    	<WhiteSpace size="sm" />
 				<WingBlank size="sm">
 			        <Item extra={formatMoney(total_price)}>
-			    {status>0?
-			    	'已付金额'
-			    	:
-			    	'应付金额'
-				}
+					    {status>0?'已付金额':'应付金额'}
 			        </Item>
-    		    	<WhiteSpace size="lg"/>
-			    {status>0?null:
-					<Button type="primary" onClick={this.handlePayClicked}>立即付款</Button>
-			    }
 				</WingBlank>
 			</List>
 
 			<WhiteSpace size="lg"/>
+
 			<List renderHeader={() => '餐品'}>
 	    		{items.map((o,k)=>{
 	    			let saving = o.price-o.order_price
@@ -141,6 +149,7 @@ class OrderShowPage extends React.Component {
 	    	</List>
 
 	    	<WhiteSpace size="sm"/>
+
 	    	<List renderHeader={() => '订单总价'}>
 		        <Item extra={`${formatMoney(items_price)}元`}>
 	        		餐品费
@@ -160,27 +169,31 @@ class OrderShowPage extends React.Component {
 	        		订单总价
         		</Item>
 	    	</List>
+
+			<WhiteSpace size="sm"/>
+
+	    	<List renderHeader={() => '订单操作'}>
+		    	<this.OrderStatusChangeButtons status={status} />
+		    </List>
 		</div>
 		);
 	}
 }
 
-OrderShowPage.propTypes = {
+AdminOrderShowPage.propTypes = {
 };
 
+AdminOrderShowPage.title = '查看订单'
 
-OrderShowPage.title = '查看订单'
-
-OrderShowPage.onBackClick = (dispatch, props)=> ()=>{
-	dispatch(routerRedux.push('/user/order/list'))
+AdminOrderShowPage.onBackClick = (dispatch, props)=> ()=>{
+	dispatch(routerRedux.goBack())
 }
 
-
 const mapStateToProps = (state) => ({
-    order: state.OrderShowPage.order,
-    loading: state.loading.effects['OrderShowPage/componentWillMount']
+    order: state.AdminOrderShowPage.order,
+    loading: state.loading.effects['AdminOrderShowPage/componentWillMount']
 });
 
-const FormWrapper = createForm()(OrderShowPage);
+const FormWrapper = createForm()(AdminOrderShowPage);
 
 export default connect(mapStateToProps)(FormWrapper);

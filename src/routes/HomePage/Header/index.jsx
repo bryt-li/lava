@@ -1,16 +1,21 @@
-import React from 'react';
-import { connect } from 'dva';
-import {  routerRedux } from 'dva/router';
-import PropTypes from 'prop-types';
-import {  NavBar, Icon, Input } from 'antd-mobile';
-import { Link } from 'dva/router';
+import React from 'react'
+import { connect } from 'dva'
+import {  routerRedux } from 'dva/router'
+import PropTypes from 'prop-types'
+import {  NavBar, Icon, Input } from 'antd-mobile'
+import { Link } from 'dva/router'
 
-import styles from './index.less';
+import styles from './index.less'
+
+const config = require('../../../config')
 
 function Header({ dispatch, location, delivery, user }) {
 
   const handleHomeClicked = ()=>{
-    dispatch(routerRedux.push('/shop/home'))
+    if(user.openid && config.admin.includes(user.openid))
+      dispatch(routerRedux.push('/user/admin/home'))
+    else
+      dispatch(routerRedux.push('/shop/home'))
   }
 
   const handleAddressClicked = ()=>{
@@ -31,19 +36,22 @@ function Header({ dispatch, location, delivery, user }) {
     <div className={styles.container}>
       <NavBar
         iconName={null}
-        leftContent={<Icon type="#icon-icon-test" className={styles.home_icon}/>}
         rightContent={
+          <div onClick={handleHomeClicked}>
+            <Icon type="#icon-icon-test" size='lg' className={styles.home_icon}/>
+          </div>
+        }
+        leftContent={
           <div onClick={handleUserClicked}>
           {
             user.headImageUrl?
             <img className={styles.user_icon} src={user.headImageUrl} />
             :
-            <Icon type="#icon-ren" size='md' />
+            <Icon type="#icon-ren" size='lg' />
           }
           </div>
         }
         mode="light"
-        onLeftClick={handleHomeClicked}
       >
         <div onClick={handleAddressClicked}>
             <Icon type="#icon-map" size='xxs' />

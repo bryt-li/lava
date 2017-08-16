@@ -16,21 +16,13 @@ export default {
   effects: {
     *logout({payload}, { call, put }){
       const { response, err } = yield call(logout)
-      if(err || !response){
+      if(err || !response || !response.ok || !response.payload){
+        console.log('response error')
         console.log(err)
+        console.log(response)
         return
       }
       
-      if(response.ok==null || !response.payload){
-        console.log(`response format error: ${response}`)
-        return
-      }
-
-      if(!response.ok){
-        console.log(`query succeeded with error message: ${response.payload.errmsg}`)
-        return
-      }
-
       yield put({type:'user/updateUser', payload: {}})
       yield put(routerRedux.push('/shop/home'))
     },
@@ -38,16 +30,6 @@ export default {
   },
 
   reducers: {
-    updateUser(state, action) {
-      return {...action.payload};
-    },
-
-    updateDelivery(state, action){
-      return {
-        ...state, 
-        delivery:{...state.delivery, ...action.payload}
-      };
-    },
 
   },
 
