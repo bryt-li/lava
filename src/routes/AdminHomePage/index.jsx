@@ -88,7 +88,7 @@ class AdminHomePage extends React.Component {
 				        已完成订单
 		          	</Item>
 		          	<Item
-				        thumb={<Icon type='#cross-circle'/>}
+				        thumb={<Icon type='cross-circle-o'/>}
 				        arrow="horizontal"
 				        onClick={this.onCancelledOrdersClick}>
 				        已取消订单
