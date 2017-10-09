@@ -37,16 +37,18 @@ export default {
   effects: {
 
     *componentWillMount({payload,}, { call, select, put }) {
+
       let title = config.name
-      if(payload.name)
+      if(payload && payload.name)
         title = payload.name
+
       yield put({type:'updateUI',payload:{title}})
 
       //这是当前的新菜单，quantity都是0
       const { menu, user, app } = yield(select(_ => _))
       const { catalog } = menu
 
-      if(Object.keys(payload).length > 0){
+      if(payload && Object.keys(payload).length > 0){
         //从url中恢复
         for(var t in catalog){
           for(var i in catalog[t]){
@@ -63,12 +65,11 @@ export default {
         yield put({ type: 'menu/updateCatalog', payload: catalog})
       }
 
-
       //微信分享
       if(null == app.jsapi_config)
         return
 
-      title = payload.name?payload.name:config.name
+      title = (payload && payload.name)?payload.name:config.name
       title = user.id?`${user.nickname}分享了【${title}】`:title
       const jsapi_config = app.jsapi_config
       const qs = menuToQs(catalog)

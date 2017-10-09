@@ -1,12 +1,15 @@
 import React from 'react'
 import { connect } from 'dva'
-import { Link, routerRedux } from 'dva/router'
+import { Link, routerRedux, Route, Switch } from 'dva/router'
 
 import PropTypes from 'prop-types'
 import { Modal, Carousel, WingBlank, Flex, Button, Icon } from 'antd-mobile'
 import ReactLoading from 'react-loading'
 
 import {formatMoney} from '../../utils/price';
+
+const HomePage = require('../HomePage/');
+const ItemPage = require('../ItemPage/');
 
 import styles from './index.less'
 
@@ -81,50 +84,57 @@ class LayoutShop extends React.Component {
 
   render(){
     const {params, children, dispatch, location, catalog, total, saving} = this.props
-    const {type,id} = params;
     
-    if(type && id){
-      let item = catalog[type][id]
-      return(
-      <div>
-        {children}
-        <div style={{display:'block',height:'200px'}} />
+    if(params){
+      const {type,id} = params;
+      
+      if(type && id){
+        let item = catalog[type][id]
+        return(
+        <div>
+          {children}
+          <div style={{display:'block',height:'200px'}} />
 
-        <div className={styles.cart}>
-          <ModalDialog visible={this.state.showModal} onClose={this.onClose} />
+          <div className={styles.cart}>
+            <ModalDialog visible={this.state.showModal} onClose={this.onClose} />
 
-          <div className={styles.left}>
-            {item.quantity>0?
-              <div>
-                <div className={styles.minus}><Icon type="#icon-jian"  onClick={this.handleMinusClicked}/></div>
-                <div className={styles.quantity}>{item.quantity}</div>
-                <div className={styles.plus}><Icon type="#icon-tianjia"  onClick={this.handlePlusClicked}/></div>
-              </div>
-              :
-              <span className={styles.add_to_cart} onClick={this.handlePlusClicked}>加入购物车</span>
-            }
-          </div>
-          <div className={styles.middle}>
-            <Button className={styles.checkout_btn} 
-              inline
-              icon="#icon-cart"
-              size = "large"
-              onClick={this.handleCheckoutClicked}
-            />
-            <div className={styles.rect_info_bar}>
-              <span className={styles.cny}>￥</span>
-              <span className={styles.total_money}>{formatMoney(total)}</span>
-              <span className={styles.delivery_saving_fee}>{saving>0?`优惠${formatMoney(saving)}元`:(total>3800?'免费配送':'满38免配送费')}</span>
+            <div className={styles.left}>
+              {item.quantity>0?
+                <div>
+                  <div className={styles.minus}><Icon type="#icon-jian"  onClick={this.handleMinusClicked}/></div>
+                  <div className={styles.quantity}>{item.quantity}</div>
+                  <div className={styles.plus}><Icon type="#icon-tianjia"  onClick={this.handlePlusClicked}/></div>
+                </div>
+                :
+                <span className={styles.add_to_cart} onClick={this.handlePlusClicked}>加入购物车</span>
+              }
             </div>
+            <div className={styles.middle}>
+              <Button className={styles.checkout_btn} 
+                inline
+                icon="#icon-cart"
+                size = "large"
+                onClick={this.handleCheckoutClicked}
+              />
+              <div className={styles.rect_info_bar}>
+                <span className={styles.cny}>￥</span>
+                <span className={styles.total_money}>{formatMoney(total)}</span>
+                <span className={styles.delivery_saving_fee}>{saving>0?`优惠${formatMoney(saving)}元`:(total>3800?'免费配送':'满38免配送费')}</span>
+              </div>
+            </div>
+            <div className={styles.right}></div>
           </div>
-          <div className={styles.right}></div>
         </div>
-      </div>
-      );
+        );
+      }
     }
     else return(
     <div>
-      {children}
+      <Switch>
+        <Route path='/shop/home' component={HomePage} />
+        <Route path='/shop/item/:type/:id' component={ItemPage} />
+      </Switch>
+
       <div className={styles.cart}>
         <ModalDialog visible={this.state.showModal} onClose={this.onClose} />
 

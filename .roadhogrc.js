@@ -11,7 +11,6 @@ export default {
   multipage: false,//note this
   disableCSSModules: false,
   publicPath: '/',
-  proxy: null,
   theme: "./src/theme.js",
   resolve: {
     "extensions": [
@@ -27,6 +26,12 @@ export default {
     ]
   },
   svgSpriteLoaderDirs: svgSpriteDirs,
+  extraPostCSSPlugins:[
+    pxtorem({
+      rootValue: 100,
+      propWhiteList: [],
+    })
+  ],
   extraBabelPlugins: [
     "transform-runtime",
     ["import", {
@@ -34,16 +39,10 @@ export default {
       "style": true
     }]
   ],
-  extraPostCSSPlugins:[
-    pxtorem({
-      rootValue: 100,
-      propWhiteList: [],
-    })
-  ],
   env: {
     development: {
       "extraBabelPlugins": [
-        "dva-hmr"
+        "dva-hmr",
       ]
     },
     production: {

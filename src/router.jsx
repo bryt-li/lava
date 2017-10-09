@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route } from 'dva/router';
+import { HashRouter, Router, Route, Switch } from 'dva/router';
 import PropTypes from 'prop-types'
 import {  routerRedux } from 'dva/router'
 import qs from 'qs'
@@ -280,7 +280,7 @@ const Routers = function ({ history, app }) {
   const routes = [
     {
       path: '/',
-      onEnter: init,
+      //onEnter: init,
       component: LayoutDefault,
       childRoutes: [
         {
@@ -297,7 +297,13 @@ const Routers = function ({ history, app }) {
     },   
   ]
 
-  return <Router history={history} routes={routes} />
+  return (
+    <Router history={history}>
+      <Switch>
+        <Route path="/" component={LayoutDefault} />
+      </Switch>
+    </Router>
+  )
 }
 
 Routers.propTypes = {

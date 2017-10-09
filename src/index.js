@@ -1,9 +1,5 @@
-// https://segmentfault.com/q/1010000005596587
-import 'babel-polyfill'
-
 import dva from 'dva';
 import createLoading from 'dva-loading'
-import { browserHistory } from 'dva/router'
 import { Toast } from 'antd-mobile';
 
 import './index.css';
@@ -13,7 +9,6 @@ const app = dva({
   ...createLoading({
     effects: true,
   }),
-//  history: browserHistory,
   onError (error) {
     Toast.fail(error.message, 1)
   },
@@ -27,6 +22,7 @@ app.model(require('./models/app'))
 app.model(require('./models/menu'))
 app.model(require('./models/user'))
 app.model(require('./routes/HomePage/controller'))
+app.model(require('./routes/ItemPage/controller'))
 
 // 4. Router
 app.router(require('./router'))

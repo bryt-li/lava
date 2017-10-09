@@ -18,8 +18,9 @@ class ItemPage extends React.Component {
 	}
 
 	componentWillMount() {
-		const {location,dispatch,params} = this.props
-		dispatch({type:'ItemPage/componentWillMount',payload:params})
+
+		const {location,dispatch,match} = this.props
+		dispatch({type:'ItemPage/componentWillMount',payload:match.params})
 	}
 
   	handleImageLoaded = () => {
