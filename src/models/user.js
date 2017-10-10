@@ -14,7 +14,7 @@ export default {
     setup({ dispatch, history }) {
       //进入应用的时候，执行一次自动登录的尝试
       //看server session是不是仍然有效
-      //dispatch({ type: 'getMe' })
+      dispatch({ type: 'getMe' })
     },
   },
 

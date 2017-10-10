@@ -1,6 +1,6 @@
 //本地部署
-const HLHS_FRONTEND = 'http://192.168.1.232:8080'
-const HLHS_BACKEND = 'http://192.168.1.88:9090/hlhs-backend'
+const HLHS_FRONTEND = 'http://192.168.1.106:8080'
+const HLHS_BACKEND = 'http://192.168.1.106:9090/hlhs-backend'
 
 //服务器部署
 /*

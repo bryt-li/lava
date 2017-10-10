@@ -27,6 +27,12 @@ class AdminOrderShowPage extends React.Component {
 			type:'AdminOrderShowPage/componentWillMount',
 			payload:{id:params.id}
 		})
+
+		this.props.dispatch({
+			type:'LayoutUser/setNav',
+			payload:{title:'查看订单',backUrl:null}
+		})
+
 	}
 
 	handleChangeStatusClicked = (status) => () => {
@@ -182,12 +188,6 @@ class AdminOrderShowPage extends React.Component {
 
 AdminOrderShowPage.propTypes = {
 };
-
-AdminOrderShowPage.title = '查看订单'
-
-AdminOrderShowPage.onBackClick = (dispatch, props)=> ()=>{
-	dispatch(routerRedux.goBack())
-}
 
 const mapStateToProps = (state) => ({
     order: state.AdminOrderShowPage.order,

@@ -45,6 +45,8 @@ export default {
           }
         }
         yield put({type:'updateItem',payload: item})
+        yield put({type:'LayoutShop/setItem',payload:item})
+
       }
       
       //微信分享

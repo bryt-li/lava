@@ -2,25 +2,29 @@
 import { routerRedux } from 'dva/router'
 import { getMe } from '../../services/user'
 
-const HOME = require('../../config/home.js')
-
 export default {
 
   namespace: 'LayoutUser',
 
   state: {
+    title: null,
+    backUrl: null,
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
-    },
   },
 
   effects: {
-
+    *setNav({payload}, { call, put }) {
+      yield put({type:'updateData',payload})
+    },
   },
 
   reducers: {
+    updateData(state, action){
+      return { ...state, ...action.payload }
+    },
+
   },
 
 };

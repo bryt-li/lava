@@ -24,6 +24,12 @@ class CartPage extends React.Component {
 	componentWillMount() {
 		const {dispatch} = this.props
 		dispatch({type:'CartPage/componentWillMount'})
+
+		this.props.dispatch({
+			type:'LayoutUser/setNav',
+			payload:{title:'购物车',backUrl:'/shop/home'}
+		})
+
 	}
 
 	render(){
@@ -175,12 +181,6 @@ class CartPage extends React.Component {
 
 CartPage.propTypes = {
 };
-
-CartPage.title = '购物车'
-
-CartPage.onBackClick = (dispatch, props)=> ()=>{
-	dispatch(routerRedux.push('/shop/home'))
-}
 
 const mapStateToProps = (state) => ({
     ui: state.CartPage.ui,

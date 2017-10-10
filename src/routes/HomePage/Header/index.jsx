@@ -38,7 +38,7 @@ function Header({ dispatch, location, delivery, user }) {
         iconName={null}
         rightContent={
           <div onClick={handleHomeClicked}>
-            <Icon type="#icon-icon-test" size='lg' className={styles.home_icon}/>
+            <Icon type="#icon-icon-test" size='sm' className={styles.home_icon}/>
           </div>
         }
         leftContent={
@@ -47,7 +47,7 @@ function Header({ dispatch, location, delivery, user }) {
             user.headImageUrl?
             <img className={styles.user_icon} src={user.headImageUrl} />
             :
-            <Icon type="#icon-ren" size='lg' />
+            <Icon type="#icon-ren" size='md' />
           }
           </div>
         }

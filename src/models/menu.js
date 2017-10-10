@@ -16,6 +16,8 @@ function emptyMenu(menu){
     for(var i in menu[t]){
       new_menu[t][i] = {...menu[t][i]}
       new_menu[t][i].quantity = 0
+      new_menu[t][i].type = t
+      new_menu[t][i].id = i
     }
   }
   return new_menu
@@ -59,15 +61,15 @@ export default {
 
   effects: {
     *changeMenuItemQuantity({payload},{call,select,put}){
-      const {type, id, inc} = payload
+      const {item, inc} = payload
       const { menu,user,app } = yield(select(_ => _))
       const { catalog } = menu
 
-      let quantity = catalog[type][id].quantity
+      let quantity = catalog[item.type][item.id].quantity
       quantity = quantity + inc
       if(quantity<0)
         quantity=0
-      catalog[type][id].quantity = quantity
+      catalog[item.type][item.id].quantity = quantity
 
       //save menu to localStorage
       window.localStorage.setItem('menu', JSON.stringify(catalog))

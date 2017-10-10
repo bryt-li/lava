@@ -18,7 +18,6 @@ class ItemPage extends React.Component {
 	}
 
 	componentWillMount() {
-
 		const {location,dispatch,match} = this.props
 		dispatch({type:'ItemPage/componentWillMount',payload:match.params})
 	}
@@ -68,7 +67,7 @@ class ItemPage extends React.Component {
 			    <div className={styles.order}>
 		    		{type=='salads'?
 		    		<div><span>沙拉标配</span>{`${item.season?item.season.name:'无酱汁'}(${item.rice?'小饭团':'无饭团'})`}</div>
-					:null}		    		
+					:null}
 		    		<div><span>配送条款</span>{item.delivery_term}</div>
 			    </div>
 		    </WingBlank>

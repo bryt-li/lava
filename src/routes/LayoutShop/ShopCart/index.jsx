@@ -5,6 +5,7 @@ import { Link, routerRedux } from 'dva/router'
 import PropTypes from 'prop-types'
 import { Modal, Carousel, WingBlank, Flex, Button, Icon } from 'antd-mobile'
 import ReactLoading from 'react-loading'
+import {formatMoney} from '../../../utils/price';
 
 import styles from './index.less'
 
@@ -51,38 +52,36 @@ class ShopCart extends React.Component {
   	}
 
   	handlePlusClicked = () => {
-  		const {dispatch, type, id} = this.props
-		dispatch({ type: 'cart/plus',payload: {type:type, id:id} })
-  	}
+		const {dispatch,item} = this.props
+		dispatch({ type: 'menu/changeMenuItemQuantity',payload: {item, inc:1} })
+	}
 
-  	handleMinusClicked = () => {
-  		const {dispatch, type, id} = this.props
-  		dispatch({ type: 'cart/minus',payload: {type:type, id:id} })
-  	}
+	handleMinusClicked = () => {
+		const {dispatch,item} = this.props
+		dispatch({ type: 'menu/changeMenuItemQuantity',payload: {item, inc:-1} })
+	}
 
-
-  	nothing_in_cart = () => {
-		for(var t in this.props.items)
-			for(var i in this.props.items[t])
-				if(this.props.items[t][i]>0)
-					return false
+	nothing_in_cart = () => {
+		for(var t in this.props.catalog)
+			for(var i in this.props.catalog[t])
+		  		if(this.props.catalog[t][i].quantity>0)
+		    		return false
 		return true
 	}
 
-  	handleCheckoutClicked = () => {
-  		if(this.nothing_in_cart())
-  			this.showModal()()
-  		else
-	  		this.props.dispatch(routerRedux.push('/order/confirm'));
-  	}
-
+	handleCheckoutClicked = () => {
+		if(this.nothing_in_cart())
+			this.showModal()()
+		else
+			this.props.dispatch(routerRedux.push('/user/cart'));
+	}
 
   	render(){
-  		const {showAdd,type,id, dispatch, items, total, saving} = this.props
+  		const {item, dispatch, catalog, total, saving} = this.props
 
-		if(showAdd){
-			const quantity = items[type][id];
-
+		if(item){
+			const quantity = catalog[item.type][item.id].quantity
+			
 			return(
 			<div className={styles.cart}>
 				<ModalDialog visible={this.state.showModal}	onClose={this.onClose} />
@@ -108,8 +107,8 @@ class ShopCart extends React.Component {
 					/>
 					<div className={styles.rect_info_bar}>
 						<span className={styles.cny}>￥</span>
-						<span className={styles.total_money}>{total.toFixed(1)}</span>
-						<span className={styles.delivery_saving_fee}>{saving>0?`优惠${saving.toFixed(1)}元`:(total>38?'免费配送':'满38免配送费')}</span>
+						<span className={styles.total_money}>{formatMoney(total)}</span>
+						<span className={styles.delivery_saving_fee}>{saving>0?`优惠${formatMoney(saving)}元`:(total>3800?'免费配送':'满38免配送费')}</span>
 					</div>
 				</div>
 				<div className={styles.right}></div>
@@ -128,8 +127,8 @@ class ShopCart extends React.Component {
 				/>
 				<div className={styles.round_info_bar}>
 					<span className={styles.cny}>￥</span>
-					<span className={styles.total_money}>{total.toFixed(1)}</span>
-					<span className={styles.delivery_saving_fee}>{saving>0?`优惠${saving.toFixed(1)}元`:(total>38?'免费配送':'满38免配送费')}</span>
+					<span className={styles.total_money}>{formatMoney(total)}</span>
+					<span className={styles.delivery_saving_fee}>{saving>0?`优惠${formatMoney(saving)}元`:(total>3800?'免费配送':'满38免配送费')}</span>
 				</div>
 			</div>
 		);
@@ -138,13 +137,14 @@ class ShopCart extends React.Component {
 
 
 ShopCart.propTypes = {
-	showAdd: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
-	items: state.cart.items,
-	total: state.cart.total,
-	saving: state.cart.saving
+	catalog: state.menu.catalog,
+	total: state.menu.total,
+	saving: state.menu.saving,
+	item: state.LayoutShop.item,
 });
+
 
 export default connect(mapStateToProps)(ShopCart);

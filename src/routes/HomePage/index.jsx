@@ -19,6 +19,7 @@ class HomePage extends React.Component {
 	componentWillMount() {
 		const {location,dispatch} = this.props
 		dispatch({type:'HomePage/componentWillMount',payload:location.query})
+		dispatch({type:'LayoutShop/clearItem'})
 	}
 
 	handleImageLoaded = ()=>{
@@ -27,8 +28,24 @@ class HomePage extends React.Component {
 	
 	render(){
 
-		const { children, dispatch, location, home, ui, user } = this.props
-		const { salads, yogurts, rices, juices, tests } = home
+		const { children, dispatch, location, catalog, ui, user } = this.props
+
+		const salads = Object.keys(catalog.salads).map(function(key) {
+			return catalog.salads[key]
+		});
+		const yogurts = Object.keys(catalog.yogurts).map(function(key) {
+			return catalog.yogurts[key]
+		});
+		const rices = Object.keys(catalog.rices).map(function(key) {
+			return catalog.rices[key]
+		});
+		const juices = Object.keys(catalog.juices).map(function(key) {
+			return catalog.juices[key]
+		});
+		const tests = Object.keys(catalog.tests).map(function(key) {
+			return catalog.tests[key]
+		});
+
 		const { imageLoading, title } = ui
 
 		return (
@@ -55,23 +72,25 @@ class HomePage extends React.Component {
 
 		    <h1><span>主食沙拉</span></h1>
 	  		<WingBlank size="sm">
-	  			{salads.map((id,key) => {
-	  				let prevId=null;
-	  				let output = false;
+	  			{salads.map((v,i) => {
 
-	  				if(key%2==1){
-	  					prevId = salads[key-1];
+	  				let prev=null
+	  				let cur=v
+	  				let output = false
+
+	  				if(i%2==1){
+	  					prev = salads[i-1];
 	  					output = true;
-	  				}else if(key==salads.length-1){
-	  					prevId = id;
-	  					id=null;
+	  				}else if(i==salads.length-1){
+	  					prev = v;
+	  					cur=null;
 	  					output = true;
 	  				}
 
 		  			if (output)	return (  				
-	  					<Flex key={key}>
-		  					<ShopItem type="salads" id={prevId} />
-		  					<ShopItem type="salads" id={id} />
+	  					<Flex key={i}>
+		  					<ShopItem item={prev} />
+		  					<ShopItem item={cur} />
 		  				</Flex>
 	  				);
 	  			})}
@@ -79,23 +98,25 @@ class HomePage extends React.Component {
 
 		    <h1><span>美味饭团子</span></h1>
 			<WingBlank size="sm">
-	  			{rices.map((id,key) => {
-	  				let prevId=null;
-	  				let output = false;
+	  			{rices.map((v,i) => {
 
-	  				if(key%2==1){
-	  					prevId = rices[key-1];
+	  				let prev=null
+	  				let cur=v
+	  				let output = false
+
+	  				if(i%2==1){
+	  					prev = rices[i-1];
 	  					output = true;
-	  				}else if(key==rices.length-1){
-	  					prevId = id;
-	  					id=null;
+	  				}else if(i==rices.length-1){
+	  					prev = v;
+	  					cur=null;
 	  					output = true;
 	  				}
 
 		  			if (output)	return (  				
-	  					<Flex key={key}>
-		  					<ShopItem type="rices" id={prevId} />
-		  					<ShopItem type="rices" id={id} />
+	  					<Flex key={i}>
+		  					<ShopItem item={prev} />
+		  					<ShopItem item={cur} />
 		  				</Flex>
 	  				);
 	  			})}
@@ -103,23 +124,25 @@ class HomePage extends React.Component {
 
 		    <h1><span>酸奶沙拉</span></h1>
 		  	<WingBlank size="sm">
-	  			{yogurts.map((id,key) => {
-	  				let prevId=null;
-	  				let output = false;
+	  			{yogurts.map((v,i) => {
 
-	  				if(key%2==1){
-	  					prevId = yogurts[key-1];
+	  				let prev=null
+	  				let cur=v
+	  				let output = false
+
+	  				if(i%2==1){
+	  					prev = yogurts[i-1];
 	  					output = true;
-	  				}else if(key==yogurts.length-1){
-	  					prevId = id;
-	  					id=null;
+	  				}else if(i==yogurts.length-1){
+	  					prev = v;
+	  					cur=null;
 	  					output = true;
 	  				}
 
 		  			if (output)	return (  				
-	  					<Flex key={key}>
-		  					<ShopItem type="yogurts" id={prevId} />
-		  					<ShopItem type="yogurts" id={id} />
+	  					<Flex key={i}>
+		  					<ShopItem item={prev} />
+		  					<ShopItem item={cur} />
 		  				</Flex>
 	  				);
 	  			})}
@@ -127,23 +150,25 @@ class HomePage extends React.Component {
 
 		    <h1><span>轻断食-果蔬稀</span></h1>
 		  	<WingBlank size="sm">
-	  			{juices.map((id,key) => {
-	  				let prevId=null;
-	  				let output = false;
+	  			{juices.map((v,i) => {
 
-	  				if(key%2==1){
-	  					prevId = juices[key-1];
+	  				let prev=null
+	  				let cur=v
+	  				let output = false
+
+	  				if(i%2==1){
+	  					prev = juices[i-1];
 	  					output = true;
-	  				}else if(key==juices.length-1){
-	  					prevId = id;
-	  					id=null;
+	  				}else if(i==juices.length-1){
+	  					prev = v;
+	  					cur=null;
 	  					output = true;
 	  				}
 
 		  			if (output)	return (  				
-	  					<Flex key={key}>
-		  					<ShopItem type="juices" id={prevId} />
-		  					<ShopItem type="juices" id={id} />
+	  					<Flex key={i}>
+		  					<ShopItem item={prev} />
+		  					<ShopItem item={cur} />
 		  				</Flex>
 	  				);
 	  			})}
@@ -154,23 +179,25 @@ class HomePage extends React.Component {
 		  	<div>
 			  	<h1><span>内部测试</span></h1>
 		  		<WingBlank size="sm">
-		  			{tests.map((id,key) => {
-		  				let prevId=null;
-		  				let output = false;
+		  			{tests.map((v,i) => {
 
-		  				if(key%2==1){
-		  					prevId = tests[key-1];
+		  				let prev=null
+		  				let cur=v
+		  				let output = false
+
+		  				if(i%2==1){
+		  					prev = tests[i-1];
 		  					output = true;
-		  				}else if(key==tests.length-1){
-		  					prevId = id;
-		  					id=null;
+		  				}else if(i==tests.length-1){
+		  					prev = v;
+		  					cur=null;
 		  					output = true;
 		  				}
 
 			  			if (output)	return (  				
-		  					<Flex key={key}>
-			  					<ShopItem type="tests" id={prevId} />
-			  					<ShopItem type="tests" id={id} />
+		  					<Flex key={i}>
+			  					<ShopItem item={prev} />
+			  					<ShopItem item={cur} />
 			  				</Flex>
 		  				);
 		  			})}
@@ -190,7 +217,7 @@ HomePage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    home: state.app.home,
+    catalog: state.menu.catalog,
     ui: state.HomePage.ui,
     user: state.user,
 });

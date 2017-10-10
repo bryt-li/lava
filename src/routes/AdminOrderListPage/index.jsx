@@ -27,6 +27,10 @@ class AdminOrderListPage extends React.Component {
 			type:'AdminOrderListPage/componentWillMount',
 			payload:{status:params.status}
 		})
+		this.props.dispatch({
+			type:'LayoutUser/setNav',
+			payload:{title:'订单列表',backUrl:'/user/admin/home'}
+		})
 	}
 
 	render(){
@@ -64,12 +68,6 @@ class AdminOrderListPage extends React.Component {
 
 AdminOrderListPage.propTypes = {
 };
-
-AdminOrderListPage.title = '订单列表'
-
-AdminOrderListPage.onBackClick = (dispatch, props)=> ()=>{
-	dispatch(routerRedux.push('/user/admin/home'))
-}
 
 const mapStateToProps = (state) => ({
     orders: state.AdminOrderListPage.orders,

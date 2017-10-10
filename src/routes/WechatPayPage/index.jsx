@@ -18,6 +18,12 @@ class WechatPayPage extends React.Component {
 	componentWillMount() {
 		const {location,dispatch,params} = this.props
 		dispatch({type:'WechatPayPage/componentWillMount',payload:{id:params.id}})
+
+		this.props.dispatch({
+			type:'LayoutUser/setNav',
+			payload:{title:'微信支付',backUrl:null}
+		})
+
 	}
 
 	render(){
@@ -31,12 +37,6 @@ class WechatPayPage extends React.Component {
 		</div>
 		)
 	}
-}
-
-WechatPayPage.title = '微信支付'
-
-WechatPayPage.onBackClick = (dispatch, props)=> ()=>{
-	dispatch(routerRedux.goBack())
 }
 
 WechatPayPage.propTypes = {

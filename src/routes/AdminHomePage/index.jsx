@@ -19,6 +19,13 @@ class AdminHomePage extends React.Component {
 		super(props)
 	}
 
+	componentWillMount() {
+		this.props.dispatch({
+			type:'LayoutUser/setNav',
+			payload:{title:'管理后台',backUrl:'/shop/home'}
+		})
+	}
+	
 	onCreatedOrdersClick = () => {
 		this.props.dispatch(routerRedux.push('/user/admin/order/list/created'))
 	}
@@ -118,12 +125,6 @@ class AdminHomePage extends React.Component {
 	      	</div>
 		);
 	}
-}
-
-AdminHomePage.title = '管理后台'
-
-AdminHomePage.onBackClick = (dispatch, props)=> ()=>{
-	dispatch(routerRedux.push('/shop/home'))
 }
 
 AdminHomePage.propTypes = {

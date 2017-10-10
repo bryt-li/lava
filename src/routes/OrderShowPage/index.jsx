@@ -27,6 +27,11 @@ class OrderShowPage extends React.Component {
 			type:'OrderShowPage/componentWillMount',
 			payload:{id:params.id}
 		})
+
+		this.props.dispatch({
+			type:'LayoutUser/setNav',
+			payload:{title:'查看订单',backUrl:'/user/order/list'}
+		})
 	}
 
 
@@ -167,14 +172,6 @@ class OrderShowPage extends React.Component {
 
 OrderShowPage.propTypes = {
 };
-
-
-OrderShowPage.title = '查看订单'
-
-OrderShowPage.onBackClick = (dispatch, props)=> ()=>{
-	dispatch(routerRedux.push('/user/order/list'))
-}
-
 
 const mapStateToProps = (state) => ({
     order: state.OrderShowPage.order,

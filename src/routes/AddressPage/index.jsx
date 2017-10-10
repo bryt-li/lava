@@ -38,6 +38,15 @@ class AddressPage extends React.Component {
 	componentWillMount() {
 		const {location,dispatch} = this.props
 		dispatch({type:'AddressPage/componentWillMount',payload:location.query})
+
+		let destination = window.sessionStorage.getItem('address_page_return')
+		if(!destination)
+			destination = '/shop/home'
+
+		this.props.dispatch({
+			type:'LayoutUser/setNav',
+			payload:{title:'收货信息',backUrl:destination}
+		})
 	}
 
 	render(){
@@ -157,14 +166,6 @@ class AddressPage extends React.Component {
 AddressPage.propTypes = {
 };
 
-AddressPage.title = '收货信息'
-
-AddressPage.onBackClick = (dispatch, props)=> ()=>{
-	let destination = window.sessionStorage.getItem('address_page_return')
-	if(!destination)
-		destination = '/shop/home'
-	dispatch(routerRedux.push(destination))
-}
 
 const mapStateToProps = (state) => ({
 	ui: state.AddressPage.ui,

@@ -21,10 +21,17 @@ class OrderEditPage extends React.Component {
 
 	}
 
+	componentWillMount() {
+		this.props.dispatch({
+			type:'LayoutUser/setNav',
+			payload:{title:'修改订单',backUrl:'/user/order/list'}
+		})
+	}
+
+
 	render(){
 	  	const {dispatch, form, order_list} = this.props
 		const { getFieldProps } = form
-
 
 	  	return(
 		<div className={styles.container}>
