@@ -9,25 +9,34 @@ import styles from './index.less';
 const LayoutShop = require('../LayoutShop/');
 const LayoutUser = require('../LayoutUser/');
 
+class LayoutDefault extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-function LayoutDefault({ children, dispatch, location, loading }) {
+  componentWillMount() {
+  }
 
-  return (
+  render(){
+    const {loading} = this.props
+
+    return (
     <div className={styles.container}>
       <Switch>
         <Route path='/shop' component={LayoutShop} />
         <Route path='/user' component={LayoutUser} />
       </Switch>
 
-    	{loading?
-      	(<ActivityIndicator
+      {loading?
+        (<ActivityIndicator
             toast
             text="全力加载..."
             animating={true}
-      	/>):null
-    	}
+        />):null
+      }
     </div>
-  );
+    )
+  }
 }
 
 LayoutDefault.propTypes = {

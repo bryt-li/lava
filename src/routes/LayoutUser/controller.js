@@ -12,9 +12,24 @@ export default {
   },
 
   subscriptions: {
+    setup({ dispatch, history }) {
+/*
+      return history.listen(({ pathname, query }) => {
+        if (pathname.startsWith('/user/')) {
+          //check wechat login
+          dispatch({ type: 'checkLogin' })
+        }
+      });
+*/
+    },
+
   },
 
   effects: {
+    *checkLogin({payload}, { call, put }) {
+
+    },
+
     *setNav({payload}, { call, put }) {
       yield put({type:'updateData',payload})
     },

@@ -56,10 +56,33 @@ export default {
   },
 
   subscriptions: {
-
+    setup({ dispatch, history }) {
+      dispatch({type:"restoreMenuCatalog"})
+    },
   },
 
   effects: {
+    *restoreMenuCatalog({payload},{call,select,put}){
+      const { menu } = yield(select(_ => _))
+      const { catalog } = menu
+
+      //从localStorage恢复菜单
+      const stored_menu = JSON.parse(window.localStorage.getItem('menu'))
+      if(stored_menu){
+        //恢复原来保存的点菜数量
+        for(var t in catalog){
+          for(var i in catalog[t]){
+            if( stored_menu[t]&&
+                stored_menu[t][i]&&
+                stored_menu[t][i].quantity>0)
+              catalog[t][i].quantity = stored_menu[t][i].quantity
+          }
+        }
+
+        yield put({ type: 'updateCatalog', payload: catalog })
+      }
+    },
+
     *changeMenuItemQuantity({payload},{call,select,put}){
       const {item, inc} = payload
       const { menu,user,app } = yield(select(_ => _))

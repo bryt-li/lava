@@ -2,29 +2,20 @@
 
 skinparam packageStyle rect
 
-
-package data {
-	class Catalog  <<Object>> #ddd{
-		[type]
-		        [id]
-		                {...item}
-	}
-
-	class Item <<Object>> #ddd{
-		-name
-		-original_price
-		-price
-		-rice
-		-season
-		-delivery_time
-		-slogon
-		-ingredients
-		-intro
-		-ingredients_intro
-		-nutrition
-		+type
-		+id
-	}
+class Item <<Object>> #ddd{
+	-name
+	-original_price
+	-price
+	-rice
+	-season
+	-delivery_time
+	-slogon
+	-ingredients
+	-intro
+	-ingredients_intro
+	-nutrition
+	+type
+	+id
 }
 
 enum menu #ccc{
@@ -54,8 +45,8 @@ enum delivery #ccc{
 	lng
 }
 
-menu --> Catalog
-user -- delivery
+menu --> Item : catalog.type.id
+user <-- delivery : id
 
 abstract localStorage #cyan{
 	menu
@@ -89,7 +80,6 @@ abstract ItemPage {
 	/item
 }
 
-
 class LayoutUser <<closed>> #eee {
 	/user/
 	checkLogin(nextState, replace)
@@ -106,6 +96,7 @@ abstract UserHomePage {
 abstract AddressPage {	
 	/address
 }
+
 abstract OrderShowPage {		
 	/order/show/:id
 }
@@ -114,8 +105,6 @@ abstract WechatPayPage <<entry>> {
 	/order/wxpay/:id
 	wechatPay()
 }
-
-OrderShowPage --() API : /order/show
 
 abstract OrderListPage {
 	/order/list
