@@ -4,10 +4,10 @@ skinparam packageStyle rect
 
 
 package data {
-	class Category  <<Object>> #ddd{
+	class Catalog  <<Object>> #ddd{
 		[type]
 		        [id]
-		                ...item
+		                {...item}
 	}
 
 	class Item <<Object>> #ddd{
@@ -22,16 +22,13 @@ package data {
 		-intro
 		-ingredients_intro
 		-nutrition
+		+type
+		+id
 	}
 }
 
-
-enum app #ccc{
-	-home
-}
-
 enum menu #ccc{
-	-menu
+	-catalog
 	-total
 	-saving
 	-items
@@ -57,6 +54,8 @@ enum delivery #ccc{
 	lng
 }
 
+menu --> Catalog
+user -- delivery
 
 abstract localStorage #cyan{
 	menu
@@ -67,7 +66,6 @@ abstract sessionStorage #cyan{
 }
 
 class Routers{
-	checkLogin(nextState, replace)
 	onEnter
 }
 
@@ -94,6 +92,7 @@ abstract ItemPage {
 
 class LayoutUser <<closed>> #eee {
 	/user/
+	checkLogin(nextState, replace)
 }
 
 abstract CartPage <<cloased>> {
@@ -134,7 +133,7 @@ LayoutUser --> WechatPayPage
 LayoutUser --> CartPage
 Routers --> LayoutDefault
 
-Routers ..> TencentWechatLoginPage : leave
+LayoutUser .> TencentWechatLoginPage : leave
 TencentWechatLoginPage ..> wxlogin : redirect
 wxlogin ..> LandingPage : fail
 wxlogin ..> ClosedPages : success
