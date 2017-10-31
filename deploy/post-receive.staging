@@ -20,17 +20,6 @@ if [ "$branch" != "master" ]; then
     exit 1
 fi
 
-# Get the latest commit subject
-SUBJECT=$(git log -1 --pretty=format:"%s")
-echo "checking commit info: $SUBJECT"
-IS_DEPLOY=$(echo "$SUBJECT" | grep "\[deploy\]")
-
-echo $IS_DEPLOY
-if [ -z "$IS_DEPLOY" ]; then
-   echo "post-receive: info: Not Deploy. Exit."
-   exit 1
-fi
-
 echo "Auto deployment activated."
 
 # Check the deploy dir whether it exists
@@ -52,9 +41,6 @@ cd $BUILD_DIR
 
 echo "git reset --hard"
 git reset --hard
-
-echo "git pull origin master"
-git pull origin master
 
 echo "cnpm install"
 cnpm install
