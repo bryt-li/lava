@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "post-receive."
+
 set -e
 
 DEPLOY_DIR=/var/www/hlhs/m_staging
