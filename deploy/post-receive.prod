@@ -4,8 +4,8 @@ echo "post-receive."
 
 set -e
 
-DEPLOY_DIR=/var/www/hlhs/m
-BUILD_DIR=/home/lixin/deploy/hlhs/frontend
+DEPLOY_DIR=/var/www/hlhs/lava_prod
+BUILD_DIR=/home/lixin/deploy/hlhs/lava_prod
 
 export PATH=$PATH:/opt/node-v4.5.0-linux-x64/bin
 alias cnpm="npm --registry=https://registry.npm.taobao.org \

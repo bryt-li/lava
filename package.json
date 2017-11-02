@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "hlhs-frontend-app",
-  "title": "HLHS Web Frontend App",
+  "name": "lava",
+  "title": "Lava - HLHS Web Frontend App",
   "version": "0.0.1",
   "scripts": {
     "start": "HOST=0.0.0.0 PORT=8080 roadhog server",
